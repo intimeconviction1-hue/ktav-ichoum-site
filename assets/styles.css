@@ -591,3 +591,69 @@ blockquote.pull cite{display:block; font-family:var(--ff-sans); font-weight:500;
   .nav a{padding:9px 5px; font-size:.72rem}
   .brand .word{font-size:1.28rem}
 }
+
+/* ============================================================
+   V2 « DÉTECTIVE + » — plus fort + photos partout
+   ============================================================ */
+
+/* ---- Manchettes plus grosses ---- */
+.lead h1{font-size:3.3rem}
+.art-head h1{font-size:3.45rem}
+.rub-head h1{font-size:3.35rem}
+.section-head h2{font-size:2.15rem}
+.feature h2{font-size:2.7rem} .nlfull h2{font-size:2.8rem}
+
+/* ---- Titres de cartes EN CAPITALES (Oswald) ---- */
+.gcard h3,.story h3,.rel h3,.side-card h3,.coldcard h3,.vcard h3,.cat h3{
+  font-family:var(--ff-display); font-weight:700; text-transform:uppercase;
+  letter-spacing:.004em; line-height:1.08;
+}
+.gcard h3{font-size:1.12rem} .side-card h3{font-size:.98rem} .rel h3{font-size:1rem}
+
+/* ---- Accents jaunes supplémentaires ---- */
+.callout{border-left:4px solid var(--ki-yellow)}
+.ext-note{border-left:4px solid var(--ki-yellow)}
+.byline .av{background:var(--ki-bordeaux)}
+.pop-list li::before{color:var(--ki-bordeaux)}
+.art-cta,.nlfull{border-top:4px solid var(--ki-yellow)}
+
+/* ---- PHOTOS : vraies images en duotone (rouge/noir), fiables ---- */
+.ph{background-color:#141414; background-size:cover; background-position:center; background-repeat:no-repeat}
+.ph--red{
+  background-image:linear-gradient(150deg,rgba(150,14,24,.86),rgba(28,6,8,.92)),url('https://picsum.photos/seed/ki-crime-red/900/600?grayscale');
+  background-blend-mode:multiply,normal;}
+.ph--slate{
+  background-image:linear-gradient(150deg,rgba(18,30,44,.84),rgba(8,12,18,.92)),url('https://picsum.photos/seed/ki-city-slate/900/600?grayscale');
+  background-blend-mode:multiply,normal;}
+.ph--night{
+  background-image:linear-gradient(150deg,rgba(20,16,30,.86),rgba(6,5,10,.94)),url('https://picsum.photos/seed/ki-night-dark/900/600?grayscale');
+  background-blend-mode:multiply,normal;}
+.ph--olive{
+  background-image:linear-gradient(150deg,rgba(40,44,20,.84),rgba(12,14,8,.92)),url('https://picsum.photos/seed/ki-field-olive/900/600?grayscale');
+  background-blend-mode:multiply,normal;}
+.ph--sand{
+  background-image:linear-gradient(150deg,rgba(70,52,20,.82),rgba(20,14,8,.9)),url('https://picsum.photos/seed/ki-street-sand/900/600?grayscale');
+  background-blend-mode:multiply,normal;}
+/* variantes d'images pour éviter la répétition (par position) */
+.side-card:nth-child(2) .ph{background-image:linear-gradient(150deg,rgba(150,14,24,.84),rgba(20,6,8,.92)),url('https://picsum.photos/seed/ki-b2/700/700?grayscale'); background-blend-mode:multiply,normal}
+.side-card:nth-child(3) .ph{background-image:linear-gradient(150deg,rgba(20,16,30,.86),rgba(6,5,10,.94)),url('https://picsum.photos/seed/ki-b3/700/700?grayscale'); background-blend-mode:multiply,normal}
+.grid-arts .gcard:nth-child(3n+1) .ph{background-image:linear-gradient(150deg,rgba(150,14,24,.84),rgba(20,6,8,.92)),url('https://picsum.photos/seed/ki-g1/900/600?grayscale'); background-blend-mode:multiply,normal}
+.grid-arts .gcard:nth-child(3n+2) .ph{background-image:linear-gradient(150deg,rgba(18,30,44,.84),rgba(8,12,18,.92)),url('https://picsum.photos/seed/ki-g2/900/600?grayscale'); background-blend-mode:multiply,normal}
+.grid-arts .gcard:nth-child(3n+3) .ph{background-image:linear-gradient(150deg,rgba(20,16,30,.86),rgba(6,5,10,.94)),url('https://picsum.photos/seed/ki-g3/900/600?grayscale'); background-blend-mode:multiply,normal}
+/* garde la trame légère par-dessus */
+.ph::after{opacity:.28}
+
+/* ---- PHOTOS v2 : duotone robuste (repli = dégradé, jamais de vide) ---- */
+.ph{background-color:#171319; background-size:cover; background-position:center; background-repeat:no-repeat}
+.ph--red{background-image:url('https://picsum.photos/seed/ki-red3/900/600?grayscale'),linear-gradient(135deg,#3a1220,#93182b 55%,#170709); background-blend-mode:luminosity}
+.ph--slate{background-image:url('https://picsum.photos/seed/ki-slate3/900/600?grayscale'),linear-gradient(135deg,#132232,#2f4356 55%,#0a0e13); background-blend-mode:luminosity}
+.ph--night{background-image:url('https://picsum.photos/seed/ki-night3/900/600?grayscale'),linear-gradient(135deg,#181526,#332c4a 55%,#08070d); background-blend-mode:luminosity}
+.ph--olive{background-image:url('https://picsum.photos/seed/ki-olive3/900/600?grayscale'),linear-gradient(135deg,#20280f,#42541f 55%,#0b0d08); background-blend-mode:luminosity}
+.ph--sand{background-image:url('https://picsum.photos/seed/ki-sand3/900/600?grayscale'),linear-gradient(135deg,#3a2913,#77602c 55%,#160f08); background-blend-mode:luminosity}
+.side-card:nth-child(2) .ph{background-image:url('https://picsum.photos/seed/ki-b2/700/700?grayscale'),linear-gradient(135deg,#3a1220,#93182b 55%,#170709); background-blend-mode:luminosity}
+.side-card:nth-child(3) .ph{background-image:url('https://picsum.photos/seed/ki-b3/700/700?grayscale'),linear-gradient(135deg,#181526,#332c4a 55%,#08070d); background-blend-mode:luminosity}
+.grid-arts .gcard:nth-child(3n+1) .ph{background-image:url('https://picsum.photos/seed/ki-g1/900/600?grayscale'),linear-gradient(135deg,#3a1220,#93182b 55%,#170709); background-blend-mode:luminosity}
+.grid-arts .gcard:nth-child(3n+2) .ph{background-image:url('https://picsum.photos/seed/ki-g2/900/600?grayscale'),linear-gradient(135deg,#132232,#2f4356 55%,#0a0e13); background-blend-mode:luminosity}
+.grid-arts .gcard:nth-child(3n+3) .ph{background-image:url('https://picsum.photos/seed/ki-g3/900/600?grayscale'),linear-gradient(135deg,#181526,#332c4a 55%,#08070d); background-blend-mode:luminosity}
+.hero-img .ph{background-image:url('https://picsum.photos/seed/ki-hero/1200/700?grayscale'),linear-gradient(135deg,#181526,#332c4a 55%,#08070d); background-blend-mode:luminosity}
+.ph::after{opacity:.22}
