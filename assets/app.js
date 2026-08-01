@@ -46,3 +46,18 @@
     }, { passive: true });
   }
 })();
+
+/* ============================================================
+   DATE DU JOUR — remplit automatiquement la barre du haut et
+   la ligne « Édition du… ». Les dates d'articles ne bougent pas.
+   ============================================================ */
+(function () {
+  var jours = ['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+  var mois  = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+  var d = new Date();
+  var jour = d.getDate();
+  var full = jours[d.getDay()] + ' ' + (jour === 1 ? '1er' : jour) + ' ' + mois[d.getMonth()] + ' ' + d.getFullYear();
+  var cap = full.charAt(0).toUpperCase() + full.slice(1);
+  document.querySelectorAll('.today').forEach(function (e) { e.textContent = cap; });
+  document.querySelectorAll('.today-lc').forEach(function (e) { e.textContent = full; });
+})();
