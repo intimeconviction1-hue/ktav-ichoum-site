@@ -97,6 +97,21 @@
   </div>
 </div></section>
 
+<!-- FIL EN DIRECT (temps réel) -->
+<section class="livewire"><div class="wrap">
+  <div class="lw-head">
+    <span class="lw-live"><span class="pulse"></span> Direct</span>
+    <h2>Fil en continu</h2>
+    <span class="lw-upd" id="lw-upd">actualisation automatique…</span>
+  </div>
+  <div class="lw-list" id="lw-list" aria-live="polite">
+    <div class="lw-item"><span class="tm lw-skel" style="width:40px">&nbsp;</span><span class="lw-skel" style="width:70%">&nbsp;</span></div>
+    <div class="lw-item"><span class="tm lw-skel" style="width:40px">&nbsp;</span><span class="lw-skel" style="width:60%">&nbsp;</span></div>
+    <div class="lw-item"><span class="tm lw-skel" style="width:40px">&nbsp;</span><span class="lw-skel" style="width:75%">&nbsp;</span></div>
+    <div class="lw-item"><span class="tm lw-skel" style="width:40px">&nbsp;</span><span class="lw-skel" style="width:55%">&nbsp;</span></div>
+  </div>
+</div></section>
+
 <!-- CORPS PRINCIPAL -->
 <div class="wrap main-grid">
   <main>
@@ -250,5 +265,49 @@
 </div>
 
 <script src="./assets/app.js"></script>
+<script>
+/* Fil en direct — se branche sur /api/news (déployé sur Vercel).
+   En local/preview (pas d'API), affiche un repli discret. */
+(function () {
+  var list = document.getElementById('lw-list');
+  var upd  = document.getElementById('lw-upd');
+  if (!list) return;
+
+  function rel(d) {
+    if (!d) return '';
+    var t = new Date(d).getTime(); if (isNaN(t)) return '';
+    var s = Math.max(0, (Date.now() - t) / 1000);
+    if (s < 3600) return Math.round(s / 60) + ' min';
+    if (s < 86400) return Math.round(s / 3600) + ' h';
+    return Math.round(s / 86400) + ' j';
+  }
+  function esc(x){ return (x||'').replace(/[&<>"]/g, function(c){return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c];}); }
+
+  function render(items) {
+    list.innerHTML = items.map(function (it) {
+      return '<div class="lw-item"><span class="tm">' + (rel(it.pubDate) || '·') + '</span>' +
+        '<span><a href="' + esc(it.link) + '" target="_blank" rel="noopener">' + esc(it.title) + '</a>' +
+        (it.source ? '<span class="so">' + esc(it.source) + '</span>' : '') + '</span></div>';
+    }).join('');
+  }
+
+  function load() {
+    fetch('/api/news', { cache: 'no-store' })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (d && d.items && d.items.length) {
+          render(d.items);
+          upd.textContent = 'mis à jour à ' + new Date().toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'});
+        } else { throw new Error('vide'); }
+      })
+      .catch(function () {
+        list.innerHTML = '<div class="lw-empty">Le fil en direct s\'affiche une fois le site déployé sur Vercel (service <code>/api/news</code>). En attendant, voir les affaires ci-dessous.</div>';
+        upd.textContent = '';
+      });
+  }
+  load();
+  setInterval(load, 5 * 60 * 1000); // rafraîchit toutes les 5 min
+})();
+</script>
 </body>
 </html>

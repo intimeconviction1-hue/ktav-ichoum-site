@@ -481,3 +481,28 @@ blockquote.pull cite{display:block; font-family:var(--ff-sans); font-weight:500;
 .ext-note{background:var(--ki-surface); border:1px solid var(--ki-line); border-left:3px solid var(--ki-bordeaux);
   border-radius:10px; padding:16px 18px; margin:24px 0; font-size:.92rem; color:var(--ki-text-2)}
 .ext-note a{color:var(--ki-bordeaux-2); font-weight:600; text-decoration:underline}
+
+/* ============================================================
+   FIL EN DIRECT (temps réel via /api/news)
+   ============================================================ */
+.livewire{padding:26px 0 0}
+.livewire .lw-head{display:flex; align-items:center; gap:12px; margin-bottom:14px;
+  border-top:2px solid var(--ki-alert); padding-top:14px}
+.livewire .lw-head h2{font-family:var(--ff-display); font-weight:800; font-size:1.4rem; margin:0; letter-spacing:-.01em}
+.livewire .lw-live{display:inline-flex; align-items:center; gap:.45em; font-family:var(--ff-display);
+  font-weight:800; letter-spacing:.08em; text-transform:uppercase; font-size:.7rem; color:#fff;
+  background:var(--ki-alert); padding:4px 9px; border-radius:4px}
+.livewire .lw-live .pulse{width:7px;height:7px;border-radius:50%;background:#fff;animation:pulse 1.4s infinite}
+.livewire .lw-upd{margin-left:auto; font-size:.74rem; color:var(--ki-text-3)}
+.lw-list{display:grid; grid-template-columns:repeat(2,1fr); gap:0 30px}
+.lw-item{display:flex; gap:12px; align-items:baseline; padding:12px 0; border-bottom:1px solid var(--ki-line)}
+.lw-item .tm{flex:0 0 auto; font-family:var(--ff-display); font-weight:700; font-size:.72rem;
+  color:var(--ki-bordeaux-2); min-width:52px; padding-top:2px}
+.lw-item a{font-size:.98rem; line-height:1.25; font-weight:500}
+.lw-item:hover a{color:var(--ki-bordeaux-2)}
+.lw-item .so{display:block; font-size:.74rem; color:var(--ki-text-3); margin-top:3px}
+.lw-empty{color:var(--ki-text-3); font-size:.9rem; padding:14px 0}
+.lw-skel{height:14px; border-radius:6px; background:linear-gradient(90deg,var(--ki-surface),var(--ki-surface-2),var(--ki-surface));
+  background-size:200% 100%; animation:shimmer 1.3s infinite}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+@media(max-width:720px){ .lw-list{grid-template-columns:1fr; gap:0} }
