@@ -10,12 +10,12 @@ const FR_QUERY =
   '(meurtre OR homicide OR assassinat OR "fait divers" OR fusillade OR poignardé OR abattu OR ' +
   'police OR arrestation OR interpellé OR enquête OR justice OR procès OR condamné OR inculpé OR ' +
   'crime OR gang OR mafia OR trafic OR agression OR disparition OR "règlement de comptes") ' +
-  '-Gaza -Hamas -Hezbollah -guerre -otages -roquette -frappe -militaire';
+  '-Gaza -Hamas -Hezbollah -guerre -otages -roquette -frappe -militaire when:14d';
 
 // Requête en hébreu : fait remonter Ynet, Mako, Haaretz, Walla, Maariv, Kan, etc.
 const IL_QUERY =
   '(רצח OR ירי OR פשע OR משטרה OR מעצר OR "כתב אישום" OR נאשם OR שוד OR סמים OR אלימות OR חשוד OR גופה OR דקירה) ' +
-  'ישראל -עזה -חמאס -חיזבאללה -מלחמה';
+  'ישראל -עזה -חמאס -חיזבאללה -מלחמה when:14d';
 
 function feedUrl(q, lang, ceid) {
   return 'https://news.google.com/rss/search?q=' + encodeURIComponent(q) +
@@ -93,7 +93,9 @@ export default async function handler(req, res) {
       if (seen.has(k)) continue; seen.add(k);
       fr.push({ ...it, theme: classify(it.title) });
     }
-    const il = ilRaw.slice(0, 20);
+    const byDate = (a, b) => new Date(b.pubDate || 0) - new Date(a.pubDate || 0);
+    fr.sort(byDate);
+    const il = ilRaw.sort(byDate).slice(0, 20);
     res.setHeader('Cache-Control', 's-maxage=600, stale-while-revalidate=1800');
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
     res.status(200).json({
