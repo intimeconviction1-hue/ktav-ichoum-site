@@ -843,3 +843,14 @@ blockquote.pull cite{display:block; font-family:var(--ff-sans); font-weight:500;
 .coldcard:nth-child(2) .ph{background-image:url('https://loremflickr.com/720/440/city,night?lock=752'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
 .coldcard:nth-child(3) .ph{background-image:url('https://loremflickr.com/720/440/police,lights?lock=753'),linear-gradient(135deg,#2a2440,#12101f)}
 .hero-img .ph{background-image:url('https://loremflickr.com/1200/700/police,car?lock=761'),linear-gradient(135deg,#2a2440,#12101f)}
+
+/* ============================================================
+   V8 — FIX : suppression du "blend" hérité qui rosissait tout
+   ============================================================ */
+.ph,
+.ph--red, .ph--slate, .ph--night, .ph--olive, .ph--sand,
+.side-card .ph, .grid-arts .gcard .ph, .rel .ph, .coldcard .ph,
+.cat .ph, .hero-img .ph, .thumb .ph, .feature .ph, .lead .ph{
+  background-blend-mode:normal !important;
+  filter:saturate(1.25) contrast(1.04) brightness(1.03);
+}
