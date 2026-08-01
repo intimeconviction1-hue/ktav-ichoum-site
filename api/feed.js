@@ -67,11 +67,17 @@ function classify(title) {
 }
 
 async function fetchFeed(url) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 7000);
   try {
-    const r = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; KtavIchoumBot/1.0)' } });
+    const r = await fetch(url, {
+      signal: ctrl.signal,
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; KtavIchoumBot/1.0)' },
+    });
     if (!r.ok) return [];
     return parse(await r.text());
   } catch (e) { return []; }
+  finally { clearTimeout(t); }
 }
 
 export default async function handler(req, res) {

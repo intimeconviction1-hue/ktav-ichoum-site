@@ -100,9 +100,17 @@
     if(data){ cb(data); return; }
     waiters.push(cb);
     if(loading) return; loading=true;
-    fetch('/api/feed',{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
-      data=d; loading=false; waiters.forEach(function(f){f(d);}); waiters=[];
-    }).catch(function(){ loading=false; waiters.forEach(function(f){f(null);}); waiters=[]; });
+    var tries=0;
+    (function attempt(){
+      tries++;
+      fetch('/api/feed',{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
+        if(!d || !d.fr){ throw new Error('vide'); }
+        data=d; loading=false; waiters.forEach(function(f){f(d);}); waiters=[];
+      }).catch(function(){
+        if(tries < 5){ setTimeout(attempt, 2500); }
+        else { loading=false; waiters.forEach(function(f){f(null);}); waiters=[]; }
+      });
+    })();
   }
 
   function fill(){
