@@ -5,42 +5,47 @@
    ============================================================ */
 
 /* ---------- Tokens ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600;700&display=swap');
+
+/* ---------- Tokens : habillage « Détective » (clair par défaut) ---------- */
 :root{
   /* Marque */
-  --ki-ink:        #0B0B0D;   /* fond principal (dark) */
-  --ki-surface:    #131317;   /* cartes / surfaces */
-  --ki-surface-2:  #1B1B21;   /* surface surélevée */
-  --ki-line:       rgba(255,255,255,.09);
-  --ki-line-strong:rgba(255,255,255,.16);
-  --ki-paper:      #F4F1EA;   /* crème dossier */
-  --ki-bordeaux:   #8A1220;   /* rouge dossier (primaire) */
-  --ki-bordeaux-2: #A9182B;   /* hover */
-  --ki-alert:      #E11D2E;   /* breaking / live */
-  --ki-gold:       #C9A227;   /* accent premium (rare) */
+  --ki-ink:        #f1eee5;   /* fond papier */
+  --ki-surface:    #ffffff;   /* cartes / surfaces */
+  --ki-surface-2:  #faf7f0;   /* surface surélevée */
+  --ki-line:       rgba(20,14,10,.13);
+  --ki-line-strong:rgba(20,14,10,.24);
+  --ki-paper:      #f4f1ea;
+  --ki-bordeaux:   #d10a13;   /* rouge Détective (primaire) */
+  --ki-bordeaux-2: #a80710;   /* hover / plus foncé */
+  --ki-alert:      #e2001a;   /* breaking / live */
+  --ki-gold:       #b8860b;   /* accent (rare) */
+  --ki-yellow:     #ffd400;   /* flash jaune signature */
 
-  /* Texte (dark) */
-  --ki-text:       #EDECE7;
-  --ki-text-2:     #B6B6BD;
-  --ki-text-3:     #86868F;
+  /* Texte (clair) */
+  --ki-text:       #16110e;
+  --ki-text-2:     #47403b;
+  --ki-text-3:     #7b726b;
 
   /* Typo */
-  --ff-display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --ff-head:    "Anton", "Archivo Narrow", "Arial Narrow", sans-serif;
+  --ff-display: "Oswald", "Archivo", "Arial Narrow", system-ui, sans-serif;
   --ff-serif:   "Newsreader", Georgia, "Times New Roman", serif;
   --ff-sans:    "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
 
   --wrap: 1240px;
   --gap: 24px;
-  --radius: 10px;
-  --shadow: 0 8px 30px rgba(0,0,0,.45);
+  --radius: 5px;
+  --shadow: 0 10px 30px rgba(30,20,20,.12);
   --ease: cubic-bezier(.2,.7,.2,1);
 }
 
-/* Mode clair (toggle) */
-:root[data-theme="light"]{
-  --ki-ink:#F4F1EA; --ki-surface:#FFFFFF; --ki-surface-2:#FBF9F4;
-  --ki-line:rgba(11,11,13,.10); --ki-line-strong:rgba(11,11,13,.18);
-  --ki-text:#16161A; --ki-text-2:#4A4A52; --ki-text-3:#72727B;
-  --shadow:0 10px 30px rgba(30,20,20,.10);
+/* Mode sombre (toggle) */
+:root[data-theme="dark"]{
+  --ki-ink:#0B0B0D; --ki-surface:#131317; --ki-surface-2:#1B1B21;
+  --ki-line:rgba(255,255,255,.09); --ki-line-strong:rgba(255,255,255,.16);
+  --ki-text:#EDECE7; --ki-text-2:#B6B6BD; --ki-text-3:#86868F;
+  --shadow:0 8px 30px rgba(0,0,0,.45);
 }
 
 *{box-sizing:border-box}
@@ -506,3 +511,83 @@ blockquote.pull cite{display:block; font-family:var(--ff-sans); font-weight:500;
   background-size:200% 100%; animation:shimmer 1.3s infinite}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 @media(max-width:720px){ .lw-list{grid-template-columns:1fr; gap:0} }
+
+/* ============================================================
+   HABILLAGE « NOUVEAU DÉTECTIVE » — surcouche tabloïd
+   ============================================================ */
+
+/* Gros titres en capitales condensées (Anton) */
+.lead h1,.art-head h1,.rub-head h1,.section-head h2,.feature h2,
+.nlfull h2,.pod h3,.art-cta h3,.livewire .lw-head h2{
+  font-family:var(--ff-head); font-weight:400; text-transform:uppercase;
+  letter-spacing:.004em; line-height:.98;
+}
+.lead h1{font-size:2.95rem} .art-head h1{font-size:3.05rem}
+.rub-head h1{font-size:3.1rem; margin:.05em 0 .12em}
+.section-head h2{font-size:1.9rem}
+.feature h2{font-size:2.5rem} .nlfull h2{font-size:2.6rem}
+
+/* Marque : logo rouge condensé + filet rouge signature */
+.brand .word{font-family:var(--ff-head); font-weight:400; color:var(--ki-bordeaux);
+  letter-spacing:.012em; font-size:1.55rem}
+.brand .word small{color:var(--ki-text-3); letter-spacing:.3em}
+.masthead{border-bottom:3px solid var(--ki-bordeaux)}
+.nav a{font-weight:600; text-transform:uppercase; letter-spacing:.02em; font-size:.8rem}
+.nav a.active,.nav a.hot{color:var(--ki-bordeaux)}
+.nav a.active{border-bottom:2px solid var(--ki-bordeaux); border-radius:0}
+
+/* Barre utilitaire noire (contraste tabloïd) */
+.util{background:#111; color:#fff}
+.util a{color:rgba(255,255,255,.72)} .util a:hover{color:#fff}
+.util .edition{color:rgba(255,255,255,.6)}
+.util .icon-btn{color:rgba(255,255,255,.82)}
+.util .icon-btn:hover{color:#fff; background:rgba(255,255,255,.12)}
+.util .live{color:#ff5563}
+
+/* Kicker/eyebrow : flash jaune */
+.eyebrow{display:inline-block; background:var(--ki-yellow); color:#111;
+  padding:.28em .6em; letter-spacing:.13em; font-weight:600; border-radius:2px}
+
+/* Flashes de rubrique : carrés, pleins, capitales */
+.tag{border:0; border-radius:2px; font-weight:600; letter-spacing:.06em;
+  padding:.34em .62em; background:var(--ki-bordeaux); color:#fff}
+.tag--doc{background:#111; color:#fff}
+.tag--alert{background:var(--ki-alert); color:#fff}
+.tag--gold{background:var(--ki-yellow); color:#111}
+
+/* Titres de cartes : condensé lourd */
+.gcard h3,.story h3,.rel h3,.side-card h3,.coldcard h3,.vcard h3,.cat h3{
+  font-weight:700; letter-spacing:0}
+.gcard:hover h3,.story:hover h3,.rel:hover h3,.side-card:hover h3{color:var(--ki-bordeaux)}
+
+/* Filets rouges des titres de section */
+.section-head{border-top:3px solid var(--ki-bordeaux)}
+.livewire .lw-head{border-top:3px solid var(--ki-bordeaux)}
+
+/* Boutons plus carrés */
+.btn{border-radius:3px; text-transform:uppercase; letter-spacing:.04em; font-weight:600}
+.chip{border-radius:3px; text-transform:uppercase; letter-spacing:.03em; font-size:.78rem}
+
+/* Bandeau « une » : accent */
+.rub-head .eyebrow{margin-bottom:6px}
+
+/* Drop cap rouge (déjà présent) renforcée */
+.art-body .lead-p::first-letter{font-family:var(--ff-head); color:var(--ki-bordeaux); font-size:3.9rem}
+
+/* Ticker : label noir sur rouge (déjà) — renfort capitales */
+.ticker .move a{font-weight:500}
+
+/* Cartes : ombre légère au survol */
+.gcard,.rel,.coldcard{transition:box-shadow .15s var(--ease), transform .15s var(--ease)}
+.gcard:hover,.rel:hover,.coldcard:hover{box-shadow:0 8px 24px rgba(0,0,0,.12)}
+
+/* Ajustement menu : tout faire tenir (8 rubriques) */
+.masthead .wrap{gap:14px}
+.nav{gap:0}
+.nav a{padding:9px 7px; font-size:.76rem; letter-spacing:.006em}
+.brand{margin-right:2px}
+.brand .word{font-size:1.4rem}
+@media(min-width:1081px) and (max-width:1200px){
+  .nav a{padding:9px 5px; font-size:.72rem}
+  .brand .word{font-size:1.28rem}
+}
