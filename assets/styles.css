@@ -777,3 +777,40 @@ blockquote.pull cite{display:block; font-family:var(--ff-sans); font-weight:500;
   background:var(--ki-bordeaux); padding:1px 6px; border-radius:2px}
 .lw-item.lw-rtl a{direction:rtl}
 .lw-item.lw-rtl .so{direction:rtl}
+
+/* ============================================================
+   V6 — PHOTOS vibrantes + partout + miniatures réparées
+   ============================================================ */
+/* répare les miniatures (côté droit home, listes) : l'image remplit son cadre */
+.thumb{position:relative}
+.thumb .ph{position:absolute; inset:0}
+/* couleur boostée, image nette */
+.ph{background-color:#2b2b2b; background-size:cover; background-position:center;
+  background-repeat:no-repeat; filter:saturate(1.32) contrast(1.06)}
+.ph::after{opacity:0}
+/* couleur garantie (photos Unsplash via picsum), variée */
+.ph--red{background-image:url('https://picsum.photos/seed/kcr6/900/600')}
+.ph--slate{background-image:url('https://picsum.photos/seed/kcs6/900/600')}
+.ph--night{background-image:url('https://picsum.photos/seed/kcn6/900/600')}
+.ph--olive{background-image:url('https://picsum.photos/seed/kco6/900/600')}
+.ph--sand{background-image:url('https://picsum.photos/seed/kcd6/900/600')}
+.side-card:nth-child(1) .ph{background-image:url('https://picsum.photos/seed/ksa6/500/500')}
+.side-card:nth-child(2) .ph{background-image:url('https://picsum.photos/seed/ksb6/500/500')}
+.side-card:nth-child(3) .ph{background-image:url('https://picsum.photos/seed/ksc6/500/500')}
+.grid-arts .gcard:nth-child(6n+1) .ph{background-image:url('https://picsum.photos/seed/kg61/900/600')}
+.grid-arts .gcard:nth-child(6n+2) .ph{background-image:url('https://picsum.photos/seed/kg62/900/600')}
+.grid-arts .gcard:nth-child(6n+3) .ph{background-image:url('https://picsum.photos/seed/kg63/900/600')}
+.grid-arts .gcard:nth-child(6n+4) .ph{background-image:url('https://picsum.photos/seed/kg64/900/600')}
+.grid-arts .gcard:nth-child(6n+5) .ph{background-image:url('https://picsum.photos/seed/kg65/900/600')}
+.grid-arts .gcard:nth-child(6n+6) .ph{background-image:url('https://picsum.photos/seed/kg66/900/600')}
+.rel:nth-child(1) .ph{background-image:url('https://picsum.photos/seed/kre1/700/500')}
+.rel:nth-child(2) .ph{background-image:url('https://picsum.photos/seed/kre2/700/500')}
+.rel:nth-child(3) .ph{background-image:url('https://picsum.photos/seed/kre3/700/500')}
+.coldcard:nth-child(1) .ph{background-image:url('https://picsum.photos/seed/kcold1/700/440')}
+.coldcard:nth-child(2) .ph{background-image:url('https://picsum.photos/seed/kcold2/700/440')}
+.coldcard:nth-child(3) .ph{background-image:url('https://picsum.photos/seed/kcold3/700/440')}
+.cat:nth-child(1) .ph{background-image:url('https://picsum.photos/seed/kcat1/500/340')}
+.cat:nth-child(2) .ph{background-image:url('https://picsum.photos/seed/kcat2/500/340')}
+.cat:nth-child(3) .ph{background-image:url('https://picsum.photos/seed/kcat3/500/340')}
+.cat:nth-child(4) .ph{background-image:url('https://picsum.photos/seed/kcat4/500/340')}
+.hero-img .ph{background-image:url('https://picsum.photos/seed/khero6/1200/700')}
