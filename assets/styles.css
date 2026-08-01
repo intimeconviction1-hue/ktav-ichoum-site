@@ -770,3 +770,10 @@ blockquote.pull cite{display:block; font-family:var(--ff-sans); font-weight:500;
   text-transform:uppercase; font-size:.74rem; letter-spacing:.05em; color:var(--ki-bordeaux)}
 @media(max-width:1080px){.src-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:720px){.src-grid{grid-template-columns:1fr}}
+
+/* Agrégateur — badges thème + presse hébraïque */
+.lw-badge{display:inline-block; margin-left:8px; font-family:var(--ff-display); font-weight:700;
+  text-transform:uppercase; font-size:.6rem; letter-spacing:.05em; color:#fff;
+  background:var(--ki-bordeaux); padding:1px 6px; border-radius:2px}
+.lw-item.lw-rtl a{direction:rtl}
+.lw-item.lw-rtl .so{direction:rtl}
