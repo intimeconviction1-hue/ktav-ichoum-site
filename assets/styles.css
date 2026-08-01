@@ -747,3 +747,26 @@ blockquote.pull cite{display:block; font-family:var(--ff-sans); font-weight:500;
 /* Grand récit : accent */
 .feature--record{border-top:4px solid var(--ki-bordeaux)}
 .feature--record .eyebrow{background:var(--ki-alert); color:#fff}
+
+/* ============================================================
+   PAGE SOURCES — annuaire presse israélienne (plili)
+   ============================================================ */
+.src-group{margin:32px 0}
+.src-group h2{font-family:var(--ff-head); text-transform:uppercase; font-size:1.5rem;
+  border-top:3px solid var(--ki-bordeaux); padding-top:12px; margin:0 0 18px; letter-spacing:.004em}
+.src-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+.srccard{display:block; background:var(--ki-surface); border:1px solid var(--ki-line);
+  border-left:4px solid var(--ki-bordeaux); border-radius:6px; padding:18px 20px;
+  transition:box-shadow .15s var(--ease)}
+.srccard:hover{box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.srccard h3{font-family:var(--ff-display); font-weight:700; text-transform:uppercase;
+  font-size:1.12rem; margin:0 0 6px}
+.srccard:hover h3{color:var(--ki-bordeaux)}
+.srccard p{color:var(--ki-text-2); font-size:.9rem; margin:0 0 12px; font-family:var(--ff-serif)}
+.srccard .htags{display:flex; flex-wrap:wrap; gap:6px}
+.srccard .htags span{font-size:.72rem; color:var(--ki-text-3); background:var(--ki-surface-2);
+  border:1px solid var(--ki-line); border-radius:3px; padding:2px 8px}
+.srccard .go{display:inline-block; margin-top:12px; font-family:var(--ff-display); font-weight:600;
+  text-transform:uppercase; font-size:.74rem; letter-spacing:.05em; color:var(--ki-bordeaux)}
+@media(max-width:1080px){.src-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:720px){.src-grid{grid-template-columns:1fr}}
