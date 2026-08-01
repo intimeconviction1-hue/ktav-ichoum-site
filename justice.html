@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./assets/styles.css?v=20260811">
+<link rel="stylesheet" href="./assets/styles.css?v=20260812">
 <link rel="canonical" href="https://ktavichoum.vercel.app/justice.html">
 <meta name="keywords" content="faits divers Israël, crime organisé Israël, פלילים, משפט, police israélienne, justice, meurtre, enquête criminelle, règlement de comptes, Ynet, Haaretz, Times of Israël, i24NEWS, N12, revue de presse">
 </head>
@@ -106,7 +106,7 @@
   <nav><a href="index.html">Actualités</a><a href="rubrique.html">Faits divers</a><a href="justice.html">Justice</a><a href="police.html">Police</a><a href="crime-organise.html">Crime organisé</a><a href="enquetes.html">Enquêtes</a><a href="societe.html">Société</a><a href="archives.html">Archives</a><a href="sources.html">Sources</a></nav>
 </div>
 
-<script src="./assets/app.js?v=20260811"></script>
+<script src="./assets/app.js?v=20260812"></script>
 
 <script>
 document.querySelectorAll('.filters .chip').forEach(function(c){
@@ -117,5 +117,30 @@ document.querySelectorAll('.filters .chip').forEach(function(c){
 });
 </script>
 
+<script>
+/* Fil KTAV ICHOUM — inline, autonome (indépendant de app.js/cache) */
+(function(){
+  var T=document.querySelectorAll('[data-feed-theme],[data-feed-il]'); if(!T.length) return;
+  var L={'crime-organise':'Crime organisé','justice':'Justice','police':'Police','enquetes':'Enquêtes','societe':'Société','faits-divers':'Faits divers'};
+  function rel(d){if(!d)return'';var t=new Date(d).getTime();if(isNaN(t))return'';var s=Math.max(0,(Date.now()-t)/1000);return s<3600?Math.round(s/60)+' min':(s<86400?Math.round(s/3600)+' h':Math.round(s/86400)+' j');}
+  function esc(x){return(x||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function frItem(it,all){var b=(all&&it.theme)?'<span class="lw-badge">'+esc(L[it.theme]||'')+'</span>':'';return '<div class="lw-item"><span class="tm">'+(rel(it.pubDate)||'·')+'</span><span><a href="'+esc(it.link)+'" target="_blank" rel="noopener">'+esc(it.title)+'</a>'+(it.source?'<span class="so">'+esc(it.source)+b+'</span>':b)+'</span></div>';}
+  function ilItem(it){return '<div class="lw-item lw-rtl"><span class="tm">'+(rel(it.pubDate)||'·')+'</span><span dir="rtl"><a href="'+esc(it.link)+'" target="_blank" rel="noopener">'+esc(it.title)+'</a>'+(it.source?'<span class="so">'+esc(it.source)+'</span>':'')+'</span></div>';}
+  function render(d){
+    T.forEach(function(el){
+      if(el.hasAttribute('data-feed-il')){ el.innerHTML=(d&&d.il&&d.il.length)?d.il.slice(0,10).map(ilItem).join(''):'<div class="lw-empty">Flux momentanément indisponible.</div>'; return; }
+      var th=el.getAttribute('data-feed-theme'), items;
+      if(!d||!d.fr){ el.innerHTML='<div class="lw-empty">Chargement…</div>'; return; }
+      if(th==='all'){ items=d.fr; } else { var m=d.fr.filter(function(x){return x.theme===th;}); items=(m.length>=4)?m:m.concat(d.fr.filter(function(x){return x.theme!==th;})); }
+      el.innerHTML=(items&&items.length)?items.slice(0,12).map(function(it){return frItem(it,th==='all');}).join(''):'<div class="lw-empty">Aucune dépêche.</div>';
+    });
+    var u=document.getElementById('lw-upd'); if(u&&d&&d.fr) u.textContent='mis à jour à '+new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  }
+  function fetchFeed(cb){ fetch('/api/feed',{cache:'no-store'}).then(function(r){return r.json();}).then(cb).catch(function(){cb(null);}); }
+  var tries=0;
+  (function go(){ tries++; fetchFeed(function(d){ if(d&&d.fr){ render(d); } else if(tries<6){ setTimeout(go,2500); } else { render(null); } }); })();
+  setInterval(function(){ fetchFeed(function(d){ if(d&&d.fr) render(d); }); }, 300000);
+})();
+</script>
 </body>
 </html>
