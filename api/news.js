@@ -4,7 +4,11 @@
 // Aucune clé requise. Mise en cache 10 min au niveau du CDN Vercel.
 
 const QUERY =
-  '(Israël OR israélien) (meurtre OR homicide OR "fait divers" OR police OR justice OR procès OR crime OR arrestation OR fusillade OR disparition) -Gaza -Hamas -Hezbollah -guerre -otages';
+  '(Israël OR israélien OR "Tel-Aviv" OR Jérusalem OR Haïfa) ' +
+  '(meurtre OR homicide OR assassinat OR "fait divers" OR fusillade OR poignardé OR abattu OR ' +
+  'police OR arrestation OR interpellé OR enquête OR justice OR procès OR condamné OR inculpé OR ' +
+  'crime OR gang OR mafia OR trafic OR agression OR disparition OR "règlement de comptes") ' +
+  '-Gaza -Hamas -Hezbollah -guerre -otages -roquette -frappe -militaire';
 
 const FEED =
   'https://news.google.com/rss/search?q=' +
@@ -49,7 +53,7 @@ export default async function handler(req, res) {
     });
     if (!r.ok) throw new Error('feed ' + r.status);
     const xml = await r.text();
-    const items = parse(xml).slice(0, 12);
+    const items = parse(xml).slice(0, 15);
     res.setHeader('Cache-Control', 's-maxage=600, stale-while-revalidate=1800');
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
     res.status(200).json({ ok: true, count: items.length, updated: new Date().toISOString(), items });
