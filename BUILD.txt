@@ -1,0 +1,4 @@
+Marqueur de build KTAV ICHOUM
+Généré pour déclencher un déploiement Vercel depuis le dépôt ktav-ichoum-site.
+Ce fichier est sans effet sur le site — tu peux le supprimer plus tard.
+build: 2026-08-01T07:35:45Z
