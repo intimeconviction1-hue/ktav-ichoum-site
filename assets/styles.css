@@ -691,3 +691,31 @@ blockquote.pull cite{display:block; font-family:var(--ff-sans); font-weight:500;
 .hero-img .ph{background-image:url('https://loremflickr.com/1200/700/police,night?lock=61'),linear-gradient(135deg,#181526,#332c4a,#08070d)}
 /* léger vignettage pour lisibilité, sans grisailler */
 .lead .ph::after,.hero-img .ph::after{opacity:0}
+
+/* ============================================================
+   V4 — STRUCTURE MAGAZINE (logo centré en haut, menu dessous)
+   ============================================================ */
+.masthead .wrap{
+  display:grid; height:auto;
+  grid-template-columns:1fr auto 1fr;
+  grid-template-areas:"actL brand actR" "nav nav nav";
+  align-items:center; padding:14px 20px 0;
+}
+.brand{grid-area:brand; justify-self:center; margin:0; gap:14px}
+.brand .emblem{width:54px; height:54px; flex:0 0 54px}
+.brand .word{font-size:2.5rem; line-height:.9; text-align:center}
+.brand .word small{font-size:.56rem; letter-spacing:.36em; margin-top:6px; text-align:center}
+.mast-actions{grid-area:actR; justify-self:end}
+.burger{grid-area:actL; justify-self:start}
+.nav{
+  grid-area:nav; width:100%; justify-content:center; flex-wrap:wrap;
+  overflow:visible; margin-top:12px; padding:9px 0; gap:2px;
+  border-top:2px solid var(--ki-bordeaux); border-bottom:2px solid var(--ki-bordeaux);
+}
+.nav a{font-size:.84rem; padding:7px 14px; letter-spacing:.04em}
+.nav a.active{border-bottom:0}
+@media(max-width:1080px){
+  .masthead .wrap{grid-template-columns:1fr auto 1fr; grid-template-areas:"actL brand actR"}
+  .brand .word{font-size:1.9rem}
+  .brand .emblem{width:44px;height:44px;flex:0 0 44px}
+}
