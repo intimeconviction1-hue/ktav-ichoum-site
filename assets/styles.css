@@ -814,3 +814,32 @@ blockquote.pull cite{display:block; font-family:var(--ff-sans); font-weight:500;
 .cat:nth-child(3) .ph{background-image:url('https://picsum.photos/seed/kcat3/500/340')}
 .cat:nth-child(4) .ph{background-image:url('https://picsum.photos/seed/kcat4/500/340')}
 .hero-img .ph{background-image:url('https://picsum.photos/seed/khero6/1200/700')}
+
+/* ============================================================
+   V7 — PHOTOS COULEUR THÉMATIQUES (fini le gris)
+   Images par mots-clés (loremflickr) ; repli = dégradé coloré.
+   ============================================================ */
+.ph{background-color:#3a1220; background-size:cover; background-position:center;
+  background-repeat:no-repeat; filter:saturate(1.18) contrast(1.05)}
+.ph::after{opacity:0}
+.ph--red{background-image:url('https://loremflickr.com/900/600/police,car?lock=711'),linear-gradient(135deg,#7a1420,#3a1220)}
+.ph--slate{background-image:url('https://loremflickr.com/900/600/city,night?lock=712'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
+.ph--night{background-image:url('https://loremflickr.com/900/600/police,lights?lock=713'),linear-gradient(135deg,#2a2440,#12101f)}
+.ph--olive{background-image:url('https://loremflickr.com/900/600/street,graffiti?lock=714'),linear-gradient(135deg,#2e3a12,#161d08)}
+.ph--sand{background-image:url('https://loremflickr.com/900/600/city,street?lock=715'),linear-gradient(135deg,#6a4a1a,#2a1c08)}
+.side-card:nth-child(1) .ph{background-image:url('https://loremflickr.com/520/520/police,car?lock=721'),linear-gradient(135deg,#7a1420,#3a1220)}
+.side-card:nth-child(2) .ph{background-image:url('https://loremflickr.com/520/520/city,night?lock=722'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
+.side-card:nth-child(3) .ph{background-image:url('https://loremflickr.com/520/520/police,lights?lock=723'),linear-gradient(135deg,#2a2440,#12101f)}
+.grid-arts .gcard:nth-child(6n+1) .ph{background-image:url('https://loremflickr.com/900/600/police,car?lock=731'),linear-gradient(135deg,#7a1420,#3a1220)}
+.grid-arts .gcard:nth-child(6n+2) .ph{background-image:url('https://loremflickr.com/900/600/courthouse,building?lock=732'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
+.grid-arts .gcard:nth-child(6n+3) .ph{background-image:url('https://loremflickr.com/900/600/city,night?lock=733'),linear-gradient(135deg,#2a2440,#12101f)}
+.grid-arts .gcard:nth-child(6n+4) .ph{background-image:url('https://loremflickr.com/900/600/police,officer?lock=734'),linear-gradient(135deg,#2e3a12,#161d08)}
+.grid-arts .gcard:nth-child(6n+5) .ph{background-image:url('https://loremflickr.com/900/600/neon,city?lock=735'),linear-gradient(135deg,#6a4a1a,#2a1c08)}
+.grid-arts .gcard:nth-child(6n+6) .ph{background-image:url('https://loremflickr.com/900/600/street,night?lock=736'),linear-gradient(135deg,#7a1420,#3a1220)}
+.rel:nth-child(1) .ph{background-image:url('https://loremflickr.com/720/500/police,car?lock=741'),linear-gradient(135deg,#7a1420,#3a1220)}
+.rel:nth-child(2) .ph{background-image:url('https://loremflickr.com/720/500/city,night?lock=742'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
+.rel:nth-child(3) .ph{background-image:url('https://loremflickr.com/720/500/police,lights?lock=743'),linear-gradient(135deg,#2a2440,#12101f)}
+.coldcard:nth-child(1) .ph{background-image:url('https://loremflickr.com/720/440/police,car?lock=751'),linear-gradient(135deg,#7a1420,#3a1220)}
+.coldcard:nth-child(2) .ph{background-image:url('https://loremflickr.com/720/440/city,night?lock=752'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
+.coldcard:nth-child(3) .ph{background-image:url('https://loremflickr.com/720/440/police,lights?lock=753'),linear-gradient(135deg,#2a2440,#12101f)}
+.hero-img .ph{background-image:url('https://loremflickr.com/1200/700/police,car?lock=761'),linear-gradient(135deg,#2a2440,#12101f)}
