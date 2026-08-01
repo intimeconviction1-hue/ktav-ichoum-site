@@ -2,5 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.ktavichoum.com/</loc><changefreq>hourly</changefreq><priority>1.0</priority></url>
   <url><loc>https://www.ktavichoum.com/rubrique.html</loc><changefreq>hourly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.ktavichoum.com/crime-organise.html</loc><changefreq>hourly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.ktavichoum.com/justice.html</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.ktavichoum.com/police.html</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.ktavichoum.com/enquetes.html</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.ktavichoum.com/societe.html</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.ktavichoum.com/archives.html</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.ktavichoum.com/article.html</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.ktavichoum.com/article-japanika.html</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.ktavichoum.com/article-justice.html</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.ktavichoum.com/article-police.html</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.ktavichoum.com/article-enquetes.html</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.ktavichoum.com/article-societe.html</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
 </urlset>
