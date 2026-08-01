@@ -54,12 +54,12 @@ function parse(xml) {
 
 // Classement par thème (mots-clés FR). Premier motif trouvé = thème.
 const THEMES = [
-  ['crime-organise', /crime organis|mafia|gang|clan|grenade|règlement de comptes|parrain|racket|extorsion/i],
-  ['justice',        /proc[eè]s|condamn|verdict|cour supr[eê]me|inculp|tribunal|prison|peine|justice|magistrat/i],
-  ['police',         /police|arrestation|interpell|coup de filet|saisie|shin bet|gardes?-fronti[eè]re|op[eé]ration/i],
-  ['enquetes',       /disparition|disparu|enqu[eê]te|non [eé]lucid|cold case|recherche|corps retrouv/i],
-  ['societe',        /communaut[eé] arabe|statistiques|victimes|soci[eé]t[eé]|pr[eé]vention|ambassade/i],
-  ['faits-divers',   /meurtre|homicide|poignard|fusillade|agression|abattu|tu[eé]|balle|couteau|viol/i],
+  ['crime-organise', /crime organis|mafia|gang|clan|grenade|r[eè]glement de comptes|parrain|racket|extorsion|fusillade|abattu|balle|kalach|voiture pi[eé]g|explos|assassin|r[eé]seau|trafic|drogue|blanchiment/i],
+  ['justice',        /proc[eè]s|condamn|verdict|cour supr[eê]me|inculp|tribunal|prison|peine|justice|magistrat|juge|accus[eé]|d[eé]tention|extrad|mis en examen|r[eé]clusion|jug[eé]/i],
+  ['enquetes',       /disparition|disparu|enqu[eê]te|non [eé]lucid|cold case|recherche|corps retrouv|myst[eè]re|introuvable/i],
+  ['societe',        /communaut[eé] arabe|arabe|b[eé]douin|statistiques|victimes|soci[eé]t[eé]|pr[eé]vention|ambassade|manifest|record|homicides|alerte|violence/i],
+  ['faits-divers',   /meurtre|homicide|poignard|agression|tu[eé]|couteau|viol|corps|cadavre|mort|bless/i],
+  ['police',         /police|arrestation|interpell|coup de filet|saisie|shin bet|gardes?-fronti[eè]re|op[eé]ration|perquisit|d[eé]mantel/i],
 ];
 function classify(title) {
   for (const [name, re] of THEMES) if (re.test(title)) return name;
@@ -94,7 +94,7 @@ export default async function handler(req, res) {
       ok: true,
       updated: new Date().toISOString(),
       counts: { fr: fr.length, il: il.length },
-      fr: fr.slice(0, 30),
+      fr: fr.slice(0, 45),
       il,
     });
   } catch (e) {

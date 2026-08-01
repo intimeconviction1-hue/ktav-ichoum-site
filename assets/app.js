@@ -113,7 +113,13 @@
         var th=el.getAttribute('data-feed-theme');
         load(function(d){
           if(!d||!d.fr){ el.innerHTML='<div class="lw-empty">Le fil s\'affiche une fois le site déployé sur Vercel.</div>'; return; }
-          var items = th==='all' ? d.fr : d.fr.filter(function(x){return x.theme===th;});
+          var items;
+          if(th==='all'){ items = d.fr; }
+          else {
+            var matched = d.fr.filter(function(x){return x.theme===th;});
+            if(matched.length >= 4){ items = matched; }
+            else { var others = d.fr.filter(function(x){return x.theme!==th;}); items = matched.concat(others); }
+          }
           renderFr(el, items);
         });
       }
