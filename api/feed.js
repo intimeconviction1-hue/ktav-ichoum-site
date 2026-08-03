@@ -1,152 +1,222 @@
-// KTAV ICHOUM — Agrégateur multi-sources (phase 3)
-// Interroge la presse criminelle israélienne via Google Actualités.
-// La presse israélienne (hébreu) est FRAÎCHE chaque jour : on la traduit
-// automatiquement en français et on la fusionne dans le fil principal.
-//   fr[] : fil principal en français (dépêches FR + presse israélienne traduite),
-//          classé par thème, trié du plus récent au plus ancien.
-//   il[] : presse israélienne en langue source (titres hébreux + média).
-// Aucune clé requise. Cache CDN 10 min.
+// KTAV ICHOUM — Fil en direct
+// -----------------------------------------------------------------------------
+// Titres de la presse israélienne, repris depuis les flux RSS publiés par les
+// éditeurs eux-mêmes. Aucune reformulation, aucun chapô : titre, source, heure,
+// lien direct vers l'éditeur.
+//
+// Principes appliqués :
+//   1. Flux natifs des éditeurs (destinés à la syndication) — pas d'agrégateur tiers
+//   2. Titres seuls, liens directs vers la source
+//   3. Quarantaine automatique de toute dépêche pouvant concerner un mineur
+//   4. Éphémère : fenêtre de 24 h, aucun archivage, en-tête noindex
+//   5. Attribution explicite côté front
+//
+// Diagnostic : appeler /api/feed?debug=1 pour voir l'état de chaque source.
+// -----------------------------------------------------------------------------
 
-const FR_QUERY =
-  '(Israël OR israélien OR "Tel-Aviv" OR Jérusalem OR Haïfa) ' +
-  '(meurtre OR homicide OR assassinat OR "fait divers" OR fusillade OR poignardé OR abattu OR ' +
-  'police OR arrestation OR interpellé OR enquête OR justice OR procès OR condamné OR inculpé OR ' +
-  'crime OR gang OR mafia OR trafic OR agression OR disparition OR "règlement de comptes") ' +
-  '-Gaza -Hamas -Hezbollah -guerre -otages -roquette -frappe -militaire';
+// ⚠️ À VÉRIFIER UNE FOIS AVANT MISE EN LIGNE (voir /api/feed?debug=1).
+// Les URL de flux changent au gré des refontes. Gardez celles qui répondent,
+// supprimez les autres. Une source morte ne casse rien : elle est ignorée.
+const SOURCES = [
+  { id: 'toi-fr',      name: 'Times of Israël',  lang: 'fr', url: 'https://fr.timesofisrael.com/feed/' },
+  { id: 'ynet',        name: 'Ynet',             lang: 'he', url: 'https://www.ynet.co.il/Integration/StoryRss538.xml' },
+  { id: 'israelhayom', name: 'Israel Hayom',     lang: 'he', url: 'https://www.israelhayom.co.il/rss.xml' },
+  { id: 'walla',       name: 'Walla',            lang: 'he', url: 'https://rss.walla.co.il/feed/1' },
+  { id: 'haaretz',     name: 'Haaretz',          lang: 'he', url: 'https://www.haaretz.co.il/srv/rss---news' },
+  { id: 'jpost',       name: 'Jerusalem Post',   lang: 'en', url: 'https://www.jpost.com/rss/rssfeedsisraelnews.aspx' },
+];
 
-// Requête en hébreu : fait remonter Ynet, Mako, Haaretz, Walla, Maariv, Kan, etc.
-const IL_QUERY =
-  '(רצח OR ירי OR פשע OR משטרה OR מעצר OR "כתב אישום" OR נאשם OR שוד OR סמים OR אלימות OR חשוד OR גופה OR דקירה) ' +
-  'ישראל -עזה -חמאס -חיזבאללה -מלחמה';
+const WINDOW_HOURS = 24;   // fenêtre de fraîcheur — rien au-delà
+const MAX_ITEMS    = 40;   // plafond d'affichage
+const TIMEOUT_MS   = 7000;
 
-function feedUrl(q, lang, ceid) {
-  return 'https://news.google.com/rss/search?q=' + encodeURIComponent(q) +
-    '&hl=' + lang + '&gl=IL&ceid=' + ceid;
+// --- Pertinence : la dépêche relève-t-elle du judiciaire ? --------------------
+const RELEVANT = new RegExp([
+  // hébreu
+  'רצח|הרג|ירי|דקיר|פשע|פלילי|משטרה|מעצר|נעצר|חשוד|נאשם|כתב אישום|גזר דין',
+  'הכרעת דין|בית משפט|שופט|תביעה|פרקליטות|שוד|סחיטה|הלבנת הון|סמים|נשק|גופה',
+  // français
+  'meurtre|homicide|assassinat|fusillade|poignard|abattu|police|arrestation|interpell',
+  'enquête|enquete|justice|procès|proces|condamn|inculp|tribunal|juge|crime|gang|mafia',
+  'trafic|agression|disparition|règlement de comptes|reglement de comptes',
+  // anglais
+  'murder|homicide|shooting|stabbing|police|arrest|suspect|indictment|verdict|court',
+  'sentenc|convict|crime|gang|mafia|trafficking|assault',
+].join('|'), 'i');
+
+// --- Exclusions : guerre, géopolitique, militaire ------------------------------
+const EXCLUDED = new RegExp([
+  'עזה|חמאס|חיזבאללה|מלחמה|חטופ|טילים|רקטות|צה"ל|פיגוע|מחבל',
+  'gaza|hamas|hezbollah|hostage|missile|rocket|idf|airstrike|militar|terror',
+  'otage|roquette|frappe|militaire|terroris',
+].join('|'), 'i');
+
+// --- QUARANTAINE MINEURS -----------------------------------------------------
+// Toute dépêche susceptible de concerner un mineur est écartée du fil, sans
+// intervention humaine. Art. L. 513-4 CJPM et art. 39 bis loi 1881.
+// Le filtre est volontairement large : un faux positif coûte une dépêche,
+// un faux négatif coûte une infraction.
+const MINOR_WORDS = new RegExp([
+  // hébreu
+  'קטין|קטינה|קטינים|נער|נערה|נערים|נערות|ילד|ילדה|ילדים|תלמיד|תלמידה',
+  'בית ספר|תיכון|גן ילדים|בני נוער|עבריינות נוער',
+  // français
+  'mineur|mineure|adolescent|adolescente|enfant|collégien|collegien|lycéen|lyceen',
+  'écolier|ecolier|élève|eleve|collège|college|lycée|lycee|école|ecole',
+  // anglais
+  'minor|teen|teenager|juvenile|schoolboy|schoolgirl|pupil|high school|kindergarten',
+].join('|'), 'i');
+
+// Âges : « בן 17 », « âgé de 16 ans », « 15-year-old », « aged 17 »…
+const AGE_PATTERNS = [
+  /\b(?:בן|בת)\s*(\d{1,2})\b/g,
+  /\b(?:âg|ag)[ée]e?\s+de\s+(\d{1,2})\s*ans?\b/gi,
+  /\b(\d{1,2})\s*ans?\b/g,
+  /\b(\d{1,2})[-\s]year[-\s]old\b/gi,
+  /\baged?\s+(\d{1,2})\b/gi,
+];
+
+function mentionsMinor(text) {
+  if (MINOR_WORDS.test(text)) return true;
+  for (const re of AGE_PATTERNS) {
+    re.lastIndex = 0;
+    let m;
+    while ((m = re.exec(text)) !== null) {
+      const age = parseInt(m[1], 10);
+      if (!Number.isNaN(age) && age > 0 && age < 18) return true;
+    }
+  }
+  return false;
 }
 
+// --- Parsing RSS + Atom ------------------------------------------------------
 function decode(s = '') {
   return s
-    .replace(/<!\[CDATA\[(.*?)\]\]>/gs, '$1')
-    .replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
-    .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&nbsp;/g, ' ')
-    .replace(/<[^>]+>/g, '').trim();
+    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
+    .replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#0?39;/g, "'")
+    .replace(/&apos;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    .replace(/&nbsp;/g, ' ').replace(/&#(\d+);/g, (_, n) => String.fromCharCode(+n))
+    .replace(/<[^>]+>/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 function parse(xml) {
-  const items = [];
-  const blocks = xml.split('<item>').slice(1);
-  for (const b of blocks) {
-    const chunk = b.split('</item>')[0];
-    const g = (re) => { const m = chunk.match(re); return m ? m[1] : ''; };
-    let title = decode(g(/<title>([\s\S]*?)<\/title>/));
-    const link = decode(g(/<link>([\s\S]*?)<\/link>/));
-    const pubDate = g(/<pubDate>([\s\S]*?)<\/pubDate>/).trim();
-    let source = decode(g(/<source[^>]*>([\s\S]*?)<\/source>/));
-    if (!source && title.includes(' - ')) {
-      const parts = title.split(' - ');
-      source = parts[parts.length - 1];
-      title = parts.slice(0, -1).join(' - ');
-    } else if (source && title.endsWith(' - ' + source)) {
-      title = title.slice(0, -(source.length + 3));
+  const out = [];
+  const isAtom = /<feed[\s>]/i.test(xml) && /<entry[\s>]/i.test(xml);
+  const blocks = isAtom
+    ? xml.split(/<entry[\s>]/i).slice(1).map((b) => b.split(/<\/entry>/i)[0])
+    : xml.split(/<item[\s>]/i).slice(1).map((b) => b.split(/<\/item>/i)[0]);
+
+  for (const chunk of blocks) {
+    const grab = (re) => { const m = chunk.match(re); return m ? m[1] : ''; };
+    const title = decode(grab(/<title[^>]*>([\s\S]*?)<\/title>/i));
+
+    let link = decode(grab(/<link[^>]*>([\s\S]*?)<\/link>/i));
+    if (!link) link = decode(grab(/<link[^>]*href=["']([^"']+)["']/i));
+    if (!link) link = decode(grab(/<guid[^>]*>([\s\S]*?)<\/guid>/i));
+
+    const date =
+      grab(/<pubDate[^>]*>([\s\S]*?)<\/pubDate>/i) ||
+      grab(/<updated[^>]*>([\s\S]*?)<\/updated>/i) ||
+      grab(/<published[^>]*>([\s\S]*?)<\/published>/i) ||
+      grab(/<dc:date[^>]*>([\s\S]*?)<\/dc:date>/i);
+
+    if (title && /^https?:\/\//i.test(link)) {
+      out.push({ title, link, pubDate: (date || '').trim() });
     }
-    if (title && link) items.push({ title, link, source, pubDate });
   }
-  return items;
+  return out;
 }
 
-// Classement par thème (mots-clés FR). Premier motif trouvé = thème.
-const THEMES = [
-  ['crime-organise', /crime organis|mafia|gang|clan|grenade|r[eè]glement de comptes|parrain|racket|extorsion|fusillade|abattu|balle|kalach|voiture pi[eé]g|explos|assassin|r[eé]seau|trafic|drogue|blanchiment/i],
-  ['justice',        /proc[eè]s|condamn|verdict|cour supr[eê]me|inculp|tribunal|prison|peine|justice|magistrat|juge|accus[eé]|d[eé]tention|extrad|mis en examen|r[eé]clusion|jug[eé]/i],
-  ['enquetes',       /disparition|disparu|enqu[eê]te|non [eé]lucid|cold case|recherche|corps retrouv|myst[eè]re|introuvable/i],
-  ['societe',        /communaut[eé] arabe|arabe|b[eé]douin|statistiques|victimes|soci[eé]t[eé]|pr[eé]vention|ambassade|manifest|record|homicides|alerte|violence/i],
-  ['faits-divers',   /meurtre|homicide|poignard|agression|tu[eé]|couteau|viol|corps|cadavre|mort|bless/i],
-  ['police',         /police|arrestation|interpell|coup de filet|saisie|shin bet|gardes?-fronti[eè]re|op[eé]ration|perquisit|d[eé]mantel/i],
-];
-function classify(title) {
-  for (const [name, re] of THEMES) if (re.test(title)) return name;
-  return 'faits-divers';
-}
-
-async function fetchFeed(url) {
+async function fetchSource(src) {
   const ctrl = new AbortController();
-  const t = setTimeout(() => ctrl.abort(), 7000);
+  const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
   try {
-    const r = await fetch(url, {
+    const r = await fetch(src.url, {
       signal: ctrl.signal,
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; KtavIchoumBot/1.0)' },
+      headers: {
+        'User-Agent': 'KtavIchoumBot/2.0 (+https://ktavichoum.vercel.app)',
+        'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml',
+      },
     });
-    if (!r.ok) return [];
-    return parse(await r.text());
-  } catch (e) { return []; }
-  finally { clearTimeout(t); }
+    if (!r.ok) return { src, ok: false, reason: 'HTTP ' + r.status, items: [] };
+    const items = parse(await r.text());
+    return { src, ok: true, reason: items.length ? 'ok' : 'flux vide', items };
+  } catch (e) {
+    return { src, ok: false, reason: e.name === 'AbortError' ? 'timeout' : String(e.message || e), items: [] };
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
-// Traduction hébreu -> français via l'endpoint gratuit de Google Traduction.
-// Si ça échoue, on garde le titre hébreu (le fil reste alimenté).
-async function translateHe(text) {
-  const ctrl = new AbortController();
-  const t = setTimeout(() => ctrl.abort(), 4500);
-  try {
-    const url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=iw&tl=fr&dt=t&q='
-      + encodeURIComponent(text);
-    const r = await fetch(url, { signal: ctrl.signal, headers: { 'User-Agent': 'Mozilla/5.0' } });
-    if (!r.ok) return null;
-    const data = await r.json();
-    if (!Array.isArray(data) || !Array.isArray(data[0])) return null;
-    const out = data[0].map((s) => (s && s[0]) ? s[0] : '').join('').trim();
-    return out || null;
-  } catch (e) { return null; }
-  finally { clearTimeout(t); }
-}
-
+// --- Handler -----------------------------------------------------------------
 export default async function handler(req, res) {
+  const debug = req?.query?.debug === '1';
+  const cutoff = Date.now() - WINDOW_HOURS * 3600 * 1000;
+
+  // Le fil ne doit jamais être indexé : il est éphémère et non éditorialisé.
+  res.setHeader('X-Robots-Tag', 'noindex, noarchive, nosnippet');
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+
   try {
-    const byDate = (a, b) => new Date(b.pubDate || 0) - new Date(a.pubDate || 0);
+    const results = await Promise.all(SOURCES.map(fetchSource));
 
-    const [frRaw, ilRaw] = await Promise.all([
-      fetchFeed(feedUrl(FR_QUERY, 'fr', 'FR:fr')),
-      fetchFeed(feedUrl(IL_QUERY, 'iw', 'IL:iw')),
-    ]);
-
-    // Presse israélienne, la plus fraîche d'abord (titres hébreux conservés).
-    const ilSorted = ilRaw.sort(byDate);
-    const il = ilSorted.slice(0, 20);
-
-    // On traduit les 28 dépêches israéliennes les plus fraîches en français,
-    // pour les injecter dans le fil principal.
-    const ilTop = ilSorted.slice(0, 28);
-    const ilTranslated = await Promise.all(ilTop.map(async (it) => {
-      const fr = await translateHe(it.title);
-      const title = fr || it.title;
-      return { title, link: it.link, source: it.source, pubDate: it.pubDate, theme: classify(title) };
-    }));
-
-    // Dépêches francophones classiques.
-    const frClassic = frRaw.map((it) => ({ ...it, theme: classify(it.title) }));
-
-    // Fusion FR classiques + presse israélienne traduite, dédoublonnage, tri par date.
     const seen = new Set();
-    const merged = [];
-    for (const it of [...ilTranslated, ...frClassic]) {
-      const k = (it.title || '').slice(0, 55).toLowerCase();
-      if (!k || seen.has(k)) continue;
-      seen.add(k);
-      merged.push(it);
-    }
-    merged.sort(byDate);
+    const items = [];
+    const stats = { recus: 0, horsFenetre: 0, horsSujet: 0, exclus: 0, quarantaineMineurs: 0, doublons: 0 };
 
-    res.setHeader('Cache-Control', 's-maxage=600, stale-while-revalidate=1800');
-    res.setHeader('Content-Type', 'application/json; charset=utf-8');
-    res.status(200).json({
+    for (const { src, items: raw } of results) {
+      for (const it of raw) {
+        stats.recus++;
+
+        const t = new Date(it.pubDate).getTime();
+        if (Number.isNaN(t) || t < cutoff) { stats.horsFenetre++; continue; }
+        if (!RELEVANT.test(it.title))      { stats.horsSujet++; continue; }
+        if (EXCLUDED.test(it.title))       { stats.exclus++; continue; }
+
+        // Quarantaine mineurs — non négociable, aucune exception.
+        if (mentionsMinor(it.title))       { stats.quarantaineMineurs++; continue; }
+
+        const key = it.title.replace(/\W+/g, '').slice(0, 50).toLowerCase();
+        if (seen.has(key)) { stats.doublons++; continue; }
+        seen.add(key);
+
+        items.push({
+          title: it.title,           // titre de l'éditeur, non reformulé
+          link: it.link,             // lien direct vers l'éditeur
+          source: src.name,          // nom fiable, issu de notre configuration
+          lang: src.lang,
+          pubDate: new Date(t).toISOString(),
+        });
+      }
+    }
+
+    items.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+
+    const payload = {
       ok: true,
       updated: new Date().toISOString(),
-      counts: { fr: merged.length, il: il.length },
-      fr: merged.slice(0, 45),
-      il,
-    });
+      fenetre: WINDOW_HOURS + 'h',
+      attribution: "Titres de la presse israélienne, liens vers les éditeurs. Ktav Ichoum n'en est pas l'auteur.",
+      count: Math.min(items.length, MAX_ITEMS),
+      items: items.slice(0, MAX_ITEMS),
+    };
+
+    if (debug) {
+      payload.debug = {
+        stats,
+        sources: results.map((r) => ({
+          id: r.src.id, name: r.src.name, url: r.src.url,
+          ok: r.ok, reason: r.reason, brut: r.items.length,
+        })),
+      };
+    }
+
+    res.setHeader('Cache-Control', 's-maxage=600, stale-while-revalidate=1800');
+    res.status(200).json(payload);
   } catch (e) {
     res.setHeader('Cache-Control', 's-maxage=60');
-    res.status(200).json({ ok: false, error: String(e), fr: [], il: [] });
+    res.status(200).json({ ok: false, error: String(e), items: [] });
   }
 }
