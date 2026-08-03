@@ -1,75 +1,78 @@
-// KTAV ICHOUM — Fil en direct
+// KTAV ICHOUM — Fil en direct (v3)
 // -----------------------------------------------------------------------------
 // Titres de la presse israélienne, repris depuis les flux RSS publiés par les
-// éditeurs eux-mêmes. Aucune reformulation, aucun chapô : titre, source, heure,
-// lien direct vers l'éditeur.
+// éditeurs eux-mêmes. Aucune reformulation : titre, source, heure, lien direct.
 //
-// Principes appliqués :
-//   1. Flux natifs des éditeurs (destinés à la syndication) — pas d'agrégateur tiers
+//   1. Flux natifs des éditeurs — pas d'agrégateur tiers
 //   2. Titres seuls, liens directs vers la source
 //   3. Quarantaine automatique de toute dépêche pouvant concerner un mineur
 //   4. Éphémère : fenêtre de 24 h, aucun archivage, en-tête noindex
 //   5. Attribution explicite côté front
 //
-// Diagnostic : appeler /api/feed?debug=1 pour voir l'état de chaque source.
+// v3 : le tri repose d'abord sur la RUBRIQUE DE L'ÉDITEUR (lisible dans l'URL),
+//      et seulement à défaut sur les mots-clés. Un éditeur qui range un article
+//      dans /crime/ sait mieux que nous de quoi il parle.
+//
+// Diagnostic : /api/feed?debug=1
 // -----------------------------------------------------------------------------
 
-// ⚠️ À VÉRIFIER UNE FOIS AVANT MISE EN LIGNE (voir /api/feed?debug=1).
-// Les URL de flux changent au gré des refontes. Gardez celles qui répondent,
-// supprimez les autres. Une source morte ne casse rien : elle est ignorée.
 const SOURCES = [
-  { id: 'toi-fr',      name: 'Times of Israël',  lang: 'fr', url: 'https://fr.timesofisrael.com/feed/' },
-  { id: 'ynet',        name: 'Ynet',             lang: 'he', url: 'https://www.ynet.co.il/Integration/StoryRss538.xml' },
-  { id: 'israelhayom', name: 'Israel Hayom',     lang: 'he', url: 'https://www.israelhayom.co.il/rss.xml' },
-  { id: 'walla',       name: 'Walla',            lang: 'he', url: 'https://rss.walla.co.il/feed/1' },
-  { id: 'haaretz',     name: 'Haaretz',          lang: 'he', url: 'https://www.haaretz.co.il/srv/rss---news' },
-  { id: 'jpost',       name: 'Jerusalem Post',   lang: 'en', url: 'https://www.jpost.com/rss/rssfeedsisraelnews.aspx' },
+  { id: 'ynet',        name: 'Ynet',           lang: 'he', url: 'https://www.ynet.co.il/Integration/StoryRss538.xml' },
+  { id: 'israelhayom', name: 'Israel Hayom',   lang: 'he', url: 'https://www.israelhayom.co.il/rss.xml' },
+  { id: 'walla',       name: 'Walla',          lang: 'he', url: 'https://rss.walla.co.il/feed/1' },
+  { id: 'jpost',       name: 'Jerusalem Post', lang: 'en', url: 'https://www.jpost.com/rss/rssfeedsisraelnews.aspx' },
+  // Retirés : Times of Israël et Haaretz renvoient HTTP 403 (robots bloqués).
+  // Ce n'est pas une erreur d'URL : leurs serveurs refusent l'accès automatisé.
 ];
 
-const WINDOW_HOURS = 24;   // fenêtre de fraîcheur — rien au-delà
-const MAX_ITEMS    = 40;   // plafond d'affichage
+const WINDOW_HOURS = 24;
+const MAX_ITEMS    = 40;
 const TIMEOUT_MS   = 7000;
 
-// --- Pertinence : la dépêche relève-t-elle du judiciaire ? --------------------
+// --- 1. RUBRIQUE ACCEPTÉE (d'après l'URL) ------------------------------------
+// Si l'éditeur a rangé l'article dans une rubrique judiciaire, on prend.
+const SECTION_OK = /\/(crime|crimes|criminal|crime-in-israel|law|legal|courts?|justice|police|law-and-order|פלילים|פלילי|משפט)(\/|$|\?)/i;
+
+// --- 2. RUBRIQUE REFUSÉE (d'après l'URL) -------------------------------------
+// Rejet immédiat, quel que soit le titre. C'est ce qui élimine les tribunes.
+const SECTION_KO = /\/(opinions?|opinion|blogs?|columns?|editorial|sport|sports|business|finance|markets|economy|tech|technology|digital|health|food|travel|tourism|culture|art|books|movies|tv|celebs|celebrity|fashion|cars|auto|real-estate|realestate|magazine|weather|judaism|jewish-world|lifestyle|science|environment|דעות|ספורט|כלכלה|תרבות|בריאות|אוכל|רכב)(\/|$|\?)/i;
+
+// --- 3. Pertinence par mots-clés (secours, si la rubrique est muette) --------
 const RELEVANT = new RegExp([
-  // hébreu
-  'רצח|הרג|ירי|דקיר|פשע|פלילי|משטרה|מעצר|נעצר|חשוד|נאשם|כתב אישום|גזר דין',
-  'הכרעת דין|בית משפט|שופט|תביעה|פרקליטות|שוד|סחיטה|הלבנת הון|סמים|נשק|גופה',
-  // français
+  'רצח|נרצח|ירי|נורה|דקיר|פשע|פלילי|משטרה|נעצר|מעצר|חשוד|נאשם|כתב אישום|גזר דין',
+  'הכרעת דין|בית משפט|תביעה|פרקליטות|שוד|סחיטה|הלבנת הון|סמים|נשק|גופה|אלימות',
   'meurtre|homicide|assassinat|fusillade|poignard|abattu|police|arrestation|interpell',
-  'enquête|enquete|justice|procès|proces|condamn|inculp|tribunal|juge|crime|gang|mafia',
-  'trafic|agression|disparition|règlement de comptes|reglement de comptes',
-  // anglais
-  'murder|homicide|shooting|stabbing|police|arrest|suspect|indictment|verdict|court',
-  'sentenc|convict|crime|gang|mafia|trafficking|assault',
+  'enquête|enquete|procès|proces|condamn|inculp|tribunal|crime|gang|mafia|trafic',
+  'murder|homicide|shooting|stabbing|police|arrest|suspect|indictment|verdict',
+  'sentenc|convict|crime|gang|mafia|trafficking|assault|manslaughter',
 ].join('|'), 'i');
 
-// --- Exclusions : guerre, géopolitique, militaire ------------------------------
-const EXCLUDED = new RegExp([
-  'עזה|חמאס|חיזבאללה|מלחמה|חטופ|טילים|רקטות|צה"ל|פיגוע|מחבל',
-  'gaza|hamas|hezbollah|hostage|missile|rocket|idf|airstrike|militar|terror',
-  'otage|roquette|frappe|militaire|terroris',
-].join('|'), 'i');
+// --- 4. Exclusions thématiques ----------------------------------------------
+// Guerre et géopolitique
+const EXCL_GUERRE = /עזה|חמאס|חיזבאללה|מלחמה|חטופ|טילים|רקטות|צה"ל|פיגוע|מחבל|gaza|hamas|hezbollah|hostage|missile|rocket|idf|airstrike|militar|terror|otage|roquette|frappe|militaire|terroris|unrwa/i;
 
-// --- QUARANTAINE MINEURS -----------------------------------------------------
-// Toute dépêche susceptible de concerner un mineur est écartée du fil, sans
-// intervention humaine. Art. L. 513-4 CJPM et art. 39 bis loi 1881.
-// Le filtre est volontairement large : un faux positif coûte une dépêche,
-// un faux négatif coûte une infraction.
+// Contentieux administratif et constitutionnel : ce n'est pas du judiciaire pénal
+const EXCL_ADMIN = /בג"?ץ|בגץ|עתירה|עותרים|high court of justice|petition|petitioners|knesset|קואליציה|coalition|תקציב|budget/i;
+
+// Accidents : un mort n'est pas un crime
+const EXCL_ACCIDENT = /תאונ|התהפכ|נהרג בתאונה|טבע|שריפה|accident|crash|collision|drown|fire|road death/i;
+
+// Manifestations et ordre public
+const EXCL_MANIF = /הפגנ|מחאה|מפגינים|חסימת כביש|protest|demonstrat|rally|road block/i;
+
+// --- 5. QUARANTAINE MINEURS --------------------------------------------------
+// Art. L. 513-4 CJPM, art. 39 bis loi 1881. Filtre volontairement large :
+// un faux positif coûte une dépêche, un faux négatif coûte une infraction.
 const MINOR_WORDS = new RegExp([
-  // hébreu
-  'קטין|קטינה|קטינים|נער|נערה|נערים|נערות|ילד|ילדה|ילדים|תלמיד|תלמידה',
+  'קטין|קטינה|קטינים|קטינות|נער|נערה|נערים|נערות|ילד|ילדה|ילדים|תלמיד|תלמידה',
   'בית ספר|תיכון|גן ילדים|בני נוער|עבריינות נוער',
-  // français
   'mineur|mineure|adolescent|adolescente|enfant|collégien|collegien|lycéen|lyceen',
   'écolier|ecolier|élève|eleve|collège|college|lycée|lycee|école|ecole',
-  // anglais
   'minor|teen|teenager|juvenile|schoolboy|schoolgirl|pupil|high school|kindergarten',
 ].join('|'), 'i');
 
-// Âges : « בן 17 », « âgé de 16 ans », « 15-year-old », « aged 17 »…
 const AGE_PATTERNS = [
-  /\b(?:בן|בת)\s*(\d{1,2})\b/g,
+  /\b(?:בן|בת)\s*(?:ה-)?\s*(\d{1,2})\b/g,
   /\b(?:âg|ag)[ée]e?\s+de\s+(\d{1,2})\s*ans?\b/gi,
   /\b(\d{1,2})\s*ans?\b/g,
   /\b(\d{1,2})[-\s]year[-\s]old\b/gi,
@@ -136,7 +139,7 @@ async function fetchSource(src) {
     const r = await fetch(src.url, {
       signal: ctrl.signal,
       headers: {
-        'User-Agent': 'KtavIchoumBot/2.0 (+https://ktavichoum.vercel.app)',
+        'User-Agent': 'KtavIchoumBot/3.0 (+https://ktavichoum.vercel.app)',
         'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml',
       },
     });
@@ -155,7 +158,6 @@ export default async function handler(req, res) {
   const debug = req?.query?.debug === '1';
   const cutoff = Date.now() - WINDOW_HOURS * 3600 * 1000;
 
-  // Le fil ne doit jamais être indexé : il est éphémère et non éditorialisé.
   res.setHeader('X-Robots-Tag', 'noindex, noarchive, nosnippet');
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
 
@@ -164,30 +166,49 @@ export default async function handler(req, res) {
 
     const seen = new Set();
     const items = [];
-    const stats = { recus: 0, horsFenetre: 0, horsSujet: 0, exclus: 0, quarantaineMineurs: 0, doublons: 0 };
+    const stats = {
+      recus: 0, horsFenetre: 0, rubriqueRefusee: 0, horsSujet: 0,
+      guerre: 0, admin: 0, accident: 0, manifestation: 0,
+      quarantaineMineurs: 0, doublons: 0,
+    };
+    const parSource = {};
 
     for (const { src, items: raw } of results) {
+      parSource[src.id] = { brut: raw.length, retenus: 0 };
+
       for (const it of raw) {
         stats.recus++;
 
         const t = new Date(it.pubDate).getTime();
         if (Number.isNaN(t) || t < cutoff) { stats.horsFenetre++; continue; }
-        if (!RELEVANT.test(it.title))      { stats.horsSujet++; continue; }
-        if (EXCLUDED.test(it.title))       { stats.exclus++; continue; }
 
-        // Quarantaine mineurs — non négociable, aucune exception.
-        if (mentionsMinor(it.title))       { stats.quarantaineMineurs++; continue; }
+        // Rubrique refusée par l'éditeur → rejet immédiat, titre non examiné
+        if (SECTION_KO.test(it.link)) { stats.rubriqueRefusee++; continue; }
+
+        // Rubrique judiciaire de l'éditeur → admis d'office ; sinon, mots-clés
+        const parRubrique = SECTION_OK.test(it.link);
+        if (!parRubrique && !RELEVANT.test(it.title)) { stats.horsSujet++; continue; }
+
+        if (EXCL_GUERRE.test(it.title))   { stats.guerre++; continue; }
+        if (EXCL_ADMIN.test(it.title))    { stats.admin++; continue; }
+        if (EXCL_ACCIDENT.test(it.title)) { stats.accident++; continue; }
+        if (EXCL_MANIF.test(it.title))    { stats.manifestation++; continue; }
+
+        // Quarantaine mineurs — aucune exception
+        if (mentionsMinor(it.title)) { stats.quarantaineMineurs++; continue; }
 
         const key = it.title.replace(/\W+/g, '').slice(0, 50).toLowerCase();
         if (seen.has(key)) { stats.doublons++; continue; }
         seen.add(key);
 
+        parSource[src.id].retenus++;
         items.push({
-          title: it.title,           // titre de l'éditeur, non reformulé
-          link: it.link,             // lien direct vers l'éditeur
-          source: src.name,          // nom fiable, issu de notre configuration
+          title: it.title,
+          link: it.link,
+          source: src.name,
           lang: src.lang,
           pubDate: new Date(t).toISOString(),
+          viaRubrique: parRubrique,   // true = classé judiciaire par l'éditeur
         });
       }
     }
@@ -208,7 +229,9 @@ export default async function handler(req, res) {
         stats,
         sources: results.map((r) => ({
           id: r.src.id, name: r.src.name, url: r.src.url,
-          ok: r.ok, reason: r.reason, brut: r.items.length,
+          ok: r.ok, reason: r.reason,
+          brut: parSource[r.src.id]?.brut ?? 0,
+          retenus: parSource[r.src.id]?.retenus ?? 0,
         })),
       };
     }
