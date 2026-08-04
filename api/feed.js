@@ -17,12 +17,12 @@
 // -----------------------------------------------------------------------------
 
 const SOURCES = [
-  { id: 'toi-fr',      name: 'Times of Israël', lang: 'fr', url: 'https://fr.timesofisrael.com/feed/', browser: true },
-  { id: 'i24-fr',      name: 'i24NEWS',         lang: 'fr', url: 'https://www.i24news.tv/fr/rss',      browser: true },
-  { id: 'ynet',        name: 'Ynet',            lang: 'he', url: 'https://www.ynet.co.il/Integration/StoryRss538.xml' },
-  { id: 'israelhayom', name: 'Israel Hayom',    lang: 'he', url: 'https://www.israelhayom.co.il/rss.xml' },
-  { id: 'walla',       name: 'Walla',           lang: 'he', url: 'https://rss.walla.co.il/feed/1' },
-  { id: 'jpost',       name: 'Jerusalem Post',  lang: 'en', url: 'https://www.jpost.com/rss/rssfeedsisraelnews.aspx' },
+  { id: 'ynet',        name: 'Ynet',           lang: 'he', url: 'https://www.ynet.co.il/Integration/StoryRss538.xml' },
+  { id: 'israelhayom', name: 'Israel Hayom',   lang: 'he', url: 'https://www.israelhayom.co.il/rss.xml' },
+  { id: 'walla',       name: 'Walla',          lang: 'he', url: 'https://rss.walla.co.il/feed/1' },
+  { id: 'jpost',       name: 'Jerusalem Post', lang: 'en', url: 'https://www.jpost.com/rss/rssfeedsisraelnews.aspx' },
+  // Times of Israel (403 malgre UA navigateur) et i24 (flux vide) : inexploitables.
+  // Aucune source francophone disponible : le fil est traduit, cf. traduire().
 ];
 
 const WINDOW_HOURS = 24;
@@ -35,7 +35,7 @@ const SECTION_OK = /\/(crime|crimes|criminal|crime-in-israel|law|legal|courts?|j
 
 // --- 2. RUBRIQUE REFUSÉE (d'après l'URL) -------------------------------------
 // Rejet immédiat, quel que soit le titre. C'est ce qui élimine les tribunes.
-const SECTION_KO = /\/(opinions?|opinion|blogs?|columns?|editorial|sport|sports|business|finance|markets|economy|tech|technology|digital|health|food|travel|tourism|culture|art|books|movies|tv|celebs|celebrity|fashion|cars|auto|real-estate|realestate|magazine|weather|judaism|jewish-world|lifestyle|science|environment|דעות|ספורט|כלכלה|תרבות|בריאות|אוכל|רכב)(\/|$|\?)/i;
+const SECTION_KO = /\/(opinions?|opinion|blogs?|columns?|editorial|sport|sports|business|finance|markets|economy|tech|technology|digital|health|food|travel|tourism|culture|art|books|movies|tv|celebs|celebrity|fashion|cars|auto|real-estate|realestate|magazine|weather|judaism|jewish-world|lifestyle|science|environment|world-news|world|usa|us-news|international|abroad|europe|חו"ל|עולם|דעות|ספורט|כלכלה|תרבות|בריאות|אוכל|רכב)(\/|$|\?)/i;
 
 // --- 3. Pertinence par mots-clés (secours, si la rubrique est muette) --------
 const RELEVANT = new RegExp([
@@ -55,7 +55,7 @@ const EXCL_GUERRE = /עזה|חמאס|חיזבאללה|מלחמה|חטופ|טיל
 const EXCL_ADMIN = /בג"?ץ|בגץ|עתירה|עותרים|high court of justice|petition|petitioners|knesset|קואליציה|coalition|תקציב|budget/i;
 
 // Accidents : un mort n'est pas un crime
-const EXCL_ACCIDENT = /תאונ|התהפכ|נהרג בתאונה|טבע|שריפה|accident|crash|collision|drown|fire|road death/i;
+const EXCL_ACCIDENT = /תאונ|התהפכ|נהרג בתאונה|טבע למוות|שריפה|נסחפ|חולצ|חילוץ|הצלה|כבאות|מד"א|accident|crash|collision|drown|rescue|fire|road death/i;
 
 // Manifestations et ordre public
 const EXCL_MANIF = /הפגנ|מחאה|מפגינים|חסימת כביש|protest|demonstrat|rally|road block/i;
