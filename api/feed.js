@@ -17,12 +17,12 @@
 // -----------------------------------------------------------------------------
 
 const SOURCES = [
-  { id: 'ynet',        name: 'Ynet',           lang: 'he', url: 'https://www.ynet.co.il/Integration/StoryRss538.xml' },
-  { id: 'israelhayom', name: 'Israel Hayom',   lang: 'he', url: 'https://www.israelhayom.co.il/rss.xml' },
-  { id: 'walla',       name: 'Walla',          lang: 'he', url: 'https://rss.walla.co.il/feed/1' },
-  { id: 'jpost',       name: 'Jerusalem Post', lang: 'en', url: 'https://www.jpost.com/rss/rssfeedsisraelnews.aspx' },
-  // Retirés : Times of Israël et Haaretz renvoient HTTP 403 (robots bloqués).
-  // Ce n'est pas une erreur d'URL : leurs serveurs refusent l'accès automatisé.
+  { id: 'toi-fr',      name: 'Times of Israël', lang: 'fr', url: 'https://fr.timesofisrael.com/feed/', browser: true },
+  { id: 'i24-fr',      name: 'i24NEWS',         lang: 'fr', url: 'https://www.i24news.tv/fr/rss',      browser: true },
+  { id: 'ynet',        name: 'Ynet',            lang: 'he', url: 'https://www.ynet.co.il/Integration/StoryRss538.xml' },
+  { id: 'israelhayom', name: 'Israel Hayom',    lang: 'he', url: 'https://www.israelhayom.co.il/rss.xml' },
+  { id: 'walla',       name: 'Walla',           lang: 'he', url: 'https://rss.walla.co.il/feed/1' },
+  { id: 'jpost',       name: 'Jerusalem Post',  lang: 'en', url: 'https://www.jpost.com/rss/rssfeedsisraelnews.aspx' },
 ];
 
 const WINDOW_HOURS = 24;
@@ -150,8 +150,13 @@ async function fetchSource(src) {
     const r = await fetch(src.url, {
       signal: ctrl.signal,
       headers: {
-        'User-Agent': 'KtavIchoumBot/3.0 (+https://ktavichoum.vercel.app)',
-        'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml',
+        // Certains editeurs (Cloudflare) refusent les UA de robot sur des flux
+        // pourtant publics. On presente alors un UA de navigateur standard.
+        'User-Agent': src.browser
+          ? 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36'
+          : 'KtavIchoumBot/4.0 (+https://ktavichoum.vercel.app)',
+        'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml, */*',
+        'Accept-Language': 'fr,he,en;q=0.8',
       },
     });
     if (!r.ok) return { src, ok: false, reason: 'HTTP ' + r.status, items: [] };
@@ -161,6 +166,52 @@ async function fetchSource(src) {
     return { src, ok: false, reason: e.name === 'AbortError' ? 'timeout' : String(e.message || e), items: [] };
   } finally {
     clearTimeout(timer);
+  }
+}
+
+
+// --- Traduction des titres en francais ---------------------------------------
+// Necessite la variable d'environnement ANTHROPIC_API_KEY dans Vercel.
+// Sans cle, le fil fonctionne : les titres restent dans leur langue d'origine.
+async function traduire(items) {
+  const key = process.env.ANTHROPIC_API_KEY;
+  const aTraduire = items.filter((x) => x.lang !== 'fr');
+  if (!key || !aTraduire.length) return { traduits: 0, raison: key ? 'rien a traduire' : 'ANTHROPIC_API_KEY absente' };
+
+  try {
+    const liste = aTraduire.map((x, i) => `${i}. ${x.title}`).join('\n');
+    const r = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': key,
+        'anthropic-version': '2023-06-01',
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 2000,
+        system: "Tu traduis en francais des titres de presse judiciaire israelienne. Registre sobre, factuel, sans sensationnalisme. Conserve le vocabulaire de la presomption d'innocence (suspecte, mis en cause, presume). Ne traduis pas les noms propres. Reponds UNIQUEMENT par un tableau JSON de chaines, dans l'ordre, sans preambule ni balises de code.",
+        messages: [{ role: 'user', content: liste }],
+      }),
+    });
+    if (!r.ok) return { traduits: 0, raison: 'API HTTP ' + r.status };
+
+    const data = await r.json();
+    const brut = (data.content || []).map((b) => b.text || '').join('').replace(/```json|```/g, '').trim();
+    const tab = JSON.parse(brut);
+    if (!Array.isArray(tab)) return { traduits: 0, raison: 'reponse inattendue' };
+
+    let n = 0;
+    aTraduire.forEach((x, i) => {
+      if (typeof tab[i] === 'string' && tab[i].trim()) {
+        x.titleOrig = x.title;
+        x.title = tab[i].trim();
+        n++;
+      }
+    });
+    return { traduits: n, raison: 'ok' };
+  } catch (e) {
+    return { traduits: 0, raison: String(e.message || e) };
   }
 }
 
@@ -227,6 +278,9 @@ export default async function handler(req, res) {
 
     items.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
 
+    // Traduction en francais des titres hebreux et anglais retenus
+    const trad = await traduire(items.slice(0, MAX_ITEMS));
+
     const payload = {
       ok: true,
       updated: new Date().toISOString(),
@@ -242,6 +296,7 @@ export default async function handler(req, res) {
     if (debug) {
       payload.debug = {
         stats,
+        traduction: trad,
         sources: results.map((r) => ({
           id: r.src.id, name: r.src.name, url: r.src.url,
           ok: r.ok, reason: r.reason,
