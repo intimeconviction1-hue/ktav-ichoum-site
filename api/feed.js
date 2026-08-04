@@ -92,6 +92,17 @@ function mentionsMinor(text) {
   return false;
 }
 
+// --- 6. Rubrique du site (pour l'affichage par thème) ------------------------
+function theme(title, link) {
+  const s = title + ' ' + link;
+  if (/מאפיה|פשיעה מאורגנת|ארגון פשיעה|חיסול|סחיטה|הלבנת הון|mafia|organized crime|crime family|extortion|money launder/i.test(s)) return 'crime-organise';
+  if (/גזר דין|הכרעת דין|כתב אישום|בית משפט|הורשע|זוכה|נדון ל|פרקליטות|verdict|sentenc|convict|acquit|indict|court|prosecut|trial/i.test(s)) return 'justice';
+  if (/משטרה|נעצר|מעצר|שוטר|להב 433|ימ"ר|police|arrest|detain|officer|lahav/i.test(s)) return 'police';
+  if (/חקירה|תעלומה|נעדר|תיק סגור|enquête|investigation|cold case|missing|mystery/i.test(s)) return 'enquetes';
+  if (/אלימות במשפחה|התעללות|הטרדה|abuse|domestic|harassment|neglect/i.test(s)) return 'societe';
+  return 'faits-divers';
+}
+
 // --- Parsing RSS + Atom ------------------------------------------------------
 function decode(s = '') {
   return s
@@ -207,6 +218,7 @@ export default async function handler(req, res) {
           link: it.link,
           source: src.name,
           lang: src.lang,
+          theme: theme(it.title, it.link),
           pubDate: new Date(t).toISOString(),
           viaRubrique: parRubrique,   // true = classé judiciaire par l'éditeur
         });
@@ -221,7 +233,10 @@ export default async function handler(req, res) {
       fenetre: WINDOW_HOURS + 'h',
       attribution: "Titres de la presse israélienne, liens vers les éditeurs. Ktav Ichoum n'en est pas l'auteur.",
       count: Math.min(items.length, MAX_ITEMS),
-      items: items.slice(0, MAX_ITEMS),
+      // Format attendu par le front : fr = liste principale, il = presse hébraïque
+      fr: items.slice(0, MAX_ITEMS),
+      il: items.filter((x) => x.lang === 'he').slice(0, 15),
+      items: items.slice(0, MAX_ITEMS),   // alias
     };
 
     if (debug) {
@@ -240,6 +255,6 @@ export default async function handler(req, res) {
     res.status(200).json(payload);
   } catch (e) {
     res.setHeader('Cache-Control', 's-maxage=60');
-    res.status(200).json({ ok: false, error: String(e), items: [] });
+    res.status(200).json({ ok: false, error: String(e), fr: [], il: [], items: [] });
   }
 }
