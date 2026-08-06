@@ -949,3 +949,7 @@ blockquote.pull cite{display:block; font-family:var(--ff-sans); font-weight:500;
 
 /* Une */
 .hero-img .ph{background-image:url('./covers/faits-divers.svg')}
+/* La une : fond neutre, sans texte, pour ne pas concurrencer le titre */
+.hero-img .ph{background-image:url('./covers/fond.svg')}
+.hero .ph,
+.lead-card .ph{background-image:url('./covers/fond.svg')}
