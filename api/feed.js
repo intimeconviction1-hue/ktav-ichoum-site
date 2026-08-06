@@ -184,19 +184,29 @@ async function fetchSource(src) {
 }
 
 
-// --- Traduction des titres en francais ---------------------------------------
-// Necessite la variable d'environnement ANTHROPIC_API_KEY dans Vercel.
-// Sans cle, le fil fonctionne : les titres restent dans leur langue d'origine.
-async function traduire(items) {
+// --- Traduction + qualification mineurs --------------------------------------
+// Un seul appel fait deux choses : traduire le titre en francais, et dire si un
+// mineur y est protagoniste (victime, temoin ou mis en cause).
+//
+// Le filtre par mots-cles ne sert plus qu'a lever un SOUPCON. C'est le modele
+// qui tranche : il distingue « un homme de 57 ans » d'« une fillette de 8 ans ».
+//
+// Regle de securite : en l'absence de cle, en cas d'erreur, ou au moindre doute,
+// la depeche soupconnee reste ecartee. Le systeme echoue toujours du cote
+// protecteur — art. 39 bis et 39 quinquies de la loi du 29 juillet 1881.
+async function traduireEtQualifier(retenus, suspects) {
   const key = process.env.ANTHROPIC_API_KEY;
-  const aTraduire = items.filter((x) => x.lang !== 'fr');
+
   if (key && /[^\x20-\x7E]/.test(key)) {
-    return { traduits: 0, raison: 'ANTHROPIC_API_KEY contient un caractere non-ASCII (souvent un tiret long — introduit par un correcteur automatique). Ressaisir la cle dans Vercel.' };
+    return { traduits: 0, reintegres: 0, raison: 'ANTHROPIC_API_KEY contient un caractere non-ASCII. Ressaisir la cle dans Vercel.' };
   }
-  if (!key || !aTraduire.length) return { traduits: 0, raison: key ? 'rien a traduire' : 'ANTHROPIC_API_KEY absente' };
+  if (!key) return { traduits: 0, reintegres: 0, raison: 'ANTHROPIC_API_KEY absente — suspects maintenus en quarantaine' };
+
+  const tous = [...retenus, ...suspects];
+  if (!tous.length) return { traduits: 0, reintegres: 0, raison: 'rien a traiter' };
 
   try {
-    const liste = aTraduire.map((x, i) => `${i}. ${x.title}`).join('\n');
+    const liste = tous.map((x, i) => `${i}. ${x.title}`).join('\n');
     const r = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -206,29 +216,55 @@ async function traduire(items) {
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
-        max_tokens: 2000,
-        system: "Tu traduis en francais des titres de presse judiciaire israelienne. Registre sobre, factuel, sans sensationnalisme. Conserve le vocabulaire de la presomption d'innocence (suspecte, mis en cause, presume). Ne traduis pas les noms propres. Reponds UNIQUEMENT par un tableau JSON de chaines, dans l'ordre, sans preambule ni balises de code.",
+        max_tokens: 4000,
+        system: [
+          "Tu traites des titres de presse judiciaire israelienne pour un media francophone.",
+          "Pour CHAQUE titre, tu produis deux informations :",
+          "1) fr : la traduction en francais. Registre sobre et factuel, sans sensationnalisme.",
+          "   Conserve le vocabulaire de la presomption d'innocence (suspecte, mis en cause, presume).",
+          "   Ne traduis pas les noms propres.",
+          "2) mineur : true si une personne de moins de 18 ans est protagoniste du fait relate,",
+          "   que ce soit comme victime, temoin ou mis en cause. true egalement pour les nourrissons,",
+          "   les eleves et les enfants en creche ou a l'ecole.",
+          "   false si les ages ou mots cites ne concernent que des adultes.",
+          "   Exemple : « un homme de 57 ans abattu » = false. « fillettes de 8 et 10 ans agressees » = true.",
+          "   En cas de doute, reponds true.",
+          "Reponds UNIQUEMENT par un tableau JSON d'objets {\"i\":numero,\"fr\":\"...\",\"mineur\":true|false},",
+          "dans l'ordre, sans preambule ni balises de code.",
+        ].join(' '),
         messages: [{ role: 'user', content: liste }],
       }),
     });
-    if (!r.ok) return { traduits: 0, raison: 'API HTTP ' + r.status };
+    if (!r.ok) return { traduits: 0, reintegres: 0, raison: 'API HTTP ' + r.status };
 
     const data = await r.json();
     const brut = (data.content || []).map((b) => b.text || '').join('').replace(/```json|```/g, '').trim();
     const tab = JSON.parse(brut);
-    if (!Array.isArray(tab)) return { traduits: 0, raison: 'reponse inattendue' };
+    if (!Array.isArray(tab)) return { traduits: 0, reintegres: 0, raison: 'reponse inattendue' };
 
-    let n = 0;
-    aTraduire.forEach((x, i) => {
-      if (typeof tab[i] === 'string' && tab[i].trim()) {
+    let traduits = 0, reintegres = 0;
+    const parIndex = new Map(tab.map((o) => [Number(o.i), o]));
+
+    tous.forEach((x, i) => {
+      const o = parIndex.get(i);
+      if (!o) return;
+      if (typeof o.fr === 'string' && o.fr.trim()) {
         x.titleOrig = x.title;
-        x.title = tab[i].trim();
-        n++;
+        x.title = o.fr.trim();
+        traduits++;
+      }
+      // Un suspect n'est reintegre que si le modele repond explicitement false
+      if (x.suspectMineur && o.mineur === false) {
+        delete x.suspectMineur;
+        x.qualifie = true;
+        retenus.push(x);
+        reintegres++;
       }
     });
-    return { traduits: n, raison: 'ok' };
+
+    return { traduits, reintegres, suspectsExamines: suspects.length, raison: 'ok' };
   } catch (e) {
-    return { traduits: 0, raison: String(e.message || e) };
+    return { traduits: 0, reintegres: 0, raison: String(e.message || e) };
   }
 }
 
@@ -245,6 +281,7 @@ export default async function handler(req, res) {
 
     const seen = new Set();
     const items = [];
+    const suspects = [];   // soupcon de mineur, en attente de qualification
     const stats = {
       recus: 0, horsFenetre: 0, rubriqueRefusee: 0, horsSujet: 0,
       guerre: 0, admin: 0, accident: 0, manifestation: 0,
@@ -273,15 +310,16 @@ export default async function handler(req, res) {
         if (EXCL_ACCIDENT.test(it.title)) { stats.accident++; continue; }
         if (EXCL_MANIF.test(it.title))    { stats.manifestation++; continue; }
 
-        // Quarantaine mineurs — aucune exception
-        if (mentionsMinor(it.title)) { stats.quarantaineMineurs++; continue; }
+        // Soupcon de mineur : mis de cote, tranche plus bas par le modele
+        const soupcon = mentionsMinor(it.title);
 
         const key = it.title.replace(/\W+/g, '').slice(0, 50).toLowerCase();
         if (seen.has(key)) { stats.doublons++; continue; }
         seen.add(key);
 
         parSource[src.id].retenus++;
-        items.push({
+        (soupcon ? suspects : items).push({
+          suspectMineur: soupcon || undefined,
           title: it.title,
           link: it.link,
           source: src.name,
@@ -293,10 +331,12 @@ export default async function handler(req, res) {
       }
     }
 
-    items.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+    // Le modele traduit et tranche les soupcons ; les suspects non leves
+    // restent ecartes. items est complete par reintegration.
+    const trad = await traduireEtQualifier(items, suspects.slice(0, 20));
+    stats.quarantaineMineurs = suspects.length - (trad.reintegres || 0);
 
-    // Traduction en francais des titres hebreux et anglais retenus
-    const trad = await traduire(items.slice(0, MAX_ITEMS));
+    items.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
 
     const payload = {
       ok: true,
