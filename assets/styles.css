@@ -620,42 +620,42 @@ blockquote.pull cite{display:block; font-family:var(--ff-sans); font-weight:500;
 /* ---- PHOTOS : vraies images en duotone (rouge/noir), fiables ---- */
 .ph{background-color:#141414; background-size:cover; background-position:center; background-repeat:no-repeat}
 .ph--red{
-  background-image:linear-gradient(150deg,rgba(150,14,24,.86),rgba(28,6,8,.92)),url('https://picsum.photos/seed/ki-crime-red/900/600?grayscale');
+  background-image:linear-gradient(150deg,rgba(150,14,24,.86),rgba(28,6,8,.92)),url('./covers/faits-divers.svg');
   background-blend-mode:multiply,normal;}
 .ph--slate{
-  background-image:linear-gradient(150deg,rgba(18,30,44,.84),rgba(8,12,18,.92)),url('https://picsum.photos/seed/ki-city-slate/900/600?grayscale');
+  background-image:linear-gradient(150deg,rgba(18,30,44,.84),rgba(8,12,18,.92)),url('./covers/societe.svg');
   background-blend-mode:multiply,normal;}
 .ph--night{
-  background-image:linear-gradient(150deg,rgba(20,16,30,.86),rgba(6,5,10,.94)),url('https://picsum.photos/seed/ki-night-dark/900/600?grayscale');
+  background-image:linear-gradient(150deg,rgba(20,16,30,.86),rgba(6,5,10,.94)),url('./covers/enquetes.svg');
   background-blend-mode:multiply,normal;}
 .ph--olive{
-  background-image:linear-gradient(150deg,rgba(40,44,20,.84),rgba(12,14,8,.92)),url('https://picsum.photos/seed/ki-field-olive/900/600?grayscale');
+  background-image:linear-gradient(150deg,rgba(40,44,20,.84),rgba(12,14,8,.92)),url('./covers/faits-divers.svg');
   background-blend-mode:multiply,normal;}
 .ph--sand{
-  background-image:linear-gradient(150deg,rgba(70,52,20,.82),rgba(20,14,8,.9)),url('https://picsum.photos/seed/ki-street-sand/900/600?grayscale');
+  background-image:linear-gradient(150deg,rgba(70,52,20,.82),rgba(20,14,8,.9)),url('./covers/faits-divers.svg');
   background-blend-mode:multiply,normal;}
 /* variantes d'images pour éviter la répétition (par position) */
-.side-card:nth-child(2) .ph{background-image:linear-gradient(150deg,rgba(150,14,24,.84),rgba(20,6,8,.92)),url('https://picsum.photos/seed/ki-b2/700/700?grayscale'); background-blend-mode:multiply,normal}
-.side-card:nth-child(3) .ph{background-image:linear-gradient(150deg,rgba(20,16,30,.86),rgba(6,5,10,.94)),url('https://picsum.photos/seed/ki-b3/700/700?grayscale'); background-blend-mode:multiply,normal}
-.grid-arts .gcard:nth-child(3n+1) .ph{background-image:linear-gradient(150deg,rgba(150,14,24,.84),rgba(20,6,8,.92)),url('https://picsum.photos/seed/ki-g1/900/600?grayscale'); background-blend-mode:multiply,normal}
-.grid-arts .gcard:nth-child(3n+2) .ph{background-image:linear-gradient(150deg,rgba(18,30,44,.84),rgba(8,12,18,.92)),url('https://picsum.photos/seed/ki-g2/900/600?grayscale'); background-blend-mode:multiply,normal}
-.grid-arts .gcard:nth-child(3n+3) .ph{background-image:linear-gradient(150deg,rgba(20,16,30,.86),rgba(6,5,10,.94)),url('https://picsum.photos/seed/ki-g3/900/600?grayscale'); background-blend-mode:multiply,normal}
+.side-card:nth-child(2) .ph{background-image:linear-gradient(150deg,rgba(150,14,24,.84),rgba(20,6,8,.92)),url('./covers/faits-divers.svg'); background-blend-mode:multiply,normal}
+.side-card:nth-child(3) .ph{background-image:linear-gradient(150deg,rgba(20,16,30,.86),rgba(6,5,10,.94)),url('./covers/faits-divers.svg'); background-blend-mode:multiply,normal}
+.grid-arts .gcard:nth-child(3n+1) .ph{background-image:linear-gradient(150deg,rgba(150,14,24,.84),rgba(20,6,8,.92)),url('./covers/faits-divers.svg'); background-blend-mode:multiply,normal}
+.grid-arts .gcard:nth-child(3n+2) .ph{background-image:linear-gradient(150deg,rgba(18,30,44,.84),rgba(8,12,18,.92)),url('./covers/faits-divers.svg'); background-blend-mode:multiply,normal}
+.grid-arts .gcard:nth-child(3n+3) .ph{background-image:linear-gradient(150deg,rgba(20,16,30,.86),rgba(6,5,10,.94)),url('./covers/faits-divers.svg'); background-blend-mode:multiply,normal}
 /* garde la trame légère par-dessus */
 .ph::after{opacity:.28}
 
 /* ---- PHOTOS v2 : duotone robuste (repli = dégradé, jamais de vide) ---- */
 .ph{background-color:#171319; background-size:cover; background-position:center; background-repeat:no-repeat}
-.ph--red{background-image:url('https://picsum.photos/seed/ki-red3/900/600?grayscale'),linear-gradient(135deg,#3a1220,#93182b 55%,#170709); background-blend-mode:luminosity}
-.ph--slate{background-image:url('https://picsum.photos/seed/ki-slate3/900/600?grayscale'),linear-gradient(135deg,#132232,#2f4356 55%,#0a0e13); background-blend-mode:luminosity}
-.ph--night{background-image:url('https://picsum.photos/seed/ki-night3/900/600?grayscale'),linear-gradient(135deg,#181526,#332c4a 55%,#08070d); background-blend-mode:luminosity}
-.ph--olive{background-image:url('https://picsum.photos/seed/ki-olive3/900/600?grayscale'),linear-gradient(135deg,#20280f,#42541f 55%,#0b0d08); background-blend-mode:luminosity}
-.ph--sand{background-image:url('https://picsum.photos/seed/ki-sand3/900/600?grayscale'),linear-gradient(135deg,#3a2913,#77602c 55%,#160f08); background-blend-mode:luminosity}
-.side-card:nth-child(2) .ph{background-image:url('https://picsum.photos/seed/ki-b2/700/700?grayscale'),linear-gradient(135deg,#3a1220,#93182b 55%,#170709); background-blend-mode:luminosity}
-.side-card:nth-child(3) .ph{background-image:url('https://picsum.photos/seed/ki-b3/700/700?grayscale'),linear-gradient(135deg,#181526,#332c4a 55%,#08070d); background-blend-mode:luminosity}
-.grid-arts .gcard:nth-child(3n+1) .ph{background-image:url('https://picsum.photos/seed/ki-g1/900/600?grayscale'),linear-gradient(135deg,#3a1220,#93182b 55%,#170709); background-blend-mode:luminosity}
-.grid-arts .gcard:nth-child(3n+2) .ph{background-image:url('https://picsum.photos/seed/ki-g2/900/600?grayscale'),linear-gradient(135deg,#132232,#2f4356 55%,#0a0e13); background-blend-mode:luminosity}
-.grid-arts .gcard:nth-child(3n+3) .ph{background-image:url('https://picsum.photos/seed/ki-g3/900/600?grayscale'),linear-gradient(135deg,#181526,#332c4a 55%,#08070d); background-blend-mode:luminosity}
-.hero-img .ph{background-image:url('https://picsum.photos/seed/ki-hero/1200/700?grayscale'),linear-gradient(135deg,#181526,#332c4a 55%,#08070d); background-blend-mode:luminosity}
+.ph--red{background-image:url('./covers/faits-divers.svg'),linear-gradient(135deg,#3a1220,#93182b 55%,#170709); background-blend-mode:luminosity}
+.ph--slate{background-image:url('./covers/faits-divers.svg'),linear-gradient(135deg,#132232,#2f4356 55%,#0a0e13); background-blend-mode:luminosity}
+.ph--night{background-image:url('./covers/enquetes.svg'),linear-gradient(135deg,#181526,#332c4a 55%,#08070d); background-blend-mode:luminosity}
+.ph--olive{background-image:url('./covers/faits-divers.svg'),linear-gradient(135deg,#20280f,#42541f 55%,#0b0d08); background-blend-mode:luminosity}
+.ph--sand{background-image:url('./covers/faits-divers.svg'),linear-gradient(135deg,#3a2913,#77602c 55%,#160f08); background-blend-mode:luminosity}
+.side-card:nth-child(2) .ph{background-image:url('./covers/faits-divers.svg'),linear-gradient(135deg,#3a1220,#93182b 55%,#170709); background-blend-mode:luminosity}
+.side-card:nth-child(3) .ph{background-image:url('./covers/faits-divers.svg'),linear-gradient(135deg,#181526,#332c4a 55%,#08070d); background-blend-mode:luminosity}
+.grid-arts .gcard:nth-child(3n+1) .ph{background-image:url('./covers/faits-divers.svg'),linear-gradient(135deg,#3a1220,#93182b 55%,#170709); background-blend-mode:luminosity}
+.grid-arts .gcard:nth-child(3n+2) .ph{background-image:url('./covers/faits-divers.svg'),linear-gradient(135deg,#132232,#2f4356 55%,#0a0e13); background-blend-mode:luminosity}
+.grid-arts .gcard:nth-child(3n+3) .ph{background-image:url('./covers/faits-divers.svg'),linear-gradient(135deg,#181526,#332c4a 55%,#08070d); background-blend-mode:luminosity}
+.hero-img .ph{background-image:url('./covers/faits-divers.svg'),linear-gradient(135deg,#181526,#332c4a 55%,#08070d); background-blend-mode:luminosity}
 .ph::after{opacity:.22}
 
 /* ============================================================
@@ -674,21 +674,21 @@ blockquote.pull cite{display:block; font-family:var(--ff-sans); font-weight:500;
 /* ---- PHOTOS : couleur + mots-clés thématiques (repli = dégradé) ---- */
 .ph{background-color:#cfcac2; background-size:cover; background-position:center; background-repeat:no-repeat}
 .ph::after{opacity:0}
-.ph--red{background-image:url('https://loremflickr.com/900/600/police,lights?lock=31'),linear-gradient(135deg,#3a1220,#93182b,#170709)}
-.ph--slate{background-image:url('https://loremflickr.com/900/600/courthouse,justice?lock=32'),linear-gradient(135deg,#132232,#2f4356,#0a0e13)}
-.ph--night{background-image:url('https://loremflickr.com/900/600/city,night?lock=33'),linear-gradient(135deg,#181526,#332c4a,#08070d)}
-.ph--olive{background-image:url('https://loremflickr.com/900/600/police,car?lock=34'),linear-gradient(135deg,#20280f,#42541f,#0b0d08)}
-.ph--sand{background-image:url('https://loremflickr.com/900/600/street,city?lock=35'),linear-gradient(135deg,#3a2913,#77602c,#160f08)}
-.side-card:nth-child(1) .ph{background-image:url('https://loremflickr.com/700/700/police,tape?lock=41'),linear-gradient(135deg,#3a1220,#93182b,#170709)}
-.side-card:nth-child(2) .ph{background-image:url('https://loremflickr.com/700/700/police,siren?lock=42'),linear-gradient(135deg,#132232,#2f4356,#0a0e13)}
-.side-card:nth-child(3) .ph{background-image:url('https://loremflickr.com/700/700/handcuffs,police?lock=43'),linear-gradient(135deg,#181526,#332c4a,#08070d)}
-.grid-arts .gcard:nth-child(5n+1) .ph{background-image:url('https://loremflickr.com/900/600/police,street?lock=51'),linear-gradient(135deg,#3a1220,#93182b,#170709)}
-.grid-arts .gcard:nth-child(5n+2) .ph{background-image:url('https://loremflickr.com/900/600/courthouse,law?lock=52'),linear-gradient(135deg,#132232,#2f4356,#0a0e13)}
-.grid-arts .gcard:nth-child(5n+3) .ph{background-image:url('https://loremflickr.com/900/600/city,night?lock=53'),linear-gradient(135deg,#181526,#332c4a,#08070d)}
-.grid-arts .gcard:nth-child(5n+4) .ph{background-image:url('https://loremflickr.com/900/600/police,car?lock=54'),linear-gradient(135deg,#20280f,#42541f,#0b0d08)}
-.grid-arts .gcard:nth-child(5n+5) .ph{background-image:url('https://loremflickr.com/900/600/handcuffs?lock=55'),linear-gradient(135deg,#3a2913,#77602c,#160f08)}
-.rel .ph{background-image:url('https://loremflickr.com/700/500/police,city?lock=56'),linear-gradient(135deg,#132232,#2f4356,#0a0e13)}
-.hero-img .ph{background-image:url('https://loremflickr.com/1200/700/police,night?lock=61'),linear-gradient(135deg,#181526,#332c4a,#08070d)}
+.ph--red{background-image:url('./covers/police.svg'),linear-gradient(135deg,#3a1220,#93182b,#170709)}
+.ph--slate{background-image:url('./covers/justice.svg'),linear-gradient(135deg,#132232,#2f4356,#0a0e13)}
+.ph--night{background-image:url('./covers/societe.svg'),linear-gradient(135deg,#181526,#332c4a,#08070d)}
+.ph--olive{background-image:url('./covers/police.svg'),linear-gradient(135deg,#20280f,#42541f,#0b0d08)}
+.ph--sand{background-image:url('./covers/societe.svg'),linear-gradient(135deg,#3a2913,#77602c,#160f08)}
+.side-card:nth-child(1) .ph{background-image:url('./covers/police.svg'),linear-gradient(135deg,#3a1220,#93182b,#170709)}
+.side-card:nth-child(2) .ph{background-image:url('./covers/police.svg'),linear-gradient(135deg,#132232,#2f4356,#0a0e13)}
+.side-card:nth-child(3) .ph{background-image:url('./covers/police.svg'),linear-gradient(135deg,#181526,#332c4a,#08070d)}
+.grid-arts .gcard:nth-child(5n+1) .ph{background-image:url('./covers/police.svg'),linear-gradient(135deg,#3a1220,#93182b,#170709)}
+.grid-arts .gcard:nth-child(5n+2) .ph{background-image:url('./covers/justice.svg'),linear-gradient(135deg,#132232,#2f4356,#0a0e13)}
+.grid-arts .gcard:nth-child(5n+3) .ph{background-image:url('./covers/societe.svg'),linear-gradient(135deg,#181526,#332c4a,#08070d)}
+.grid-arts .gcard:nth-child(5n+4) .ph{background-image:url('./covers/police.svg'),linear-gradient(135deg,#20280f,#42541f,#0b0d08)}
+.grid-arts .gcard:nth-child(5n+5) .ph{background-image:url('./covers/faits-divers.svg'),linear-gradient(135deg,#3a2913,#77602c,#160f08)}
+.rel .ph{background-image:url('./covers/police.svg'),linear-gradient(135deg,#132232,#2f4356,#0a0e13)}
+.hero-img .ph{background-image:url('./covers/police.svg'),linear-gradient(135deg,#181526,#332c4a,#08070d)}
 /* léger vignettage pour lisibilité, sans grisailler */
 .lead .ph::after,.hero-img .ph::after{opacity:0}
 
@@ -726,20 +726,20 @@ blockquote.pull cite{display:block; font-family:var(--ff-sans); font-weight:500;
    ============================================================ */
 .ph{background-color:#cfcac2; background-size:cover; background-position:center; background-repeat:no-repeat}
 .ph::after{opacity:0}
-.ph--red{background-image:url('https://loremflickr.com/900/600/police?lock=131'),url('https://picsum.photos/seed/kir131/900/600'),linear-gradient(135deg,#3a1220,#93182b,#170709)}
-.ph--slate{background-image:url('https://loremflickr.com/900/600/courthouse?lock=132'),url('https://picsum.photos/seed/kis132/900/600'),linear-gradient(135deg,#132232,#2f4356,#0a0e13)}
-.ph--night{background-image:url('https://loremflickr.com/900/600/city?lock=133'),url('https://picsum.photos/seed/kin133/900/600'),linear-gradient(135deg,#181526,#332c4a,#08070d)}
-.ph--olive{background-image:url('https://loremflickr.com/900/600/prison?lock=134'),url('https://picsum.photos/seed/kio134/900/600'),linear-gradient(135deg,#20280f,#42541f,#0b0d08)}
-.ph--sand{background-image:url('https://loremflickr.com/900/600/street?lock=135'),url('https://picsum.photos/seed/kid135/900/600'),linear-gradient(135deg,#3a2913,#77602c,#160f08)}
-.side-card:nth-child(1) .ph{background-image:url('https://loremflickr.com/700/700/police?lock=141'),url('https://picsum.photos/seed/ki141/700/700'),linear-gradient(135deg,#3a1220,#93182b,#170709)}
-.side-card:nth-child(2) .ph{background-image:url('https://loremflickr.com/700/700/court?lock=142'),url('https://picsum.photos/seed/ki142/700/700'),linear-gradient(135deg,#132232,#2f4356,#0a0e13)}
-.side-card:nth-child(3) .ph{background-image:url('https://loremflickr.com/700/700/city?lock=143'),url('https://picsum.photos/seed/ki143/700/700'),linear-gradient(135deg,#181526,#332c4a,#08070d)}
-.grid-arts .gcard:nth-child(5n+1) .ph{background-image:url('https://loremflickr.com/900/600/police?lock=151'),url('https://picsum.photos/seed/ki151/900/600'),linear-gradient(135deg,#3a1220,#93182b,#170709)}
-.grid-arts .gcard:nth-child(5n+2) .ph{background-image:url('https://loremflickr.com/900/600/courthouse?lock=152'),url('https://picsum.photos/seed/ki152/900/600'),linear-gradient(135deg,#132232,#2f4356,#0a0e13)}
-.grid-arts .gcard:nth-child(5n+3) .ph{background-image:url('https://loremflickr.com/900/600/city?lock=153'),url('https://picsum.photos/seed/ki153/900/600'),linear-gradient(135deg,#181526,#332c4a,#08070d)}
-.grid-arts .gcard:nth-child(5n+4) .ph{background-image:url('https://loremflickr.com/900/600/prison?lock=154'),url('https://picsum.photos/seed/ki154/900/600'),linear-gradient(135deg,#20280f,#42541f,#0b0d08)}
-.grid-arts .gcard:nth-child(5n+5) .ph{background-image:url('https://loremflickr.com/900/600/street?lock=155'),url('https://picsum.photos/seed/ki155/900/600'),linear-gradient(135deg,#3a2913,#77602c,#160f08)}
-.rel .ph{background-image:url('https://loremflickr.com/700/500/police?lock=156'),url('https://picsum.photos/seed/ki156/700/500'),linear-gradient(135deg,#132232,#2f4356,#0a0e13)}
+.ph--red{background-image:url('./covers/police.svg'),url('./covers/faits-divers.svg'),linear-gradient(135deg,#3a1220,#93182b,#170709)}
+.ph--slate{background-image:url('./covers/justice.svg'),url('./covers/faits-divers.svg'),linear-gradient(135deg,#132232,#2f4356,#0a0e13)}
+.ph--night{background-image:url('./covers/societe.svg'),url('./covers/faits-divers.svg'),linear-gradient(135deg,#181526,#332c4a,#08070d)}
+.ph--olive{background-image:url('./covers/faits-divers.svg'),url('./covers/faits-divers.svg'),linear-gradient(135deg,#20280f,#42541f,#0b0d08)}
+.ph--sand{background-image:url('./covers/faits-divers.svg'),url('./covers/faits-divers.svg'),linear-gradient(135deg,#3a2913,#77602c,#160f08)}
+.side-card:nth-child(1) .ph{background-image:url('./covers/police.svg'),url('./covers/faits-divers.svg'),linear-gradient(135deg,#3a1220,#93182b,#170709)}
+.side-card:nth-child(2) .ph{background-image:url('./covers/justice.svg'),url('./covers/faits-divers.svg'),linear-gradient(135deg,#132232,#2f4356,#0a0e13)}
+.side-card:nth-child(3) .ph{background-image:url('./covers/societe.svg'),url('./covers/faits-divers.svg'),linear-gradient(135deg,#181526,#332c4a,#08070d)}
+.grid-arts .gcard:nth-child(5n+1) .ph{background-image:url('./covers/police.svg'),url('./covers/faits-divers.svg'),linear-gradient(135deg,#3a1220,#93182b,#170709)}
+.grid-arts .gcard:nth-child(5n+2) .ph{background-image:url('./covers/justice.svg'),url('./covers/faits-divers.svg'),linear-gradient(135deg,#132232,#2f4356,#0a0e13)}
+.grid-arts .gcard:nth-child(5n+3) .ph{background-image:url('./covers/societe.svg'),url('./covers/faits-divers.svg'),linear-gradient(135deg,#181526,#332c4a,#08070d)}
+.grid-arts .gcard:nth-child(5n+4) .ph{background-image:url('./covers/faits-divers.svg'),url('./covers/faits-divers.svg'),linear-gradient(135deg,#20280f,#42541f,#0b0d08)}
+.grid-arts .gcard:nth-child(5n+5) .ph{background-image:url('./covers/faits-divers.svg'),url('./covers/faits-divers.svg'),linear-gradient(135deg,#3a2913,#77602c,#160f08)}
+.rel .ph{background-image:url('./covers/police.svg'),url('./covers/faits-divers.svg'),linear-gradient(135deg,#132232,#2f4356,#0a0e13)}
 
 /* Sources : deux colonnes (liste complète) */
 .foot .src-list{columns:2; column-gap:20px}
@@ -789,31 +789,31 @@ blockquote.pull cite{display:block; font-family:var(--ff-sans); font-weight:500;
   background-repeat:no-repeat; filter:saturate(1.32) contrast(1.06)}
 .ph::after{opacity:0}
 /* couleur garantie (photos Unsplash via picsum), variée */
-.ph--red{background-image:url('https://picsum.photos/seed/kcr6/900/600')}
-.ph--slate{background-image:url('https://picsum.photos/seed/kcs6/900/600')}
-.ph--night{background-image:url('https://picsum.photos/seed/kcn6/900/600')}
-.ph--olive{background-image:url('https://picsum.photos/seed/kco6/900/600')}
-.ph--sand{background-image:url('https://picsum.photos/seed/kcd6/900/600')}
-.side-card:nth-child(1) .ph{background-image:url('https://picsum.photos/seed/ksa6/500/500')}
-.side-card:nth-child(2) .ph{background-image:url('https://picsum.photos/seed/ksb6/500/500')}
-.side-card:nth-child(3) .ph{background-image:url('https://picsum.photos/seed/ksc6/500/500')}
-.grid-arts .gcard:nth-child(6n+1) .ph{background-image:url('https://picsum.photos/seed/kg61/900/600')}
-.grid-arts .gcard:nth-child(6n+2) .ph{background-image:url('https://picsum.photos/seed/kg62/900/600')}
-.grid-arts .gcard:nth-child(6n+3) .ph{background-image:url('https://picsum.photos/seed/kg63/900/600')}
-.grid-arts .gcard:nth-child(6n+4) .ph{background-image:url('https://picsum.photos/seed/kg64/900/600')}
-.grid-arts .gcard:nth-child(6n+5) .ph{background-image:url('https://picsum.photos/seed/kg65/900/600')}
-.grid-arts .gcard:nth-child(6n+6) .ph{background-image:url('https://picsum.photos/seed/kg66/900/600')}
-.rel:nth-child(1) .ph{background-image:url('https://picsum.photos/seed/kre1/700/500')}
-.rel:nth-child(2) .ph{background-image:url('https://picsum.photos/seed/kre2/700/500')}
-.rel:nth-child(3) .ph{background-image:url('https://picsum.photos/seed/kre3/700/500')}
-.coldcard:nth-child(1) .ph{background-image:url('https://picsum.photos/seed/kcold1/700/440')}
-.coldcard:nth-child(2) .ph{background-image:url('https://picsum.photos/seed/kcold2/700/440')}
-.coldcard:nth-child(3) .ph{background-image:url('https://picsum.photos/seed/kcold3/700/440')}
-.cat:nth-child(1) .ph{background-image:url('https://picsum.photos/seed/kcat1/500/340')}
-.cat:nth-child(2) .ph{background-image:url('https://picsum.photos/seed/kcat2/500/340')}
-.cat:nth-child(3) .ph{background-image:url('https://picsum.photos/seed/kcat3/500/340')}
-.cat:nth-child(4) .ph{background-image:url('https://picsum.photos/seed/kcat4/500/340')}
-.hero-img .ph{background-image:url('https://picsum.photos/seed/khero6/1200/700')}
+.ph--red{background-image:url('./covers/faits-divers.svg')}
+.ph--slate{background-image:url('./covers/faits-divers.svg')}
+.ph--night{background-image:url('./covers/faits-divers.svg')}
+.ph--olive{background-image:url('./covers/faits-divers.svg')}
+.ph--sand{background-image:url('./covers/faits-divers.svg')}
+.side-card:nth-child(1) .ph{background-image:url('./covers/faits-divers.svg')}
+.side-card:nth-child(2) .ph{background-image:url('./covers/faits-divers.svg')}
+.side-card:nth-child(3) .ph{background-image:url('./covers/faits-divers.svg')}
+.grid-arts .gcard:nth-child(6n+1) .ph{background-image:url('./covers/faits-divers.svg')}
+.grid-arts .gcard:nth-child(6n+2) .ph{background-image:url('./covers/faits-divers.svg')}
+.grid-arts .gcard:nth-child(6n+3) .ph{background-image:url('./covers/faits-divers.svg')}
+.grid-arts .gcard:nth-child(6n+4) .ph{background-image:url('./covers/faits-divers.svg')}
+.grid-arts .gcard:nth-child(6n+5) .ph{background-image:url('./covers/faits-divers.svg')}
+.grid-arts .gcard:nth-child(6n+6) .ph{background-image:url('./covers/faits-divers.svg')}
+.rel:nth-child(1) .ph{background-image:url('./covers/faits-divers.svg')}
+.rel:nth-child(2) .ph{background-image:url('./covers/faits-divers.svg')}
+.rel:nth-child(3) .ph{background-image:url('./covers/faits-divers.svg')}
+.coldcard:nth-child(1) .ph{background-image:url('./covers/faits-divers.svg')}
+.coldcard:nth-child(2) .ph{background-image:url('./covers/faits-divers.svg')}
+.coldcard:nth-child(3) .ph{background-image:url('./covers/faits-divers.svg')}
+.cat:nth-child(1) .ph{background-image:url('./covers/faits-divers.svg')}
+.cat:nth-child(2) .ph{background-image:url('./covers/faits-divers.svg')}
+.cat:nth-child(3) .ph{background-image:url('./covers/faits-divers.svg')}
+.cat:nth-child(4) .ph{background-image:url('./covers/faits-divers.svg')}
+.hero-img .ph{background-image:url('./covers/faits-divers.svg')}
 
 /* ============================================================
    V7 — PHOTOS COULEUR THÉMATIQUES (fini le gris)
@@ -822,27 +822,27 @@ blockquote.pull cite{display:block; font-family:var(--ff-sans); font-weight:500;
 .ph{background-color:#3a1220; background-size:cover; background-position:center;
   background-repeat:no-repeat; filter:saturate(1.18) contrast(1.05)}
 .ph::after{opacity:0}
-.ph--red{background-image:url('https://loremflickr.com/900/600/police,car?lock=711'),linear-gradient(135deg,#7a1420,#3a1220)}
-.ph--slate{background-image:url('https://loremflickr.com/900/600/city,night?lock=712'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
-.ph--night{background-image:url('https://loremflickr.com/900/600/police,lights?lock=713'),linear-gradient(135deg,#2a2440,#12101f)}
-.ph--olive{background-image:url('https://loremflickr.com/900/600/street,graffiti?lock=714'),linear-gradient(135deg,#2e3a12,#161d08)}
-.ph--sand{background-image:url('https://loremflickr.com/900/600/city,street?lock=715'),linear-gradient(135deg,#6a4a1a,#2a1c08)}
-.side-card:nth-child(1) .ph{background-image:url('https://loremflickr.com/520/520/police,car?lock=721'),linear-gradient(135deg,#7a1420,#3a1220)}
-.side-card:nth-child(2) .ph{background-image:url('https://loremflickr.com/520/520/city,night?lock=722'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
-.side-card:nth-child(3) .ph{background-image:url('https://loremflickr.com/520/520/police,lights?lock=723'),linear-gradient(135deg,#2a2440,#12101f)}
-.grid-arts .gcard:nth-child(6n+1) .ph{background-image:url('https://loremflickr.com/900/600/police,car?lock=731'),linear-gradient(135deg,#7a1420,#3a1220)}
-.grid-arts .gcard:nth-child(6n+2) .ph{background-image:url('https://loremflickr.com/900/600/courthouse,building?lock=732'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
-.grid-arts .gcard:nth-child(6n+3) .ph{background-image:url('https://loremflickr.com/900/600/city,night?lock=733'),linear-gradient(135deg,#2a2440,#12101f)}
-.grid-arts .gcard:nth-child(6n+4) .ph{background-image:url('https://loremflickr.com/900/600/police,officer?lock=734'),linear-gradient(135deg,#2e3a12,#161d08)}
-.grid-arts .gcard:nth-child(6n+5) .ph{background-image:url('https://loremflickr.com/900/600/neon,city?lock=735'),linear-gradient(135deg,#6a4a1a,#2a1c08)}
-.grid-arts .gcard:nth-child(6n+6) .ph{background-image:url('https://loremflickr.com/900/600/street,night?lock=736'),linear-gradient(135deg,#7a1420,#3a1220)}
-.rel:nth-child(1) .ph{background-image:url('https://loremflickr.com/720/500/police,car?lock=741'),linear-gradient(135deg,#7a1420,#3a1220)}
-.rel:nth-child(2) .ph{background-image:url('https://loremflickr.com/720/500/city,night?lock=742'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
-.rel:nth-child(3) .ph{background-image:url('https://loremflickr.com/720/500/police,lights?lock=743'),linear-gradient(135deg,#2a2440,#12101f)}
-.coldcard:nth-child(1) .ph{background-image:url('https://loremflickr.com/720/440/police,car?lock=751'),linear-gradient(135deg,#7a1420,#3a1220)}
-.coldcard:nth-child(2) .ph{background-image:url('https://loremflickr.com/720/440/city,night?lock=752'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
-.coldcard:nth-child(3) .ph{background-image:url('https://loremflickr.com/720/440/police,lights?lock=753'),linear-gradient(135deg,#2a2440,#12101f)}
-.hero-img .ph{background-image:url('https://loremflickr.com/1200/700/police,car?lock=761'),linear-gradient(135deg,#2a2440,#12101f)}
+.ph--red{background-image:url('./covers/police.svg'),linear-gradient(135deg,#7a1420,#3a1220)}
+.ph--slate{background-image:url('./covers/societe.svg'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
+.ph--night{background-image:url('./covers/police.svg'),linear-gradient(135deg,#2a2440,#12101f)}
+.ph--olive{background-image:url('./covers/faits-divers.svg'),linear-gradient(135deg,#2e3a12,#161d08)}
+.ph--sand{background-image:url('./covers/societe.svg'),linear-gradient(135deg,#6a4a1a,#2a1c08)}
+.side-card:nth-child(1) .ph{background-image:url('./covers/police.svg'),linear-gradient(135deg,#7a1420,#3a1220)}
+.side-card:nth-child(2) .ph{background-image:url('./covers/societe.svg'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
+.side-card:nth-child(3) .ph{background-image:url('./covers/police.svg'),linear-gradient(135deg,#2a2440,#12101f)}
+.grid-arts .gcard:nth-child(6n+1) .ph{background-image:url('./covers/police.svg'),linear-gradient(135deg,#7a1420,#3a1220)}
+.grid-arts .gcard:nth-child(6n+2) .ph{background-image:url('./covers/justice.svg'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
+.grid-arts .gcard:nth-child(6n+3) .ph{background-image:url('./covers/societe.svg'),linear-gradient(135deg,#2a2440,#12101f)}
+.grid-arts .gcard:nth-child(6n+4) .ph{background-image:url('./covers/police.svg'),linear-gradient(135deg,#2e3a12,#161d08)}
+.grid-arts .gcard:nth-child(6n+5) .ph{background-image:url('./covers/societe.svg'),linear-gradient(135deg,#6a4a1a,#2a1c08)}
+.grid-arts .gcard:nth-child(6n+6) .ph{background-image:url('./covers/enquetes.svg'),linear-gradient(135deg,#7a1420,#3a1220)}
+.rel:nth-child(1) .ph{background-image:url('./covers/police.svg'),linear-gradient(135deg,#7a1420,#3a1220)}
+.rel:nth-child(2) .ph{background-image:url('./covers/societe.svg'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
+.rel:nth-child(3) .ph{background-image:url('./covers/police.svg'),linear-gradient(135deg,#2a2440,#12101f)}
+.coldcard:nth-child(1) .ph{background-image:url('./covers/police.svg'),linear-gradient(135deg,#7a1420,#3a1220)}
+.coldcard:nth-child(2) .ph{background-image:url('./covers/societe.svg'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
+.coldcard:nth-child(3) .ph{background-image:url('./covers/police.svg'),linear-gradient(135deg,#2a2440,#12101f)}
+.hero-img .ph{background-image:url('./covers/police.svg'),linear-gradient(135deg,#2a2440,#12101f)}
 
 /* ============================================================
    V8 — FIX : suppression du "blend" hérité qui rosissait tout
@@ -864,24 +864,88 @@ blockquote.pull cite{display:block; font-family:var(--ff-sans); font-weight:500;
   background-blend-mode:normal !important; filter:saturate(1.2) contrast(1.03) brightness(1.02);
 }
 .ph{background-color:#2a2440; background-size:cover; background-position:center; background-repeat:no-repeat}
-.ph--red{background-image:url('https://loremflickr.com/900/600/police,car?lock=911'),linear-gradient(135deg,#7a1420,#3a1220)}
-.ph--slate{background-image:url('https://loremflickr.com/900/600/courthouse?lock=912'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
-.ph--night{background-image:url('https://loremflickr.com/900/600/city,night?lock=913'),linear-gradient(135deg,#2a2440,#12101f)}
-.ph--olive{background-image:url('https://loremflickr.com/900/600/police,officer?lock=914'),linear-gradient(135deg,#2e3a12,#161d08)}
-.ph--sand{background-image:url('https://loremflickr.com/900/600/jerusalem,city?lock=915'),linear-gradient(135deg,#6a4a1a,#2a1c08)}
-.side-card:nth-child(1) .ph{background-image:url('https://loremflickr.com/520/520/police,car?lock=921'),linear-gradient(135deg,#7a1420,#3a1220)}
-.side-card:nth-child(2) .ph{background-image:url('https://loremflickr.com/520/520/courthouse?lock=922'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
-.side-card:nth-child(3) .ph{background-image:url('https://loremflickr.com/520/520/city,night?lock=923'),linear-gradient(135deg,#2a2440,#12101f)}
-.grid-arts .gcard:nth-child(6n+1) .ph{background-image:url('https://loremflickr.com/900/600/police,car?lock=931'),linear-gradient(135deg,#7a1420,#3a1220)}
-.grid-arts .gcard:nth-child(6n+2) .ph{background-image:url('https://loremflickr.com/900/600/courthouse?lock=932'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
-.grid-arts .gcard:nth-child(6n+3) .ph{background-image:url('https://loremflickr.com/900/600/city,night?lock=933'),linear-gradient(135deg,#2a2440,#12101f)}
-.grid-arts .gcard:nth-child(6n+4) .ph{background-image:url('https://loremflickr.com/900/600/police,officer?lock=934'),linear-gradient(135deg,#2e3a12,#161d08)}
-.grid-arts .gcard:nth-child(6n+5) .ph{background-image:url('https://loremflickr.com/900/600/telaviv,city?lock=935'),linear-gradient(135deg,#6a4a1a,#2a1c08)}
-.grid-arts .gcard:nth-child(6n+6) .ph{background-image:url('https://loremflickr.com/900/600/prison?lock=936'),linear-gradient(135deg,#2a2440,#12101f)}
-.rel:nth-child(1) .ph{background-image:url('https://loremflickr.com/720/500/police,car?lock=941'),linear-gradient(135deg,#7a1420,#3a1220)}
-.rel:nth-child(2) .ph{background-image:url('https://loremflickr.com/720/500/courthouse?lock=942'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
-.rel:nth-child(3) .ph{background-image:url('https://loremflickr.com/720/500/city,night?lock=943'),linear-gradient(135deg,#2a2440,#12101f)}
-.coldcard:nth-child(1) .ph{background-image:url('https://loremflickr.com/720/440/police,car?lock=951'),linear-gradient(135deg,#7a1420,#3a1220)}
-.coldcard:nth-child(2) .ph{background-image:url('https://loremflickr.com/720/440/city,night?lock=952'),linear-gradient(135deg,#2a2440,#12101f)}
-.coldcard:nth-child(3) .ph{background-image:url('https://loremflickr.com/720/440/courthouse?lock=953'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
-.hero-img .ph{background-image:url('https://loremflickr.com/1200/700/police,car?lock=961'),linear-gradient(135deg,#2a2440,#12101f)}
+.ph--red{background-image:url('./covers/police.svg'),linear-gradient(135deg,#7a1420,#3a1220)}
+.ph--slate{background-image:url('./covers/justice.svg'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
+.ph--night{background-image:url('./covers/societe.svg'),linear-gradient(135deg,#2a2440,#12101f)}
+.ph--olive{background-image:url('./covers/police.svg'),linear-gradient(135deg,#2e3a12,#161d08)}
+.ph--sand{background-image:url('./covers/societe.svg'),linear-gradient(135deg,#6a4a1a,#2a1c08)}
+.side-card:nth-child(1) .ph{background-image:url('./covers/police.svg'),linear-gradient(135deg,#7a1420,#3a1220)}
+.side-card:nth-child(2) .ph{background-image:url('./covers/justice.svg'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
+.side-card:nth-child(3) .ph{background-image:url('./covers/societe.svg'),linear-gradient(135deg,#2a2440,#12101f)}
+.grid-arts .gcard:nth-child(6n+1) .ph{background-image:url('./covers/police.svg'),linear-gradient(135deg,#7a1420,#3a1220)}
+.grid-arts .gcard:nth-child(6n+2) .ph{background-image:url('./covers/justice.svg'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
+.grid-arts .gcard:nth-child(6n+3) .ph{background-image:url('./covers/societe.svg'),linear-gradient(135deg,#2a2440,#12101f)}
+.grid-arts .gcard:nth-child(6n+4) .ph{background-image:url('./covers/police.svg'),linear-gradient(135deg,#2e3a12,#161d08)}
+.grid-arts .gcard:nth-child(6n+5) .ph{background-image:url('./covers/societe.svg'),linear-gradient(135deg,#6a4a1a,#2a1c08)}
+.grid-arts .gcard:nth-child(6n+6) .ph{background-image:url('./covers/faits-divers.svg'),linear-gradient(135deg,#2a2440,#12101f)}
+.rel:nth-child(1) .ph{background-image:url('./covers/police.svg'),linear-gradient(135deg,#7a1420,#3a1220)}
+.rel:nth-child(2) .ph{background-image:url('./covers/justice.svg'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
+.rel:nth-child(3) .ph{background-image:url('./covers/societe.svg'),linear-gradient(135deg,#2a2440,#12101f)}
+.coldcard:nth-child(1) .ph{background-image:url('./covers/police.svg'),linear-gradient(135deg,#7a1420,#3a1220)}
+.coldcard:nth-child(2) .ph{background-image:url('./covers/societe.svg'),linear-gradient(135deg,#2a2440,#12101f)}
+.coldcard:nth-child(3) .ph{background-image:url('./covers/justice.svg'),linear-gradient(135deg,#1b3a52,#0e1f2e)}
+.hero-img .ph{background-image:url('./covers/police.svg'),linear-gradient(135deg,#2a2440,#12101f)}
+
+/* ===========================================================================
+   KTAV ICHOUM — ATTRIBUTION DEFINITIVE DES COUVERTURES
+   Ce bloc doit rester en dernier. Il annule les attributions des blocs
+   precedents et retablit background-blend-mode:normal.
+
+   Photographies :
+     commissariat-jerusalem.jpg — Doronef, domaine public, Wikimedia Commons
+     cour-supreme-jerusalem.jpg — shaula haitner, PikiWiki Israel, CC BY 2.5
+   Affichees en superposition, jamais fusionnees : aucune oeuvre derivee.
+   =========================================================================== */
+
+.ph,
+.side-card .ph,
+.grid-arts .gcard .ph,
+.rel .ph,
+.coldcard .ph,
+.cat .ph,
+.hero-img .ph{
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  background-blend-mode:normal;
+}
+
+/* Variantes nommees */
+.ph--red   {background-image:url('./covers/faits-divers.svg')}
+.ph--slate {background-image:url('./covers/cadres/justice.svg'),url('./photos/cour-supreme-jerusalem.jpg')}
+.ph--night {background-image:url('./covers/enquetes.svg')}
+.ph--olive {background-image:url('./covers/cadres/police.svg'),url('./photos/commissariat-jerusalem.jpg')}
+.ph--sand  {background-image:url('./covers/societe.svg')}
+
+/* Colonne laterale */
+.side-card:nth-child(1) .ph{background-image:url('./covers/cadres/police.svg'),url('./photos/commissariat-jerusalem.jpg')}
+.side-card:nth-child(2) .ph{background-image:url('./covers/crime-organise.svg')}
+.side-card:nth-child(3) .ph{background-image:url('./covers/cadres/justice.svg'),url('./photos/cour-supreme-jerusalem.jpg')}
+
+/* Grille d'articles — rotation sur les six rubriques */
+.grid-arts .gcard:nth-child(6n+1) .ph{background-image:url('./covers/faits-divers.svg')}
+.grid-arts .gcard:nth-child(6n+2) .ph{background-image:url('./covers/cadres/justice.svg'),url('./photos/cour-supreme-jerusalem.jpg')}
+.grid-arts .gcard:nth-child(6n+3) .ph{background-image:url('./covers/cadres/police.svg'),url('./photos/commissariat-jerusalem.jpg')}
+.grid-arts .gcard:nth-child(6n+4) .ph{background-image:url('./covers/crime-organise.svg')}
+.grid-arts .gcard:nth-child(6n+5) .ph{background-image:url('./covers/enquetes.svg')}
+.grid-arts .gcard:nth-child(6n+6) .ph{background-image:url('./covers/societe.svg')}
+
+/* Articles lies */
+.rel:nth-child(1) .ph{background-image:url('./covers/faits-divers.svg')}
+.rel:nth-child(2) .ph{background-image:url('./covers/cadres/justice.svg'),url('./photos/cour-supreme-jerusalem.jpg')}
+.rel:nth-child(3) .ph{background-image:url('./covers/crime-organise.svg')}
+.rel .ph{background-size:cover;background-position:center}
+
+/* Cold cases */
+.coldcard:nth-child(1) .ph{background-image:url('./covers/enquetes.svg')}
+.coldcard:nth-child(2) .ph{background-image:url('./covers/crime-organise.svg')}
+.coldcard:nth-child(3) .ph{background-image:url('./covers/faits-divers.svg')}
+
+/* Vignettes de rubrique */
+.cat:nth-child(1) .ph{background-image:url('./covers/faits-divers.svg')}
+.cat:nth-child(2) .ph{background-image:url('./covers/cadres/justice.svg'),url('./photos/cour-supreme-jerusalem.jpg')}
+.cat:nth-child(3) .ph{background-image:url('./covers/cadres/police.svg'),url('./photos/commissariat-jerusalem.jpg')}
+.cat:nth-child(4) .ph{background-image:url('./covers/societe.svg')}
+
+/* Une */
+.hero-img .ph{background-image:url('./covers/faits-divers.svg')}
