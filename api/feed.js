@@ -64,16 +64,24 @@ const EXCL_MANIF = /הפגנ|מחאה|מפגינים|חסימת כביש|protest
 // Art. L. 513-4 CJPM, art. 39 bis loi 1881. Filtre volontairement large :
 // un faux positif coûte une dépêche, un faux négatif coûte une infraction.
 const MINOR_WORDS = new RegExp([
-  'קטין|קטינה|קטינים|קטינות|נער|נערה|נערים|נערות|ילד|ילדה|ילדים|תלמיד|תלמידה',
-  'בית ספר|תיכון|גן ילדים|בני נוער|עבריינות נוער',
-  'mineur|mineure|adolescent|adolescente|enfant|collégien|collegien|lycéen|lyceen',
-  'écolier|ecolier|élève|eleve|collège|college|lycée|lycee|école|ecole',
-  'minor|teen|teenager|juvenile|schoolboy|schoolgirl|pupil|high school|kindergarten',
+  'קטין|קטינה|קטינים|קטינות|נער|נערה|נערים|נערות|ילד|ילדה|ילדים|ילדות',
+  'בן|בת|בנות|בנים|תינוק|תינוקת|תינוקות|פעוט|פעוטה|פעוטות|תלמיד|תלמידה',
+  'בית ספר|תיכון|גן ילדים|גנון|מעון|בני נוער|עבריינות נוער|חטיבת ביניים',
+  'mineur|mineure|adolescent|adolescente|enfant|nourrisson|bébé|bebe|tout-petit',
+  'crèche|creche|garderie|collégien|collegien|lycéen|lyceen|écolier|ecolier',
+  'élève|eleve|collège|college|lycée|lycee|école|ecole|maternelle',
+  'minor|teen|teenager|juvenile|child|children|toddler|infant|baby|babies',
+  'schoolboy|schoolgirl|pupil|high school|kindergarten|daycare|nursery',
 ].join('|'), 'i');
 
 const AGE_PATTERNS = [
-  /\b(?:בן|בת)\s*(?:ה-)?\s*(\d{1,2})\b/g,
-  /\b(?:âg|ag)[ée]e?\s+de\s+(\d{1,2})\s*ans?\b/gi,
+  // ATTENTION : pas de \b sur les motifs hebreux. En JavaScript, \b se fonde
+  // sur [A-Za-z0-9_] ; les lettres hebraiques n'en font pas partie, donc \b
+  // empeche toute correspondance. Les prefixes (ל, ה, כ, ש, מ, ו) se collent
+  // au mot : « לבן 15 », « כבן 32 » — on ne peut donc pas ancrer a gauche.
+  /(?:בן|בת|בני|בנות|גיל)\s*ה?\s*-?\s*(\d{1,2})/g,
+  /(\d{1,2})\s*ו-\s*\d{1,2}/g,                       // « בנות 8 ו-10 »
+  /\b(?:âg|ag)[ée]e?s?\s+de\s+(\d{1,2})\s*ans?\b/gi,
   /\b(\d{1,2})\s*ans?\b/g,
   /\b(\d{1,2})[-\s]year[-\s]old\b/gi,
   /\baged?\s+(\d{1,2})\b/gi,
@@ -85,8 +93,14 @@ function mentionsMinor(text) {
     re.lastIndex = 0;
     let m;
     while ((m = re.exec(text)) !== null) {
-      const age = parseInt(m[1], 10);
-      if (!Number.isNaN(age) && age > 0 && age < 18) return true;
+      // On examine tous les nombres captures par le motif, pas seulement le premier
+      for (let g = 1; g < m.length; g++) {
+        const age = parseInt(m[g], 10);
+        if (!Number.isNaN(age) && age > 0 && age < 18) return true;
+      }
+      // Filet de securite : tout nombre de 1 a 17 accole a un mot d'age
+      const nums = (m[0].match(/\d{1,2}/g) || []).map(Number);
+      if (nums.some((n) => n > 0 && n < 18)) return true;
     }
   }
   return false;
@@ -176,6 +190,9 @@ async function fetchSource(src) {
 async function traduire(items) {
   const key = process.env.ANTHROPIC_API_KEY;
   const aTraduire = items.filter((x) => x.lang !== 'fr');
+  if (key && /[^\x20-\x7E]/.test(key)) {
+    return { traduits: 0, raison: 'ANTHROPIC_API_KEY contient un caractere non-ASCII (souvent un tiret long — introduit par un correcteur automatique). Ressaisir la cle dans Vercel.' };
+  }
   if (!key || !aTraduire.length) return { traduits: 0, raison: key ? 'rien a traduire' : 'ANTHROPIC_API_KEY absente' };
 
   try {
