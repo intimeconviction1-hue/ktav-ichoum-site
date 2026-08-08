@@ -251,11 +251,16 @@ function parse(xml) {
     if (!link) link = decode(grab(/<link[^>]*href=["']([^"']+)["']/i));
     if (!link) link = decode(grab(/<guid[^>]*>([\s\S]*?)<\/guid>/i));
 
-    const date =
+    // La date DOIT passer par decode(), au meme titre que le titre et le lien.
+    // Ynet enveloppe son pubDate dans un bloc CDATA : sans ce nettoyage, le
+    // lecteur recoit « <![CDATA[Sat, 08 Aug 2026 13:32:14 +0300]]> » et rend la
+    // main. Soixante depeches valides etaient perdues chaque jour a cause de ca.
+    const date = decode(
       grab(/<pubDate[^>]*>([\s\S]*?)<\/pubDate>/i) ||
       grab(/<updated[^>]*>([\s\S]*?)<\/updated>/i) ||
       grab(/<published[^>]*>([\s\S]*?)<\/published>/i) ||
-      grab(/<dc:date[^>]*>([\s\S]*?)<\/dc:date>/i);
+      grab(/<dc:date[^>]*>([\s\S]*?)<\/dc:date>/i),
+    );
 
     if (title && /^https?:\/\//i.test(link)) {
       out.push({ title, link, pubDate: (date || '').trim() });
