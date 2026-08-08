@@ -100,6 +100,23 @@ const RELEVANT = new RegExp([
 // Guerre et géopolitique
 const EXCL_GUERRE = /עזה|חמאס|חיזבאללה|מלחמה|חטופ|טילים|רקטות|צה"ל|פיגוע|מחבל|gaza|hamas|hezbollah|hostage|missile|rocket|idf|airstrike|militar|terror|otage|roquette|frappe|militaire|terroris|unrwa/i;
 
+// Conflit et territoires. KTAV ICHOUM couvre la justice penale israelienne,
+// pas le conflit : un vehicule vole qui force un barrage en Cisjordanie releve
+// du second, meme quand le titre contient « suspect » et « police ».
+// L'exclusion vaut aussi comme garde-fou de traduction : le moteur rendait
+// « התנחלות » par « colonies », terme politiquement marque en francais, la ou
+// la presse francophone d'Israel ecrit « implantations ». Ne pas traiter le
+// sujet vaut mieux que d'arbitrer ce lexique depeche par depeche.
+const EXCL_TERRITOIRES = new RegExp([
+  ...['התנחלות', 'התנחלויות', 'מתנחל', 'מאחז', 'שומרון', 'יהודה ושומרון',
+    'הגדה', 'פלסטיני', 'פלסטינים', 'הרשות הפלסטינית', 'מזרח ירושלים',
+    'רמאללה', "ג'נין", 'שכם', 'טול כרם', 'מחסום', 'השטחים', 'מפגע',
+  ].map(racine),
+  '\\b(?:settlement|settler|west bank|judea and samaria|palestinian|checkpoint)',
+  '\\b(?:ramallah|jenin|nablus|tulkarem|east jerusalem|infiltration)',
+  '\\b(?:colonie|implantation|cisjordanie|palestinien)',
+].join('|'), 'i');
+
 // Contentieux administratif et constitutionnel : ce n'est pas du judiciaire pénal
 const EXCL_ADMIN = /בג"?ץ|בגץ|עתירה|עותרים|high court of justice|petition|petitioners|knesset|קואליציה|coalition|תקציב|budget/i;
 
@@ -396,7 +413,7 @@ export default async function handler(req, res) {
     const suspects = [];   // soupcon de mineur, en attente de qualification
     const stats = {
       recus: 0, horsFenetre: 0, rubriqueRefusee: 0, horsSujet: 0,
-      guerre: 0, admin: 0, accident: 0, manifestation: 0,
+      guerre: 0, territoires: 0, admin: 0, accident: 0, manifestation: 0,
       quarantaineMineurs: 0, doublons: 0,
     };
     const parSource = {};
@@ -435,8 +452,9 @@ export default async function handler(req, res) {
         const parRubrique = SECTION_OK.test(it.link);
         if (!parRubrique && !RELEVANT.test(it.title)) { stats.horsSujet++; rejet('hors sujet', it); continue; }
 
-        if (EXCL_GUERRE.test(it.title))   { stats.guerre++; rejet('guerre', it); continue; }
-        if (EXCL_ADMIN.test(it.title))    { stats.admin++; rejet('administratif', it); continue; }
+        if (EXCL_GUERRE.test(it.title))       { stats.guerre++; rejet('guerre', it); continue; }
+        if (EXCL_TERRITOIRES.test(it.title))  { stats.territoires++; rejet('territoires', it); continue; }
+        if (EXCL_ADMIN.test(it.title))        { stats.admin++; rejet('administratif', it); continue; }
         if (EXCL_ACCIDENT.test(it.title)) { stats.accident++; rejet('accident', it); continue; }
         if (EXCL_MANIF.test(it.title))    { stats.manifestation++; rejet('manifestation', it); continue; }
 
