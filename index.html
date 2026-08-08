@@ -112,6 +112,7 @@
     <div class="lw-item"><span class="tm lw-skel" style="width:40px">&nbsp;</span><span class="lw-skel" style="width:75%">&nbsp;</span></div>
     <div class="lw-item"><span class="tm lw-skel" style="width:40px">&nbsp;</span><span class="lw-skel" style="width:55%">&nbsp;</span></div>
   </div>
+  <p style="margin:10px 2px 0;font-size:.72rem;line-height:1.5;color:var(--ki-text);opacity:.55">Dépêches de la presse israélienne (rubriques criminelles et judiciaires), titres traduits automatiquement. Ktav Ichoum n'en est pas l'auteur ; chaque lien renvoie à l'éditeur d'origine.</p>
 </div></section>
 
 <!-- CORPS PRINCIPAL -->
@@ -177,17 +178,6 @@
 
   </aside>
 </div>
-
-<!-- PRESSE ISRAÉLIENNE EN DIRECT -->
-<section class="livewire"><div class="wrap">
-  <div class="lw-head">
-    <span class="lw-live"><span class="pulse"></span> Direct</span>
-    <h2>Presse israélienne · פלילים</h2>
-    <span class="lw-upd">Ynet · Mako · Haaretz · Walla…</span>
-  </div>
-  <div class="lw-list" data-nosnippet data-feed-il aria-live="polite"><div class="lw-empty">Chargement…</div></div>
-  <p style="margin:10px 2px 0;font-size:.72rem;line-height:1.5;color:var(--ki-text);opacity:.5">Titres en hébreu, repris tels quels de la presse israélienne. Ktav Ichoum n'en est pas l'auteur ; chaque lien renvoie à l'éditeur d'origine.</p>
-</div></section>
 
 <!-- GRAND RÉCIT (Ynet) -->
 <section class="feature feature--record"><div class="wrap feature-grid">
@@ -257,21 +247,24 @@
 <script>
 /* Fil KTAV ICHOUM — inline, autonome (indépendant de app.js/cache) */
 (function(){
-  var T=document.querySelectorAll('[data-feed-theme],[data-feed-il]'); if(!T.length) return;
+  var T=document.querySelectorAll('[data-feed-theme]'); if(!T.length) return;
   var L={'crime-organise':'Crime organisé','justice':'Justice','police':'Police','enquetes':'Enquêtes','societe':'Société','faits-divers':'Faits divers'};
   function rel(d){if(!d)return'';var t=new Date(d).getTime();if(isNaN(t))return'';var s=Math.max(0,(Date.now()-t)/1000);return s<3600?Math.round(s/60)+' min':(s<86400?Math.round(s/3600)+' h':Math.round(s/86400)+' j');}
   function esc(x){return(x||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   function frItem(it,all){var b=(all&&it.theme)?'<span class="lw-badge">'+esc(L[it.theme]||'')+'</span>':'';return '<div class="lw-item"><span class="tm">'+(rel(it.pubDate)||'·')+'</span><span><a href="'+esc(it.link)+'" target="_blank" rel="noopener">'+esc(it.title)+'</a>'+(it.source?'<span class="so">'+esc(it.source)+b+'</span>':b)+'</span></div>';}
-  function ilItem(it){return '<div class="lw-item lw-rtl"><span class="tm">'+(rel(it.pubDate)||'·')+'</span><span dir="rtl"><a href="'+esc(it.link)+'" target="_blank" rel="noopener">'+esc(it.title)+'</a>'+(it.source?'<span class="so">'+esc(it.source)+'</span>':'')+'</span></div>';}
+  /* Ne retenir que les depeches passees par une rubrique criminelle ou judiciaire.
+     Ecarte le contenu generaliste mal classe et garantit que le titre est traduit. */
+  function pertinent(x){ return x && x.viaRubrique===true; }
   function render(d){
     T.forEach(function(el){
-      if(el.hasAttribute('data-feed-il')){ el.innerHTML=(d&&d.il&&d.il.length)?d.il.slice(0,10).map(ilItem).join(''):'<div class="lw-empty">Flux momentanément indisponible.</div>'; return; }
       var th=el.getAttribute('data-feed-theme'), items;
       if(!d||!d.fr){ el.innerHTML='<div class="lw-empty">Chargement…</div>'; return; }
-      if(th==='all'){ items=d.fr; } else { var m=d.fr.filter(function(x){return x.theme===th;}); items=(m.length>=4)?m:m.concat(d.fr.filter(function(x){return x.theme!==th;})); }
-      el.innerHTML=(items&&items.length)?items.slice(0,12).map(function(it){return frItem(it,th==='all');}).join(''):'<div class="lw-empty">Aucune dépêche.</div>';
+      var base=d.fr.filter(pertinent);
+      if(th==='all'){ items=base; } else { var m=base.filter(function(x){return x.theme===th;}); items=(m.length>=4)?m:m.concat(base.filter(function(x){return x.theme!==th;})); }
+      el.innerHTML=(items&&items.length)?items.slice(0,12).map(function(it){return frItem(it,th==='all');}).join(''):'<div class="lw-empty">Aucune dépêche judiciaire depuis 24 heures.</div>';
     });
-    var u=document.getElementById('lw-upd'); if(u&&d&&d.fr) u.textContent='mis à jour à '+new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+    var u=document.getElementById('lw-upd');
+    if(u&&d&&d.fr){ var n=d.fr.filter(pertinent).length; u.textContent=n+' dépêche'+(n>1?'s':'')+' · mis à jour à '+new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}); }
   }
   function fetchFeed(cb){ fetch('/api/feed',{cache:'no-store'}).then(function(r){return r.json();}).then(cb).catch(function(){cb(null);}); }
   var tries=0;
