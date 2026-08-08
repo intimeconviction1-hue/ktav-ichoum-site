@@ -17,25 +17,40 @@
 // -----------------------------------------------------------------------------
 
 const SOURCES = [
-  { id: 'ynet',        name: 'Ynet',           lang: 'he', url: 'https://www.ynet.co.il/Integration/StoryRss538.xml' },
+  // ATTENTION AUX IDENTIFIANTS YNET. Les flux sont numerotes par rubrique :
+  //   2    = chdashot (actualites, page d'accueil)      <- celui qu'il nous faut
+  //   1854 = mivzakim (depeches)                        <- complement utile
+  //   3    = sport | 6 = economie | 538 = CULTURE | 1208 = sante
+  // Le fil a longtemps pointe sur 538 : il interrogeait la rubrique culture,
+  // puis rejetait legitimement chaque article. Ne pas reintroduire 538.
+  { id: 'ynet',        name: 'Ynet',           lang: 'he', browser: true, url: 'https://www.ynet.co.il/Integration/StoryRss2.xml' },
+  { id: 'ynet-mvz',    name: 'Ynet',           lang: 'he', browser: true, url: 'https://www.ynet.co.il/Integration/StoryRss1854.xml' },
   { id: 'israelhayom', name: 'Israel Hayom',   lang: 'he', url: 'https://www.israelhayom.co.il/rss.xml' },
-  { id: 'walla',       name: 'Walla',          lang: 'he', url: 'https://rss.walla.co.il/feed/1' },
+  { id: 'walla',       name: 'Walla',          lang: 'he', browser: true, url: 'https://rss.walla.co.il/feed/1' },
+  { id: 'mako',        name: 'Mako / N12',     lang: 'he', browser: true, url: 'https://rcs.mako.co.il/rss/news-law.xml' },
   { id: 'jpost',       name: 'Jerusalem Post', lang: 'en', url: 'https://www.jpost.com/rss/rssfeedsisraelnews.aspx' },
   // Times of Israel (403 malgre UA navigateur) et i24 (flux vide) : inexploitables.
+  // Haaretz : flux existant mais articles payants — lien inutile pour le lecteur.
   // Aucune source francophone disponible : le fil est traduit, cf. traduire().
+  //
+  // browser: true  ->  UA de navigateur. Necessaire derriere Cloudflare, qui
+  // refuse les UA de robot sur des flux pourtant publics. Les sources qui
+  // acceptent l'UA robot le conservent : on s'identifie quand on le peut.
 ];
 
-const WINDOW_HOURS = 24;
+const WINDOW_HOURS = 48;
 const MAX_ITEMS    = 40;
 const TIMEOUT_MS   = 7000;
 
 // --- 1. RUBRIQUE ACCEPTÉE (d'après l'URL) ------------------------------------
 // Si l'éditeur a rangé l'article dans une rubrique judiciaire, on prend.
-const SECTION_OK = /\/(crime|crimes|criminal|crime-in-israel|law|legal|courts?|justice|police|law-and-order|פלילים|פלילי|משפט)(\/|$|\?)/i;
+const SECTION_OK = /\/(crime|crimes|criminal|crime-in-israel|law|legal|courts?|justice|police|law-and-order|news-law|news-crime|פלילים|פלילי|משפט)(\/|$|\?)/i;
 
 // --- 2. RUBRIQUE REFUSÉE (d'après l'URL) -------------------------------------
 // Rejet immédiat, quel que soit le titre. C'est ce qui élimine les tribunes.
-const SECTION_KO = /\/(opinions?|opinion|blogs?|columns?|editorial|sport|sports|business|finance|markets|economy|tech|technology|digital|health|food|travel|tourism|culture|art|books|movies|tv|celebs|celebrity|fashion|cars|auto|real-estate|realestate|magazine|weather|judaism|jewish-world|lifestyle|science|environment|world-news|world|usa|us-news|international|abroad|europe|חו"ל|עולם|דעות|ספורט|כלכלה|תרבות|בריאות|אוכל|רכב)(\/|$|\?)/i;
+// Le delimiteur accepte le point : chez Walla, les rubriques sont en
+// sous-domaine (sports.walla.co.il, celebs.walla.co.il) et non en chemin.
+const SECTION_KO = /[\/.](opinions?|opinion|blogs?|columns?|editorial|sport|sports|business|finance|markets|economy|tech|technology|digital|health|food|travel|tourism|culture|art|books|movies|tv|celebs|celebrity|fashion|cars|auto|real-estate|realestate|magazine|weather|judaism|jewish-world|lifestyle|science|environment|world-news|world|usa|us-news|international|abroad|europe|חו"ל|עולם|דעות|ספורט|כלכלה|תרבות|בריאות|אוכל|רכב)([\/.]|$|\?)/i;
 
 // --- 3. Pertinence par mots-clés (secours, si la rubrique est muette) --------
 const RELEVANT = new RegExp([
@@ -290,25 +305,38 @@ export default async function handler(req, res) {
     const parSource = {};
 
     for (const { src, items: raw } of results) {
-      parSource[src.id] = { brut: raw.length, retenus: 0 };
+      parSource[src.id] = { brut: raw.length, retenus: 0, echantillon: [], rejets: [] };
+      const S = parSource[src.id];
+
+      // Trois premiers titres bruts : permet de verifier d'un coup d'oeil que
+      // la source interrogee est bien celle qu'on croit (piege du flux 538).
+      S.echantillon = raw.slice(0, 3).map((x) => x.title.slice(0, 90));
+
+      const rejet = (motif, it) => {
+        if (S.rejets.length < 8) S.rejets.push(motif + ' — ' + it.title.slice(0, 70));
+      };
 
       for (const it of raw) {
         stats.recus++;
 
         const t = new Date(it.pubDate).getTime();
-        if (Number.isNaN(t) || t < cutoff) { stats.horsFenetre++; continue; }
+        if (Number.isNaN(t) || t < cutoff) {
+          stats.horsFenetre++;
+          rejet(Number.isNaN(t) ? 'date illisible' : 'hors fenetre', it);
+          continue;
+        }
 
         // Rubrique refusée par l'éditeur → rejet immédiat, titre non examiné
-        if (SECTION_KO.test(it.link)) { stats.rubriqueRefusee++; continue; }
+        if (SECTION_KO.test(it.link)) { stats.rubriqueRefusee++; rejet('rubrique refusee', it); continue; }
 
         // Rubrique judiciaire de l'éditeur → admis d'office ; sinon, mots-clés
         const parRubrique = SECTION_OK.test(it.link);
-        if (!parRubrique && !RELEVANT.test(it.title)) { stats.horsSujet++; continue; }
+        if (!parRubrique && !RELEVANT.test(it.title)) { stats.horsSujet++; rejet('hors sujet', it); continue; }
 
-        if (EXCL_GUERRE.test(it.title))   { stats.guerre++; continue; }
-        if (EXCL_ADMIN.test(it.title))    { stats.admin++; continue; }
-        if (EXCL_ACCIDENT.test(it.title)) { stats.accident++; continue; }
-        if (EXCL_MANIF.test(it.title))    { stats.manifestation++; continue; }
+        if (EXCL_GUERRE.test(it.title))   { stats.guerre++; rejet('guerre', it); continue; }
+        if (EXCL_ADMIN.test(it.title))    { stats.admin++; rejet('administratif', it); continue; }
+        if (EXCL_ACCIDENT.test(it.title)) { stats.accident++; rejet('accident', it); continue; }
+        if (EXCL_MANIF.test(it.title))    { stats.manifestation++; rejet('manifestation', it); continue; }
 
         // Soupcon de mineur : mis de cote, tranche plus bas par le modele
         const soupcon = mentionsMinor(it.title);
@@ -357,8 +385,11 @@ export default async function handler(req, res) {
         sources: results.map((r) => ({
           id: r.src.id, name: r.src.name, url: r.src.url,
           ok: r.ok, reason: r.reason,
+          ua: r.src.browser ? 'navigateur' : 'robot',
           brut: parSource[r.src.id]?.brut ?? 0,
           retenus: parSource[r.src.id]?.retenus ?? 0,
+          echantillon: parSource[r.src.id]?.echantillon ?? [],
+          rejets: parSource[r.src.id]?.rejets ?? [],
         })),
       };
     }
