@@ -6,7 +6,7 @@
 //   1. Flux natifs des éditeurs — pas d'agrégateur tiers
 //   2. Titres seuls, liens directs vers la source
 //   3. Quarantaine automatique de toute dépêche pouvant concerner un mineur
-//   4. Éphémère : fenêtre de 24 h, aucun archivage, en-tête noindex
+//   4. Éphémère : fenêtre de 48 h, aucun archivage, en-tête noindex
 //   5. Attribution explicite côté front
 //
 // v3 : le tri repose d'abord sur la RUBRIQUE DE L'ÉDITEUR (lisible dans l'URL),
@@ -50,16 +50,50 @@ const SECTION_OK = /\/(crime|crimes|criminal|crime-in-israel|law|legal|courts?|j
 // Rejet immédiat, quel que soit le titre. C'est ce qui élimine les tribunes.
 // Le delimiteur accepte le point : chez Walla, les rubriques sont en
 // sous-domaine (sports.walla.co.il, celebs.walla.co.il) et non en chemin.
-const SECTION_KO = /[\/.](opinions?|opinion|blogs?|columns?|editorial|sport|sports|business|finance|markets|economy|tech|technology|digital|health|food|travel|tourism|culture|art|books|movies|tv|celebs|celebrity|fashion|cars|auto|real-estate|realestate|magazine|weather|judaism|jewish-world|lifestyle|science|environment|world-news|world|usa|us-news|international|abroad|europe|חו"ל|עולם|דעות|ספורט|כלכלה|תרבות|בריאות|אוכל|רכב)([\/.]|$|\?)/i;
+const SECTION_KO = /[\/.](opinions?|opinion|blogs?|columns?|editorial|sport|sports|business|finance|markets|economy|tech|technology|digital|health|food|travel|tourism|culture|art|books|movies|tv|celebs|celebrity|entertainment|trending|trending-online|viral|gossip|gallery|humor|fashion|cars|auto|real-estate|realestate|magazine|weather|judaism|jewish-world|lifestyle|science|environment|world-news|world|usa|us-news|international|abroad|europe|חו"ל|עולם|דעות|ספורט|כלכלה|תרבות|בריאות|אוכל|רכב)([\/.]|$|\?)/i;
 
-// --- 3. Pertinence par mots-clés (secours, si la rubrique est muette) --------
+// --- 3. Pertinence par mots-cles (secours, si la rubrique est muette) --------
+//
+// PIEGE HEBREU, identique a celui du filtre mineurs mais cote pertinence.
+// En JavaScript, \b se fonde sur [A-Za-z0-9_] : il ne fonctionne pas sur
+// l'alphabet hebreu. Sans frontiere, un mot court se retrouve AU MILIEU d'un
+// autre mot. Exemple reel : « ירי » (tir) est contenu dans « מכירים » (que vous
+// connaissez) — c'est ce qui faisait passer un article people sur une vedette
+// hollywoodienne dans un fil judiciaire.
+//
+// On reconstruit donc une frontiere manuelle :
+//   a gauche  : aucune lettre hebraique avant, hors prefixe colle (ו ה ב ל מ ש כ)
+//   a droite  : aucune lettre hebraique apres, pour les mots entiers
+const HE     = '\\u0590-\\u05FF';
+const AVANT  = `(?<![${HE}])[והבלמשכ]?`;
+const APRES  = `(?![${HE}])`;
+const mot    = (m) => AVANT + m + APRES;  // mot entier : aucun suffixe admis
+const racine = (m) => AVANT + m;          // suffixes admis (pluriel, feminin)
+
+// Mots courts ou ambigus : frontiere des deux cotes.
+const HE_MOTS = [
+  'ירי', 'נורה', 'שוד', 'נשק', 'גופה', 'פשע', 'סמים', 'תביעה',
+  'מעצר', 'נעצר', 'גניבה', 'זיוף', 'איומים', 'עצור',
+];
+
+// Racines : le suffixe est attendu (דקירה, דקירות, פליליים, הצתה...).
+const HE_RACINES = [
+  'רצח', 'נרצח', 'דקיר', 'פליל', 'משטרה', 'חשוד', 'נאשם',
+  'כתב אישום', 'גזר דין', 'הכרעת דין', 'בית משפט', 'פרקליטות',
+  'סחיטה', 'הלבנת הון', 'אלימות', 'חקיר', 'תקיפה', 'אונס',
+  'עבירות מין', 'עבירת מין', 'הטרדה', 'הונאה', 'מרמה', 'פדופיל',
+  'הצת', 'הוצת', 'מאסר', 'עונש', 'הורשע', 'פריצה', 'סחר בבני אדם',
+];
+
 const RELEVANT = new RegExp([
-  'רצח|נרצח|ירי|נורה|דקיר|פשע|פלילי|משטרה|נעצר|מעצר|חשוד|נאשם|כתב אישום|גזר דין',
-  'הכרעת דין|בית משפט|תביעה|פרקליטות|שוד|סחיטה|הלבנת הון|סמים|נשק|גופה|אלימות',
-  'meurtre|homicide|assassinat|fusillade|poignard|abattu|police|arrestation|interpell',
-  'enquête|enquete|procès|proces|condamn|inculp|tribunal|crime|gang|mafia|trafic',
-  'murder|homicide|shooting|stabbing|police|arrest|suspect|indictment|verdict',
-  'sentenc|convict|crime|gang|mafia|trafficking|assault|manslaughter',
+  ...HE_MOTS.map(mot),
+  ...HE_RACINES.map(racine),
+  // Langues latines : \b fonctionne normalement.
+  '\\b(?:meurtre|homicide|assassinat|fusillade|poignard|abattu|police|arrestation|interpell)',
+  '\\b(?:enquête|enquete|procès|proces|condamn|inculp|tribunal|crime|gang|mafia|trafic)',
+  '\\b(?:murder|homicide|shooting|stabbing|police|arrest|suspect|indictment|verdict)',
+  '\\b(?:sentenc|convict|crime|gang|mafia|trafficking|assault|manslaughter)',
+  '\\b(?:arson|fraud|rape|abuse|extortion|burglary|launder|prosecut|remand|custody)',
 ].join('|'), 'i');
 
 // --- 4. Exclusions thématiques ----------------------------------------------
@@ -142,6 +176,64 @@ function decode(s = '') {
     .replace(/<[^>]+>/g, '')
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+// --- Lecture de date tolerante -----------------------------------------------
+// new Date() ne sait lire que les formats normalises. Or les flux israeliens
+// s'en ecartent : abreviations de fuseau non standard (IST, IDT), dates en
+// notation locale, secondes absentes. Ynet renvoyait ainsi trente depeches
+// parfaitement valides, toutes rejetees pour « date illisible ».
+//
+// On normalise avant de lire, et l'on expose la chaine brute en mode debug
+// pour que tout nouveau format se voie immediatement.
+// Ecart reel entre UTC et l'heure d'Israel a un instant donne. Israel bascule
+// entre +02:00 (hiver) et +03:00 (heure d'ete) : un decalage fixe serait faux
+// la moitie de l'annee.
+function decalageIsrael(ms) {
+  const d = new Date(ms);
+  const utc = new Date(d.toLocaleString('en-US', { timeZone: 'UTC' }));
+  const il = new Date(d.toLocaleString('en-US', { timeZone: 'Asia/Jerusalem' }));
+  const ecart = il - utc;
+  return Number.isNaN(ecart) ? 3 * 3600 * 1000 : ecart;
+}
+
+function lireDate(brut) {
+  const s = String(brut || '').trim();
+  if (!s) return NaN;
+
+  // Fuseaux israeliens ecrits en toutes lettres, refuses par le moteur JS
+  const n = s
+    .replace(/\b(IST|IDT|Israel Standard Time|Israel Daylight Time)\b/i, '+0300')
+    .replace(/\bGMT\s*\+\s*0?3(:?00)?\b/i, '+0300')
+    .replace(/\bGMT\s*\+\s*0?2(:?00)?\b/i, '+0200')
+    .replace(/\bUT\b/i, 'UTC');
+
+  // Le fuseau est-il indique ? Si oui, Date.parse fait autorite.
+  // Sinon, l'heure est locale : c'est celle d'Israel, et surtout PAS celle du
+  // serveur — Vercel tourne en UTC, ce qui decalerait tout de trois heures.
+  const aFuseau = /(Z|[+-]\d{2}:?\d{2}|GMT|UTC|[A-Z]{3,4}\s*$)/.test(n);
+  if (aFuseau) {
+    const t = Date.parse(n);
+    if (!Number.isNaN(t)) return t;
+  }
+
+  const enIsrael = (a, m, j, h, mi, se) => {
+    const brutUTC = Date.UTC(+a, +m - 1, +j, +h, +mi, +(se || 0));
+    if (Number.isNaN(brutUTC)) return NaN;
+    return brutUTC - decalageIsrael(brutUTC);
+  };
+
+  // Notation locale : 08/08/2026 13:45[:00] ou 08.08.2026 13:45
+  const jma = n.match(/(\d{1,2})[\/.](\d{1,2})[\/.](\d{4})[ T,]+(\d{1,2}):(\d{2})(?::(\d{2}))?/);
+  if (jma) return enIsrael(jma[3], jma[2], jma[1], jma[4], jma[5], jma[6]);
+
+  // ISO sans fuseau : 2026-08-08 13:45:00 ou 2026-08-08T13:45
+  const iso = n.match(/(\d{4})-(\d{2})-(\d{2})[ T]+(\d{2}):(\d{2})(?::(\d{2}))?/);
+  if (iso) return enIsrael(iso[1], iso[2], iso[3], iso[4], iso[5], iso[6]);
+
+  // Dernier recours : format conforme mais fuseau absent de notre detection
+  const t = Date.parse(n);
+  return Number.isNaN(t) ? NaN : t;
 }
 
 function parse(xml) {
@@ -319,10 +411,15 @@ export default async function handler(req, res) {
       for (const it of raw) {
         stats.recus++;
 
-        const t = new Date(it.pubDate).getTime();
+        const t = lireDate(it.pubDate);
         if (Number.isNaN(t) || t < cutoff) {
           stats.horsFenetre++;
-          rejet(Number.isNaN(t) ? 'date illisible' : 'hors fenetre', it);
+          rejet(
+            Number.isNaN(t)
+              ? 'date illisible [' + String(it.pubDate || '(vide)').slice(0, 40) + ']'
+              : 'hors fenetre',
+            it,
+          );
           continue;
         }
 
