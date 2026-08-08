@@ -57,10 +57,10 @@
 <div class="ticker"><div class="wrap">
   <span class="lbl"><span class="pulse"></span> À la une</span>
   <div class="track"><div class="move">
+    <!-- Tête de bandeau : récits originaux, jamais périmés. Les 3 dépêches
+         les plus récentes du fil sont ajoutées à la suite par le script en bas de page. -->
     <a href="recit-eilat-taxi.html">Notre récit — La facilité : 27 et 25 ans de prison pour le meurtre du taxi d'Eilat</a>
-    <a href="article.html">Meurtre de Benayahu Razi : le suspect principal arrêté après deux semaines de traque</a>
-    <a href="https://www.timesofisrael.com/man-killed-another-seriously-wounded-in-shooting-in-northern-arab-town-of-tamra/" target="_blank" rel="noopener">Tamra : un coiffeur tué par balle dans son salon, piste criminelle privilégiée</a>
-    <a href="https://fr.timesofisrael.com/lambassade-us-appelle-les-americains-en-israel-a-la-prudence-face-au-crime-organise/" target="_blank" rel="noopener">L'ambassade américaine met en garde ses ressortissants face au crime organisé</a>
+    <a href="recit-ashdod-250-shekels.html">Notre récit — Deux cent cinquante shekels : le meurtre d'Ashdod</a>
   </div></div>
 </div></div>
 
@@ -255,7 +255,21 @@
   /* Ne retenir que les depeches passees par une rubrique criminelle ou judiciaire.
      Ecarte le contenu generaliste mal classe et garantit que le titre est traduit. */
   function pertinent(x){ return x && x.title && !/[\u0590-\u05FF]/.test(x.title); }
+  /* Bandeau « A la une » : 2 recits originaux (en dur, jamais perimes)
+     suivis des 3 depeches les plus recentes du flux. Si le flux ne repond pas,
+     le bandeau garde le HTML statique de la page. */
+  var TICK_LEAD='<a href="recit-eilat-taxi.html">Notre r\u00e9cit \u2014 La facilit\u00e9 : 27 et 25 ans de prison pour le meurtre du taxi d\'Eilat</a>'
+              + '<a href="recit-ashdod-250-shekels.html">Notre r\u00e9cit \u2014 Deux cent cinquante shekels : le meurtre d\'Ashdod</a>';
+  function ticker(d){
+    var ms=document.querySelectorAll('.ticker .move'); if(!ms.length||!d||!d.fr) return;
+    var extra=d.fr.filter(pertinent).slice(0,3).map(function(it){
+      return '<a href="'+esc(it.link)+'" target="_blank" rel="noopener">'+esc(it.title)+'</a>';
+    }).join('');
+    if(!extra) return;
+    Array.prototype.forEach.call(ms,function(m){ m.innerHTML=TICK_LEAD+extra; });
+  }
   function render(d){
+    ticker(d);
     T.forEach(function(el){
       var th=el.getAttribute('data-feed-theme'), items;
       if(!d||!d.fr){ el.innerHTML='<div class="lw-empty">Chargement…</div>'; return; }
