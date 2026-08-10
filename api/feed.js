@@ -514,10 +514,10 @@ export default async function handler(req, res) {
       };
     }
 
-    res.setHeader('Cache-Control', 's-maxage=600, stale-while-revalidate=1800');
+    res.setHeader('Cache-Control', 's-maxage=1800, stale-while-revalidate=3600');
     res.status(200).json(payload);
   } catch (e) {
-    res.setHeader('Cache-Control', 's-maxage=60');
+    res.setHeader('Cache-Control', 's-maxage=300');
     res.status(200).json({ ok: false, error: String(e), fr: [], il: [], items: [] });
   }
 }
