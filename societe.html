@@ -22,7 +22,7 @@
 <div class="notice">Titres de la presse israélienne — <b>chaque lien renvoie à l'éditeur d'origine</b>.</div>
 
 <div class="util"><div class="wrap">
-  <div class="left"><span class="edition"><span class="today">…</span></span></div>
+  <div class="left"><span class="edition">Édition de Tel-Aviv<span class="today"></span></span></div>
   <div class="right">
     <button class="icon-btn" data-search aria-label="Rechercher"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
     <button class="icon-btn" data-theme-toggle aria-label="Thème"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></button>
@@ -77,10 +77,7 @@
 
   <div class="ext-note" style="margin-top:30px">Ce fil rassemble des affaires publiées par des médias tiers. KTAV ICHOUM en propose un résumé factuel en français ; les articles complets restent sur les sites d'origine, liés ci-dessus.</div>
 
-  <nav class="pager" aria-label="Pagination">
-    <a href="#" aria-label="Précédent">‹</a><a href="#" class="on">1</a><a href="#">2</a><a href="#" aria-label="Suivant">›</a>
-  </nav>
-</div>
+  </div>
 
 <section class="nlfull" id="newsletter"><div class="wrap">
   <h2>Comprendre la société</h2>
@@ -112,6 +109,10 @@
   <nav><a href="/">Accueil</a><a href="/fil">Fil</a><a href="/recits">Récits</a><a href="/justice">Justice</a><a href="/crime-organise">Crime organisé</a><a href="/societe">Société</a><a href="/archives">Archives</a><a href="/sources">Sources</a></nav>
 </div>
 
+<script>
+(function(){var e=document.querySelector('.util .today');if(!e)return;
+ try{e.textContent=' · '+new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});}catch(x){}})();
+</script>
 <script src="./assets/app.js?v=20260812"></script>
 
 <script>

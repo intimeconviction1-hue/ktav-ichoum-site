@@ -30,7 +30,7 @@
 <div class="notice">Résumé factuel en français — <b>cet article renvoie à ses sources d'origine</b> (voir encadré et liens).</div>
 
 <div class="util"><div class="wrap">
-  <div class="left"><span class="edition"><span class="today">…</span></span></div>
+  <div class="left"><span class="edition">Édition de Tel-Aviv<span class="today"></span></span></div>
   <div class="right">
     <button class="icon-btn" data-search aria-label="Rechercher"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
     <button class="icon-btn" data-theme-toggle aria-label="Thème"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></button>
@@ -65,9 +65,9 @@
         <div class="meta"><span>2026 · d'après l'Abraham Initiatives</span><span class="dot">Lecture 3 min</span></div>
       </div>
       <div class="share" aria-label="Partager">
-        <a href="#" aria-label="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7 8 8.2 12H17l-5-7.3L6.3 22H3l7.5-8.6L2 2h6.3l4.6 6.7zM17 20h1.7L7 4H5.3z"/></svg></a>
-        <a href="#" aria-label="WhatsApp"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 5 5.1-1.3A10 10 0 1 0 12 2z"/></svg></a>
-        <a href="#" aria-label="Copier"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/></svg></a>
+        <a href="https://twitter.com/intent/tweet?text=La%20barre%20des%20100%20homicides%20franchie%20dans%20la%20soci%C3%A9t%C3%A9%20arabe%20en%202026&amp;url=https%3A%2F%2Fktavichoum.vercel.app%2Farticle-societe" target="_blank" rel="noopener" data-partage="X" aria-label="Partager sur X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7 8 8.2 12H17l-5-7.3L6.3 22H3l7.5-8.6L2 2h6.3l4.6 6.7zM17 20h1.7L7 4H5.3z"/></svg></a>
+        <a href="https://wa.me/?text=La%20barre%20des%20100%20homicides%20franchie%20dans%20la%20soci%C3%A9t%C3%A9%20arabe%20en%202026%20%E2%80%94%20https%3A%2F%2Fktavichoum.vercel.app%2Farticle-societe" target="_blank" rel="noopener" data-partage="WhatsApp" aria-label="Partager sur WhatsApp"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 5 5.1-1.3A10 10 0 1 0 12 2z"/></svg></a>
+        <a href="https://ktavichoum.vercel.app/article-societe" data-partage="copier" aria-label="Copier le lien"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/></svg></a>
       </div>
     </div>
   </header>
@@ -100,10 +100,6 @@
       <h2>Une spirale qui inquiète</h2>
 
       <p>Ces violences, largement attribuées au crime organisé et aux règlements de comptes entre familles, nourrissent un profond sentiment d'abandon dans la communauté arabe, qui dénonce de longue date l'insuffisance de la réponse policière.</p>
-
-      <div class="tags-row">
-        <a href="#">#Société</a><a href="#">#CommunautéArabe</a><a href="#">#Homicides</a><a href="#">#AbrahamInitiatives</a><a href="#">#Israël</a>
-      </div>
 
       <div class="ext-note">
         <strong>Sources</strong> :
@@ -163,7 +159,37 @@
   <nav><a href="/">Accueil</a><a href="/fil">Fil</a><a href="/recits">Récits</a><a href="/justice">Justice</a><a href="/crime-organise">Crime organisé</a><a href="/societe">Société</a><a href="/archives">Archives</a><a href="/sources">Sources</a></nav>
 </div>
 
+<script>
+(function(){var e=document.querySelector('.util .today');if(!e)return;
+ try{e.textContent=' · '+new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});}catch(x){}})();
+</script>
 <script src="./assets/app.js?v=20260812"></script>
 
+<script>
+/* Partage — construit sur le canonical de la page, sans dependance externe. */
+(function(){
+  var lien = document.querySelector('link[rel="canonical"]');
+  var url  = lien ? lien.href : location.href;
+  var titre = (document.querySelector('h1') || {}).textContent || document.title;
+  var cibles = {
+    X: 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(titre) + '&url=' + encodeURIComponent(url),
+    WhatsApp: 'https://wa.me/?text=' + encodeURIComponent(titre + ' — ' + url)
+  };
+  document.querySelectorAll('.share a[data-partage]').forEach(function(a){
+    var r = a.getAttribute('data-partage');
+    if (cibles[r]) { a.href = cibles[r]; a.target = '_blank'; a.rel = 'noopener'; return; }
+    a.href = url;
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      var fini = function(){
+        var t = a.getAttribute('aria-label');
+        a.setAttribute('aria-label', 'Lien copié');
+        setTimeout(function(){ a.setAttribute('aria-label', t); }, 1800);
+      };
+      if (navigator.clipboard) { navigator.clipboard.writeText(url).then(fini, function(){}); }
+    });
+  });
+})();
+</script>
 </body>
 </html>
