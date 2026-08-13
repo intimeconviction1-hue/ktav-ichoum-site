@@ -47,9 +47,10 @@
       "@type": "ItemList",
       "name": "Nos r\u00e9cits originaux",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "url": "https://ktavichoum.vercel.app/recit-srour-shuafat", "name": "\u00c0 la lueur du coup de feu" },
-        { "@type": "ListItem", "position": 2, "url": "https://ktavichoum.vercel.app/recit-ashdod-250-shekels", "name": "Deux cent cinquante shekels" },
-        { "@type": "ListItem", "position": 3, "url": "https://ktavichoum.vercel.app/recit-eilat-taxi", "name": "La facilit\u00e9" }
+        { "@type": "ListItem", "position": 1, "url": "https://ktavichoum.vercel.app/recit-ramat-gan-wishniak", "name": "Rue Avtalion" },
+        { "@type": "ListItem", "position": 2, "url": "https://ktavichoum.vercel.app/recit-srour-shuafat", "name": "\u00c0 la lueur du coup de feu" },
+        { "@type": "ListItem", "position": 3, "url": "https://ktavichoum.vercel.app/recit-ashdod-250-shekels", "name": "Deux cent cinquante shekels" },
+        { "@type": "ListItem", "position": 4, "url": "https://ktavichoum.vercel.app/recit-eilat-taxi", "name": "La facilit\u00e9" }
       ]
     }
   ]
@@ -107,6 +108,7 @@
   <div class="track"><div class="move">
     <!-- Tête de bandeau : récits originaux, jamais périmés. Les 3 dépêches
          les plus récentes du fil sont ajoutées à la suite par le script en bas de page. -->
+    <a href="/recit-ramat-gan-wishniak">Notre récit — Rue Avtalion : six ans de procédure pour le meurtre de Maya Wishniak</a>
     <a href="/recit-srour-shuafat">Notre récit — À la lueur du coup de feu : Jamil Srour obtient un nouveau procès après seize ans</a>
     <a href="/recit-eilat-taxi">Notre récit — La facilité : 27 et 25 ans de prison pour le meurtre du taxi d'Eilat</a>
     <a href="/recit-ashdod-250-shekels">Notre récit — Deux cent cinquante shekels : le meurtre d'Ashdod</a>
@@ -121,14 +123,20 @@
     <div class="ph ph--night" style="background-image:url('./assets/covers/justice.svg'),linear-gradient(135deg,#2b2b33,#14141a);background-size:cover;background-position:center"></div>
     <div class="overlay">
       <span class="tag tag--doc">Notre récit · Justice</span>
-      <h2 class="lead-titre">À la lueur du coup de feu</h2>
-      <p>Shuafat, 2009. Un homme venu s'interposer est tué par une balle perdue. Aucune preuve matérielle, quatre témoins de la famille rivale, une identification à la lueur d'un tir. Seize ans plus tard, la Cour suprême a ordonné de tout reprendre.</p>
-      <div class="meta"><span class="src">Récit original de <b>David Castel</b></span><span class="dot">Sources en hébreu · Kan 11, N12, Maariv</span></div>
+      <h2 class="lead-titre">Rue Avtalion</h2>
+      <p>Ramat Gan, mai 2020. Maya Wishniak, vingt et un ans, est étranglée par son compagnon, qui photographie ensuite le corps et disperse des billets dessus. Personne n'a jamais contesté qu'il l'avait tuée. Il aura pourtant fallu six ans, vingt examens psychiatriques et un accord de plaidoyer pour qu'il le dise.</p>
+      <div class="meta"><span class="src">Récit original de <b>David Castel</b></span><span class="dot">Sources en hébreu · Mako/N12, Ynet, Haaretz, Maariv</span></div>
     </div>
-    <a href="/recit-srour-shuafat" style="position:absolute;inset:0;z-index:3" aria-label="Lire le récit"></a>
+    <a href="/recit-ramat-gan-wishniak" style="position:absolute;inset:0;z-index:3" aria-label="Lire le récit"></a>
   </article>
 
   <div class="side-lead">
+    <a class="side-card" href="/recit-srour-shuafat">
+      <div class="thumb"><div class="ph ph--night"></div></div>
+      <div><span class="tag tag--doc">Notre récit · Justice</span>
+        <h3>À la lueur du coup de feu : Jamil Srour obtient un nouveau procès après seize ans</h3>
+        <div class="meta"><span class="src">Récit original <b>KI</b></span><span>8 août 2026</span></div></div>
+    </a>
     <a class="side-card" href="/recit-ashdod-250-shekels">
       <div class="thumb"><div class="ph ph--red"></div></div>
       <div><span class="tag tag--doc">Notre récit · Justice</span>
@@ -140,12 +148,6 @@
       <div><span class="tag tag--doc">Notre récit · Justice</span>
         <h3>La facilité : 27 et 25 ans de prison pour le meurtre du taxi d'Eilat</h3>
         <div class="meta"><span class="src">Récit original <b>KI</b></span><span>Verdict du 20 juil. 2026</span></div></div>
-    </a>
-    <a class="side-card" href="/synthese-razi-jerusalem">
-      <div class="thumb"><div class="ph ph--night"></div></div>
-      <div><span class="tag tag--alert">Mise à jour</span>
-        <h3>Meurtre de Benayahu Razi à Jérusalem : le suspect arrêté après deux semaines</h3>
-        <div class="meta"><span class="src">Synthèse <b>KI</b></span><span>29 juil. 2026</span></div></div>
     </a>
   </div>
 </div></section>
@@ -303,7 +305,8 @@
   /* Bandeau « A la une » : 2 recits originaux (en dur, jamais perimes)
      suivis des 3 depeches les plus recentes du flux. Si le flux ne repond pas,
      le bandeau garde le HTML statique de la page. */
-  var TICK_LEAD='<a href="/recit-srour-shuafat">Notre r\u00e9cit \u2014 \u00c0 la lueur du coup de feu : Jamil Srour obtient un nouveau proc\u00e8s apr\u00e8s seize ans</a>'
+  var TICK_LEAD='<a href="/recit-ramat-gan-wishniak">Notre r\u00e9cit \u2014 Rue Avtalion : six ans de proc\u00e9dure pour le meurtre de Maya Wishniak</a>'
+              + '<a href="/recit-srour-shuafat">Notre r\u00e9cit \u2014 \u00c0 la lueur du coup de feu : Jamil Srour obtient un nouveau proc\u00e8s apr\u00e8s seize ans</a>'
               + '<a href="/recit-eilat-taxi">Notre r\u00e9cit \u2014 La facilit\u00e9 : 27 et 25 ans de prison pour le meurtre du taxi d\'Eilat</a>'
               + '<a href="/recit-ashdod-250-shekels">Notre r\u00e9cit \u2014 Deux cent cinquante shekels : le meurtre d\'Ashdod</a>';
   function ticker(d){
