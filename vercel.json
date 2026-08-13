@@ -2,8 +2,25 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "headers": [
-    { "source": "/assets/(.*)", "headers": [
-      { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
-    ]}
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/api/rss",
+      "headers": [
+        { "key": "Cache-Control", "value": "s-maxage=1800, stale-while-revalidate=3600" }
+      ]
+    }
+  ],
+  "redirects": [
+    { "source": "/article", "destination": "/synthese-razi-jerusalem", "permanent": true },
+    { "source": "/article-japanika", "destination": "/synthese-japanika-grenades", "permanent": true },
+    { "source": "/article-police", "destination": "/synthese-operation-on-target", "permanent": true },
+    { "source": "/article-societe", "destination": "/synthese-homicides-societe-arabe-2026", "permanent": true },
+    { "source": "/article-enquetes", "destination": "/dossier-disparus-mont-meron", "permanent": true },
+    { "source": "/article-justice", "destination": "/recit-srour-shuafat", "permanent": true }
   ]
 }
