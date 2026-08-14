@@ -12,9 +12,11 @@
       <feFuncG type="table" tableValues="0.0863 0.39"/>
       <feFuncB type="table" tableValues="0.0824 0.03"/>
     </feComponentTransfer>
-  </filter></defs>
-<image href="../photos/sources/jerusalem-police-station.jpg" x="0" y="0" width="1200" height="700" preserveAspectRatio="xMidYMid slice" filter="url(#duotone)"/>
-<rect width="1200" height="700" fill="url(#lum)" opacity=".72"/>
+  </filter><linearGradient id="textscrim" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".82"/><stop offset=".5" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></linearGradient></defs>
+<image href="../photos/sources/jerusalem-police-station.jpg" x="0" y="0" width="1200" height="700" preserveAspectRatio="xMidYMid slice"/>
+<rect width="1200" height="700" fill="url(#lum)" opacity=".38"/>
+<rect width="1200" height="700" fill="url(#textscrim)"/>
+
 <g opacity=".12"><path d="M0 0h1200v700H0z" filter="url(#grain)"/></g>
 <g opacity=".07" stroke="#EDECE7" stroke-width="1"><path d="M64 150h1072"/><path d="M64 180h1072"/><path d="M64 210h1072"/><path d="M64 240h1072"/><path d="M64 270h1072"/><path d="M64 300h1072"/><path d="M64 330h1072"/><path d="M64 360h1072"/><path d="M64 390h1072"/><path d="M64 420h1072"/><path d="M64 450h1072"/><path d="M64 480h1072"/><path d="M64 510h1072"/><path d="M64 540h1072"/><path d="M64 570h1072"/><path d="M64 600h1072"/><path d="M64 630h1072"/></g>
 <rect x="40" y="40" width="1120" height="620" fill="none" stroke="#b8860b" stroke-width="1.2" opacity=".6"/>
