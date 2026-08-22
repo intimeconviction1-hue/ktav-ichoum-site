@@ -955,3 +955,93 @@ body.home{
     display:none;
   }
 }
+/* ==========================================================
+   CORRECTIONS VISUELLES HOME — 22/08/2026
+   ========================================================== */
+
+/* Header un peu plus compact */
+.home .masthead .wrap{
+  padding-top:10px;
+}
+
+.home .masthead .brand .emblem{
+  width:46px;
+  height:46px;
+  flex-basis:46px;
+}
+
+.home .brand .word{
+  font-size:2.25rem;
+}
+
+.home .brand .word small{
+  margin-top:5px;
+}
+
+.home .nav{
+  margin-top:10px;
+  padding:6px 0 7px;
+}
+
+/* Ticker plus propre */
+.home .ticker .wrap{
+  height:40px;
+}
+
+.home .ticker .move a{
+  line-height:40px;
+}
+
+/* Hero moins massif, plus éditorial */
+.home .lead{
+  min-height:500px;
+}
+
+.home .lead .overlay{
+  padding:38px 40px 32px;
+}
+
+.home .hero .lead .overlay .lead-titre{
+  font-size:clamp(2.5rem,4.4vw,4rem);
+  line-height:.96;
+  max-width:13ch;
+  margin-top:10px;
+  margin-bottom:12px;
+}
+
+.home .lead p{
+  max-width:54ch;
+  font-size:1.03rem;
+  line-height:1.48;
+}
+
+/* Colonne de droite */
+.home .side-card{
+  padding:18px 0 20px;
+}
+
+.home .side-card h3{
+  font-size:1.04rem;
+  line-height:1.16;
+}
+
+/* Plus de respiration globale */
+.home .hero{
+  padding-top:32px;
+}
+
+.home .hero-grid{
+  gap:30px;
+}
+
+/* Le label rouge reste bien lisible */
+.home .lead .tag--doc{
+  padding:.36em .7em;
+}
+
+/* Desktop large */
+@media(min-width:1200px){
+  .home .wrap{
+    max-width:1320px;
+  }
+}
