@@ -1,25 +1,40 @@
+```html
 <!DOCTYPE html>
 <html lang="fr" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>KTAV ICHOUM — Faits divers, enquêtes & justice en Israël</title>
+
 <meta name="description" content="Récits originaux et synthèses en français sur les faits divers israéliens : criminalité organisée, justice, police. Sourcés en hébreu, chaque affaire liée à son média d'origine.">
 <meta name="theme-color" content="#0B0B0D">
+
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="KTAV ICHOUM">
 <meta property="og:title" content="KTAV ICHOUM — Comprendre Israël à travers ses affaires criminelles">
-<meta name="twitter:card" content="summary">
 <meta property="og:url" content="https://ktavichoum.vercel.app/">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:description" content="Récits originaux et synthèses en français sur la justice pénale, la police et le crime organisé en Israël. Sourcés dans la presse hébraïque.">
+
+<meta name="twitter:card" content="summary">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@500;600;700&family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+<!-- CSS GLOBAL -->
 <link rel="stylesheet" href="./assets/styles.css?v=20260812">
+
+<!-- NOUVEL HABILLAGE HOMEPAGE -->
+<link rel="stylesheet" href="./assets/home.css?v=20260822">
+
 <link rel="alternate" type="application/rss+xml" title="KTAV ICHOUM — Le fil des faits divers israéliens" href="/api/rss">
 <link rel="canonical" href="https://ktavichoum.vercel.app/">
+
 <meta name="keywords" content="faits divers Israël, crime organisé Israël, פלילים, משפט, police israélienne, justice, meurtre, enquête criminelle, règlement de comptes, Ynet, Haaretz, Times of Israël, i24NEWS, N12">
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -30,10 +45,16 @@
       "name": "Ktav Ichoum",
       "url": "https://ktavichoum.vercel.app/",
       "inLanguage": "fr",
-      "description": "M\u00e9dia num\u00e9rique francophone consacr\u00e9 \u00e0 la justice p\u00e9nale, \u00e0 la police et au crime organis\u00e9 en Isra\u00ebl.",
+      "description": "Média numérique francophone consacré à la justice pénale, à la police et au crime organisé en Israël.",
       "publishingPrinciples": "https://ktavichoum.vercel.app/charte-ethique",
-      "founder": { "@type": "Person", "name": "David Castel" },
-      "parentOrganization": { "@type": "Organization", "name": "FACILE PAPIERS SAS" }
+      "founder": {
+        "@type": "Person",
+        "name": "David Castel"
+      },
+      "parentOrganization": {
+        "@type": "Organization",
+        "name": "FACILE PAPIERS SAS"
+      }
     },
     {
       "@type": "WebSite",
@@ -41,303 +62,1876 @@
       "url": "https://ktavichoum.vercel.app/",
       "name": "Ktav Ichoum",
       "inLanguage": "fr",
-      "publisher": { "@id": "https://ktavichoum.vercel.app/#org" }
+      "publisher": {
+        "@id": "https://ktavichoum.vercel.app/#org"
+      }
     },
     {
       "@type": "ItemList",
-      "name": "Nos r\u00e9cits originaux",
+      "name": "Nos récits originaux",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "url": "https://ktavichoum.vercel.app/recit-nahlaot-adulte-presente", "name": "\u00c0 Nahlaot, une adulte et six enfants" },
-        { "@type": "ListItem", "position": 2, "url": "https://ktavichoum.vercel.app/recit-ramat-gan-wishniak", "name": "Rue Avtalion" },
-        { "@type": "ListItem", "position": 2, "url": "https://ktavichoum.vercel.app/recit-srour-shuafat", "name": "\u00c0 la lueur du coup de feu" },
-        { "@type": "ListItem", "position": 3, "url": "https://ktavichoum.vercel.app/recit-ashdod-250-shekels", "name": "Deux cent cinquante shekels" },
-        { "@type": "ListItem", "position": 4, "url": "https://ktavichoum.vercel.app/recit-eilat-taxi", "name": "La facilit\u00e9" }
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "url": "https://ktavichoum.vercel.app/recit-nahlaot-adulte-presente",
+          "name": "À Nahlaot, une adulte et six enfants"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "url": "https://ktavichoum.vercel.app/recit-ramat-gan-wishniak",
+          "name": "Rue Avtalion"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "url": "https://ktavichoum.vercel.app/recit-srour-shuafat",
+          "name": "À la lueur du coup de feu"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "url": "https://ktavichoum.vercel.app/recit-ashdod-250-shekels",
+          "name": "Deux cent cinquante shekels"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "url": "https://ktavichoum.vercel.app/recit-eilat-taxi",
+          "name": "La facilité"
+        }
       ]
     }
   ]
 }
 </script>
+
 <style>
-.lw-head .lw-all{margin-left:auto;font-family:var(--ff-ui,inherit);font-size:.8rem;font-weight:700;text-decoration:none;color:var(--ki-bordeaux-2,#8c1c24);white-space:nowrap}
-.lw-head .lw-all:hover{text-decoration:underline}
-.lw-more{margin:14px 2px 0;font-size:.85rem}
-.lw-more a{color:var(--ki-bordeaux-2,#8c1c24);text-decoration:none}
-.lw-more a:hover{text-decoration:underline}
-@media(max-width:640px){.lw-head .lw-all{margin-left:0;flex-basis:100%}}
+.lw-head .lw-all{
+  margin-left:auto;
+  font-family:var(--ff-ui,inherit);
+  font-size:.8rem;
+  font-weight:700;
+  text-decoration:none;
+  color:var(--ki-bordeaux-2,#8c1c24);
+  white-space:nowrap
+}
+
+.lw-head .lw-all:hover{
+  text-decoration:underline
+}
+
+.lw-more{
+  margin:14px 2px 0;
+  font-size:.85rem
+}
+
+.lw-more a{
+  color:var(--ki-bordeaux-2,#8c1c24);
+  text-decoration:none
+}
+
+.lw-more a:hover{
+  text-decoration:underline
+}
+
+@media(max-width:640px){
+  .lw-head .lw-all{
+    margin-left:0;
+    flex-basis:100%
+  }
+}
 </style>
+
 <style>
-.h1-accueil{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
-.hero .lead .overlay .lead-titre{font-family:var(--ff-display,inherit);font-weight:900;text-transform:uppercase;letter-spacing:-.01em;line-height:1.02;font-size:clamp(1.9rem,4.4vw,3.4rem);margin:0 0 12px}
+.h1-accueil{
+  position:absolute;
+  width:1px;
+  height:1px;
+  margin:-1px;
+  padding:0;
+  overflow:hidden;
+  clip:rect(0 0 0 0);
+  white-space:nowrap;
+  border:0
+}
+
+.hero .lead .overlay .lead-titre{
+  font-family:var(--ff-display,inherit);
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:-.01em;
+  line-height:1.02;
+  font-size:clamp(1.9rem,4.4vw,3.4rem);
+  margin:0 0 12px
+}
 </style>
+
 </head>
-<body>
 
-<div class="notice">Récits originaux et synthèses en français, sourcés. Le fil reprend les titres de la presse israélienne ; <b>chaque lien renvoie à l'éditeur d'origine</b>.</div>
+<body class="home">
 
-<!-- BARRE UTILITAIRE -->
-<div class="util"><div class="wrap">
-  <div class="left">
-    <span class="edition">Édition de Tel-Aviv<span class="today"></span></span>
-    <span class="sep muted">|</span>
-    <a href="/fil" class="live"><span class="pulse"></span> En continu</a>
-  </div>
-  <div class="right">
-    <a href="/recits">Récits</a><a href="/archives">Archives</a><a href="#newsletter">Newsletter</a>
-    <button class="icon-btn" data-search aria-label="Rechercher"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
-    <button class="icon-btn" data-theme-toggle aria-label="Thème"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></button>
-  </div>
-</div></div>
+<div class="notice">
+  Récits originaux et synthèses en français, sourcés.
+  Le fil reprend les titres de la presse israélienne ;
+  <b>chaque lien renvoie à l'éditeur d'origine</b>.
+</div>
 
-<!-- MASTHEAD -->
-<header class="masthead"><div class="wrap">
-  <a class="brand" href="/" aria-label="Accueil KTAV ICHOUM">
-    <svg class="emblem" viewBox="0 0 44 44" fill="none" aria-hidden="true"><rect x="2" y="2" width="40" height="40" rx="10" fill="#111"/><rect x="2" y="2" width="40" height="40" rx="10" stroke="#C9A227" stroke-width="1.6"/><circle cx="18" cy="18" r="9.3" fill="none" stroke="#d10a13" stroke-width="3"/><line x1="24.8" y1="24.8" x2="33" y2="33" stroke="#C9A227" stroke-width="3.8" stroke-linecap="round"/><path d="M18 13.6 L21.9 20.4 L14.1 20.4 Z" fill="none" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/><path d="M18 22.4 L21.9 15.6 L14.1 15.6 Z" fill="none" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg>
-    <span class="word">Ktav Ichoum<small>Crime et justice · Israël</small></span>
-  </a>
-  <nav class="nav" aria-label="Navigation principale">
-    <a href="/fil" class="hot">Fil</a><a href="/recits" >Récits</a><a href="/justice" >Justice</a><a href="/crime-organise" >Crime organisé</a><a href="/societe" >Société</a>
-  </nav>
-  <div class="mast-actions">
-    <a href="#newsletter" class="btn btn--primary">S'abonner</a>
-    <button class="btn burger icon-btn" data-menu-open aria-label="Menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
-  </div>
-</div></header>
 
-<!-- TICKER -->
-<div class="ticker"><div class="wrap">
-  <span class="lbl"><span class="pulse"></span> À la une</span>
-  <div class="track"><div class="move">
-    <!-- Tête de bandeau : récits originaux, jamais périmés. Les 3 dépêches
-         les plus récentes du fil sont ajoutées à la suite par le script en bas de page. -->
-    <a href="/recit-nahlaot-adulte-presente">Notre récit — À Nahlaot, une adulte et six enfants : sept personnes poursuivies, dont quatre mineurs</a>
-    <a href="/recit-ramat-gan-wishniak">Notre récit — Rue Avtalion : six ans de procédure pour le meurtre de Maya Wishniak</a>
-    <a href="/recit-srour-shuafat">Notre récit — À la lueur du coup de feu : Jamil Srour obtient un nouveau procès après seize ans</a>
-    <a href="/recit-eilat-taxi">Notre récit — La facilité : 27 et 25 ans de prison pour le meurtre du taxi d'Eilat</a>
-    <a href="/recit-ashdod-250-shekels">Notre récit — Deux cent cinquante shekels : le meurtre d'Ashdod</a>
-  </div></div>
-</div></div>
+<!-- =====================================================
+     BARRE UTILITAIRE
+     ===================================================== -->
 
-<h1 class="h1-accueil">Ktav Ichoum — crime, police et justice en Israël, en français</h1>
+<div class="util">
+  <div class="wrap">
 
-<!-- HERO / LA UNE -->
-<section class="hero"><div class="wrap hero-grid">
-  <article class="lead">
-    <div class="ph ph--night" style="background-image:url('./assets/covers/societe.svg'),linear-gradient(135deg,#2b2b33,#14141a);background-size:cover;background-position:center"></div>
-    <div class="overlay">
-      <span class="tag tag--doc">Notre récit · Société</span>
-      <h2 class="lead-titre">À Nahlaot, une adulte et six enfants</h2>
-      <p>Jérusalem, juillet 2026. Un homme de dix-neuf ans est tué dans un appartement loué pour quelques nuits. Sept personnes sont poursuivies : quatre mineurs de quinze à dix-sept ans, deux jeunes femmes, et la mère de l'un des adolescents. Dans ce dossier, l'adulte n'était pas absente.</p>
-      
-      <div class="meta"><span class="src">Récit original de <b>David Castel</b></span><span class="dot">Sources en hébreu · Haaretz, Walla, Kikar HaShabat, Chaîne 13</span></div>
+    <div class="left">
+      <span class="edition">
+        Édition de Tel-Aviv<span class="today"></span>
+      </span>
+
+      <span class="sep muted">|</span>
+
+      <a href="/fil" class="live">
+        <span class="pulse"></span>
+        En continu
+      </a>
     </div>
-    <a href="/recit-nahlaot-adulte-presente" style="position:absolute;inset:0;z-index:3" aria-label="Lire le récit"></a>
-  </article>
 
-  <div class="side-lead">
-    <a class="side-card" href="/recit-srour-shuafat">
-      <div class="thumb"><div class="ph ph--night"></div></div>
-      <div><span class="tag tag--doc">Notre récit · Justice</span>
-        <h3>À la lueur du coup de feu : Jamil Srour obtient un nouveau procès après seize ans</h3>
-        <div class="meta"><span class="src">Récit original <b>KI</b></span><span>8 août 2026</span></div></div>
-    </a>
-    <a class="side-card" href="/recit-ashdod-250-shekels">
-      <div class="thumb"><div class="ph ph--red"></div></div>
-      <div><span class="tag tag--doc">Notre récit · Justice</span>
-        <h3>Deux cent cinquante shekels : trente ans de prison pour le meurtre d'Ashdod</h3>
-        <div class="meta"><span class="src">Récit original <b>KI</b></span><span>7 août 2026</span></div></div>
-    </a>
-    <a class="side-card" href="/recit-eilat-taxi">
-      <div class="thumb"><div class="ph ph--slate"></div></div>
-      <div><span class="tag tag--doc">Notre récit · Justice</span>
-        <h3>La facilité : 27 et 25 ans de prison pour le meurtre du taxi d'Eilat</h3>
-        <div class="meta"><span class="src">Récit original <b>KI</b></span><span>Verdict du 20 juil. 2026</span></div></div>
-    </a>
-  </div>
-</div></section>
+    <div class="right">
 
-<!-- FIL EN DIRECT (temps réel) -->
-<section class="livewire" id="fil"><div class="wrap">
-  <div class="lw-head">
-    <span class="lw-live"><span class="pulse"></span> Direct</span>
-    <h2>Le fil des faits divers israéliens</h2>
-    <span class="lw-upd" id="lw-upd">actualisation automatique…</span>
-    <a class="lw-all" href="/fil">Tout le fil →</a>
-  </div>
-  <div class="lw-list" data-nosnippet id="lw-list" data-feed-theme="all" aria-live="polite">
-    <div class="lw-item"><span class="tm lw-skel" style="width:40px">&nbsp;</span><span class="lw-skel" style="width:70%">&nbsp;</span></div>
-    <div class="lw-item"><span class="tm lw-skel" style="width:40px">&nbsp;</span><span class="lw-skel" style="width:60%">&nbsp;</span></div>
-    <div class="lw-item"><span class="tm lw-skel" style="width:40px">&nbsp;</span><span class="lw-skel" style="width:75%">&nbsp;</span></div>
-    <div class="lw-item"><span class="tm lw-skel" style="width:40px">&nbsp;</span><span class="lw-skel" style="width:55%">&nbsp;</span></div>
-  </div>
-  <p class="lw-more"><a href="/fil"><b>Voir tout le fil, rubrique par rubrique →</b></a></p>
-  <p style="margin:10px 2px 0;font-size:.72rem;line-height:1.5;color:var(--ki-text);opacity:.55">Titres de la presse israélienne (rubriques criminelles et judiciaires) traduits en français. Ktav Ichoum n'en est pas l'auteur ; chaque lien renvoie à l'éditeur d'origine.</p>
-</div></section>
+      <a href="/recits">Récits</a>
+      <a href="/archives">Archives</a>
+      <a href="#newsletter">Newsletter</a>
 
-<!-- CORPS PRINCIPAL -->
+      <button class="icon-btn" data-search aria-label="Rechercher">
+        <svg width="18" height="18" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="7"/>
+          <path d="m21 21-4.3-4.3"/>
+        </svg>
+      </button>
+
+      <button class="icon-btn" data-theme-toggle aria-label="Thème">
+        <svg width="18" height="18" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/>
+        </svg>
+      </button>
+
+    </div>
+
+  </div>
+</div>
+
+
+<!-- =====================================================
+     MASTHEAD
+     ===================================================== -->
+
+<header class="masthead">
+
+  <div class="wrap">
+
+    <a class="brand" href="/" aria-label="Accueil KTAV ICHOUM">
+
+      <svg class="emblem" viewBox="0 0 44 44"
+           fill="none" aria-hidden="true">
+
+        <rect x="2" y="2" width="40" height="40"
+              rx="10" fill="#111"/>
+
+        <rect x="2" y="2" width="40" height="40"
+              rx="10" stroke="#C9A227" stroke-width="1.6"/>
+
+        <circle cx="18" cy="18" r="9.3"
+                fill="none" stroke="#d10a13" stroke-width="3"/>
+
+        <line x1="24.8" y1="24.8"
+              x2="33" y2="33"
+              stroke="#C9A227"
+              stroke-width="3.8"
+              stroke-linecap="round"/>
+
+        <path d="M18 13.6 L21.9 20.4 L14.1 20.4 Z"
+              fill="none"
+              stroke="#fff"
+              stroke-width="1.5"
+              stroke-linejoin="round"/>
+
+        <path d="M18 22.4 L21.9 15.6 L14.1 15.6 Z"
+              fill="none"
+              stroke="#fff"
+              stroke-width="1.5"
+              stroke-linejoin="round"/>
+
+      </svg>
+
+      <span class="word">
+        Ktav Ichoum
+        <small>Crime et justice · Israël</small>
+      </span>
+
+    </a>
+
+
+    <nav class="nav" aria-label="Navigation principale">
+
+      <a href="/fil" class="hot">Fil</a>
+      <a href="/recits">Récits</a>
+      <a href="/justice">Justice</a>
+      <a href="/crime-organise">Crime organisé</a>
+      <a href="/societe">Société</a>
+
+    </nav>
+
+
+    <div class="mast-actions">
+
+      <a href="#newsletter"
+         class="btn btn--primary">
+         S'abonner
+      </a>
+
+      <button class="btn burger icon-btn"
+              data-menu-open
+              aria-label="Menu">
+
+        <svg width="22" height="22"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2">
+
+          <path d="M3 6h18M3 12h18M3 18h18"/>
+
+        </svg>
+
+      </button>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<!-- =====================================================
+     TICKER
+     ===================================================== -->
+
+<div class="ticker">
+
+  <div class="wrap">
+
+    <span class="lbl">
+      <span class="pulse"></span>
+      À la une
+    </span>
+
+    <div class="track">
+
+      <div class="move">
+
+        <a href="/recit-nahlaot-adulte-presente">
+          Notre récit — À Nahlaot, une adulte et six enfants :
+          sept personnes poursuivies, dont quatre mineurs
+        </a>
+
+        <a href="/recit-ramat-gan-wishniak">
+          Notre récit — Rue Avtalion :
+          six ans de procédure pour le meurtre de Maya Wishniak
+        </a>
+
+        <a href="/recit-srour-shuafat">
+          Notre récit — À la lueur du coup de feu :
+          Jamil Srour obtient un nouveau procès après seize ans
+        </a>
+
+        <a href="/recit-eilat-taxi">
+          Notre récit — La facilité :
+          27 et 25 ans de prison pour le meurtre du taxi d'Eilat
+        </a>
+
+        <a href="/recit-ashdod-250-shekels">
+          Notre récit — Deux cent cinquante shekels :
+          le meurtre d'Ashdod
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<h1 class="h1-accueil">
+  Ktav Ichoum — crime, police et justice en Israël, en français
+</h1>
+
+
+<!-- =====================================================
+     HERO / LA UNE
+     ===================================================== -->
+
+<section class="hero">
+
+  <div class="wrap hero-grid">
+
+    <article class="lead">
+
+      <div
+        class="ph ph--night"
+        style="
+          background-image:
+            url('./assets/covers/societe.svg'),
+            linear-gradient(135deg,#2b2b33,#14141a);
+          background-size:cover;
+          background-position:center;
+        ">
+      </div>
+
+      <div class="overlay">
+
+        <span class="tag tag--doc">
+          Notre récit · Société
+        </span>
+
+        <h2 class="lead-titre">
+          À Nahlaot, une adulte et six enfants
+        </h2>
+
+        <p>
+          Jérusalem, juillet 2026. Un homme de dix-neuf ans est tué
+          dans un appartement loué pour quelques nuits.
+          Sept personnes sont poursuivies : quatre mineurs de quinze
+          à dix-sept ans, deux jeunes femmes, et la mère de l'un
+          des adolescents. Dans ce dossier, l'adulte n'était pas absente.
+        </p>
+
+        <div class="meta">
+
+          <span class="src">
+            Récit original de <b>David Castel</b>
+          </span>
+
+          <span class="dot">
+            Sources en hébreu · Haaretz, Walla,
+            Kikar HaShabat, Chaîne 13
+          </span>
+
+        </div>
+
+      </div>
+
+      <a
+        href="/recit-nahlaot-adulte-presente"
+        style="position:absolute;inset:0;z-index:3"
+        aria-label="Lire le récit">
+      </a>
+
+    </article>
+
+
+    <div class="side-lead">
+
+      <a class="side-card"
+         href="/recit-srour-shuafat">
+
+        <div class="thumb">
+          <div class="ph ph--night"></div>
+        </div>
+
+        <div>
+
+          <span class="tag tag--doc">
+            Notre récit · Justice
+          </span>
+
+          <h3>
+            À la lueur du coup de feu :
+            Jamil Srour obtient un nouveau procès après seize ans
+          </h3>
+
+          <div class="meta">
+            <span class="src">
+              Récit original <b>KI</b>
+            </span>
+            <span>8 août 2026</span>
+          </div>
+
+        </div>
+
+      </a>
+
+
+      <a class="side-card"
+         href="/recit-ashdod-250-shekels">
+
+        <div class="thumb">
+          <div class="ph ph--red"></div>
+        </div>
+
+        <div>
+
+          <span class="tag tag--doc">
+            Notre récit · Justice
+          </span>
+
+          <h3>
+            Deux cent cinquante shekels :
+            trente ans de prison pour le meurtre d'Ashdod
+          </h3>
+
+          <div class="meta">
+            <span class="src">
+              Récit original <b>KI</b>
+            </span>
+            <span>7 août 2026</span>
+          </div>
+
+        </div>
+
+      </a>
+
+
+      <a class="side-card"
+         href="/recit-eilat-taxi">
+
+        <div class="thumb">
+          <div class="ph ph--slate"></div>
+        </div>
+
+        <div>
+
+          <span class="tag tag--doc">
+            Notre récit · Justice
+          </span>
+
+          <h3>
+            La facilité :
+            27 et 25 ans de prison pour le meurtre du taxi d'Eilat
+          </h3>
+
+          <div class="meta">
+
+            <span class="src">
+              Récit original <b>KI</b>
+            </span>
+
+            <span>
+              Verdict du 20 juil. 2026
+            </span>
+
+          </div>
+
+        </div>
+
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     FIL EN DIRECT
+     ===================================================== -->
+
+<section class="livewire" id="fil">
+
+  <div class="wrap">
+
+    <div class="lw-head">
+
+      <span class="lw-live">
+        <span class="pulse"></span>
+        Direct
+      </span>
+
+      <h2>
+        Le fil des faits divers israéliens
+      </h2>
+
+      <span class="lw-upd" id="lw-upd">
+        actualisation automatique…
+      </span>
+
+      <a class="lw-all" href="/fil">
+        Tout le fil →
+      </a>
+
+    </div>
+
+
+    <div
+      class="lw-list"
+      data-nosnippet
+      id="lw-list"
+      data-feed-theme="all"
+      aria-live="polite">
+
+      <div class="lw-item">
+        <span class="tm lw-skel"
+              style="width:40px">&nbsp;</span>
+        <span class="lw-skel"
+              style="width:70%">&nbsp;</span>
+      </div>
+
+      <div class="lw-item">
+        <span class="tm lw-skel"
+              style="width:40px">&nbsp;</span>
+        <span class="lw-skel"
+              style="width:60%">&nbsp;</span>
+      </div>
+
+      <div class="lw-item">
+        <span class="tm lw-skel"
+              style="width:40px">&nbsp;</span>
+        <span class="lw-skel"
+              style="width:75%">&nbsp;</span>
+      </div>
+
+      <div class="lw-item">
+        <span class="tm lw-skel"
+              style="width:40px">&nbsp;</span>
+        <span class="lw-skel"
+              style="width:55%">&nbsp;</span>
+      </div>
+
+    </div>
+
+
+    <p class="lw-more">
+
+      <a href="/fil">
+        <b>
+          Voir tout le fil,
+          rubrique par rubrique →
+        </b>
+      </a>
+
+    </p>
+
+
+    <p style="
+      margin:10px 2px 0;
+      font-size:.72rem;
+      line-height:1.5;
+      color:var(--ki-text);
+      opacity:.55">
+
+      Titres de la presse israélienne
+      (rubriques criminelles et judiciaires)
+      traduits en français.
+
+      Ktav Ichoum n'en est pas l'auteur ;
+      chaque lien renvoie à l'éditeur d'origine.
+
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     CORPS PRINCIPAL
+     ===================================================== -->
+
 <div class="wrap main-grid">
+
   <main>
-    <div class="section-head"><h2>Notre sélection</h2><a href="/recits">Tout voir →</a></div>
-    <p class="muted" style="margin:-6px 0 18px;font-size:.9rem">Deux formats. Nos <b>récits</b> sont des textes originaux construits sur des décisions de justice rendues. Nos <b>synthèses</b> portent sur des affaires en cours : elles signalent ce qui reste à établir, et les personnes mises en cause y sont présumées innocentes. L'actualité au fil de l'eau est dans le <a href="/fil">fil</a>, ci-dessus.</p>
-    <div class="river">
-      <article class="story"><div class="thumb"><div class="ph ph--night"></div></div>
-        <div><span class="tag tag--doc">Crime organisé</span>
-          <a href="/synthese-japanika-grenades"><h3>Guerre des clans : une vague d'attaques à la grenade vise la chaîne Japanika</h3></a>
-          <p>Plusieurs succursales de la chaîne visées par des engins explosifs, dans une série d'attaques attribuée à des rivalités criminelles.</p>
-          <div class="meta"><span class="src">Synthèse <b>KI</b></span><span class="dot">14 juillet 2026 · mis à jour le 15 juillet</span></div>
-        </div></article>
 
-      <article class="story"><div class="thumb"><div class="ph ph--olive"></div></div>
-        <div><span class="tag tag--doc">Police</span>
-          <a href="/synthese-operation-on-target"><h3>Opération « On Target » : plus de 200 arrestations dans le secteur arabe</h3></a>
-          <p>Point d'étape sur l'opération policière lancée en janvier 2026 dans les localités arabes israéliennes.</p>
-          <div class="meta"><span class="src">Synthèse <b>KI</b></span><span class="dot">Opération lancée en janvier 2026 · point d'étape</span></div>
-        </div></article>
+    <div class="section-head">
 
-      <article class="story"><div class="thumb"><div class="ph ph--slate"></div></div>
-        <div><span class="tag tag--doc">Société</span>
-          <a href="/synthese-homicides-societe-arabe-2026"><h3>La barre des 100 homicides franchie dans la société arabe en 2026</h3></a>
-          <p>Le décompte annuel des homicides dans la société arabe israélienne, d'après les données de l'Abraham Initiatives.</p>
-          <div class="meta"><span class="src">Synthèse <b>KI</b></span><span class="dot">2026 · d'après l'Abraham Initiatives</span></div>
-        </div></article>
+      <h2>Notre sélection</h2>
 
-      <article class="story"><div class="thumb"><div class="ph ph--red"></div></div>
-        <div><span class="tag tag--doc">Enquêtes</span>
-          <a href="/dossier-disparus-mont-meron"><h3>Disparus du mont Meron : trois pèlerins jamais revenus</h3></a>
-          <p>Trois disparitions de pèlerins autour du mont Meron, réunies dans un même dossier.</p>
-          <div class="meta"><span class="src">Dossier <b>KI</b></span><span class="dot">2026</span></div>
-        </div></article>
+      <a href="/recits">
+        Tout voir →
+      </a>
+
     </div>
+
+
+    <p
+      class="muted"
+      style="
+        margin:-6px 0 18px;
+        font-size:.9rem">
+
+      Deux formats.
+
+      Nos <b>récits</b> sont des textes originaux
+      construits sur des décisions de justice rendues.
+
+      Nos <b>synthèses</b> portent sur des affaires
+      en cours : elles signalent ce qui reste à établir,
+      et les personnes mises en cause y sont présumées innocentes.
+
+      L'actualité au fil de l'eau est dans le
+      <a href="/fil">fil</a>, ci-dessus.
+
+    </p>
+
+
+    <div class="river">
+
+
+      <!-- JAPANIKA -->
+
+      <article class="story">
+
+        <div class="thumb">
+          <div class="ph ph--night"></div>
+        </div>
+
+        <div>
+
+          <span class="tag tag--doc">
+            Crime organisé
+          </span>
+
+          <a href="/synthese-japanika-grenades">
+
+            <h3>
+              Guerre des clans :
+              une vague d'attaques à la grenade
+              vise la chaîne Japanika
+            </h3>
+
+          </a>
+
+          <p>
+            Plusieurs succursales de la chaîne visées
+            par des engins explosifs,
+            dans une série d'attaques attribuée
+            à des rivalités criminelles.
+          </p>
+
+          <div class="meta">
+
+            <span class="src">
+              Synthèse <b>KI</b>
+            </span>
+
+            <span class="dot">
+              14 juillet 2026 · mis à jour le 15 juillet
+            </span>
+
+          </div>
+
+        </div>
+
+      </article>
+
+
+      <!-- ON TARGET -->
+
+      <article class="story">
+
+        <div class="thumb">
+          <div class="ph ph--olive"></div>
+        </div>
+
+        <div>
+
+          <span class="tag tag--doc">
+            Police
+          </span>
+
+          <a href="/synthese-operation-on-target">
+
+            <h3>
+              Opération « On Target » :
+              plus de 200 arrestations
+              dans le secteur arabe
+            </h3>
+
+          </a>
+
+          <p>
+            Point d'étape sur l'opération policière
+            lancée en janvier 2026
+            dans les localités arabes israéliennes.
+          </p>
+
+          <div class="meta">
+
+            <span class="src">
+              Synthèse <b>KI</b>
+            </span>
+
+            <span class="dot">
+              Opération lancée en janvier 2026 ·
+              point d'étape
+            </span>
+
+          </div>
+
+        </div>
+
+      </article>
+
+
+      <!-- HOMICIDES -->
+
+      <article class="story">
+
+        <div class="thumb">
+          <div class="ph ph--slate"></div>
+        </div>
+
+        <div>
+
+          <span class="tag tag--doc">
+            Société
+          </span>
+
+          <a href="/synthese-homicides-societe-arabe-2026">
+
+            <h3>
+              La barre des 100 homicides franchie
+              dans la société arabe en 2026
+            </h3>
+
+          </a>
+
+          <p>
+            Le décompte annuel des homicides
+            dans la société arabe israélienne,
+            d'après les données de l'Abraham Initiatives.
+          </p>
+
+          <div class="meta">
+
+            <span class="src">
+              Synthèse <b>KI</b>
+            </span>
+
+            <span class="dot">
+              2026 · d'après l'Abraham Initiatives
+            </span>
+
+          </div>
+
+        </div>
+
+      </article>
+
+
+      <!-- MERON -->
+
+      <article class="story">
+
+        <div class="thumb">
+          <div class="ph ph--red"></div>
+        </div>
+
+        <div>
+
+          <span class="tag tag--doc">
+            Enquêtes
+          </span>
+
+          <a href="/dossier-disparus-mont-meron">
+
+            <h3>
+              Disparus du mont Meron :
+              trois pèlerins jamais revenus
+            </h3>
+
+          </a>
+
+          <p>
+            Trois disparitions de pèlerins
+            autour du mont Meron,
+            réunies dans un même dossier.
+          </p>
+
+          <div class="meta">
+
+            <span class="src">
+              Dossier <b>KI</b>
+            </span>
+
+            <span class="dot">
+              2026
+            </span>
+
+          </div>
+
+        </div>
+
+      </article>
+
+    </div>
+
   </main>
 
+
+  <!-- ===================================================
+       SIDEBAR
+       =================================================== -->
+
   <aside class="rail">
-    <div class="box">
-      <span class="eyebrow">Le chiffre</span>
-      <div style="font-family:var(--ff-display);font-weight:900;font-size:3.4rem;line-height:1;color:var(--ki-bordeaux-2);margin:10px 0 4px">144</div>
-      <p class="muted" style="margin:0 0 12px;font-size:.95rem">personnes tuées dans la société arabe israélienne au premier semestre 2026, au cours de 124 faits de violence et de criminalité — contre 128 à la même période de 2025. Sept mineurs, treize femmes ; neuf victimes sur dix tuées par arme à feu.</p>
-      <div class="meta"><span class="src">Rapport semestriel <b>Abraham Initiatives</b> · 1<sup>er</sup> juillet 2026</span></div>
-    </div>
+
 
     <div class="box">
-      <span class="eyebrow">Notre méthode</span>
-      <p class="muted" style="margin:10px 0 12px;font-size:.95rem">Nos récits sont écrits en français à partir de décisions rendues et de la presse israélienne en hébreu. Le fil d'actualité, lui, renvoie toujours à l'éditeur d'origine.</p>
-      <div class="meta"><a href="/charte-ethique"><b>Notre charte éthique →</b></a></div>
+
+      <span class="eyebrow">
+        Le chiffre
+      </span>
+
+      <div style="
+        font-family:var(--ff-display);
+        font-weight:900;
+        font-size:3.4rem;
+        line-height:1;
+        color:var(--ki-bordeaux-2);
+        margin:10px 0 4px">
+
+        144
+
+      </div>
+
+      <p
+        class="muted"
+        style="
+          margin:0 0 12px;
+          font-size:.95rem">
+
+        personnes tuées dans la société arabe israélienne
+        au premier semestre 2026,
+        au cours de 124 faits de violence et de criminalité —
+        contre 128 à la même période de 2025.
+
+        Sept mineurs, treize femmes ;
+        neuf victimes sur dix tuées par arme à feu.
+
+      </p>
+
+      <div class="meta">
+
+        <span class="src">
+          Rapport semestriel
+          <b>Abraham Initiatives</b>
+          · 1<sup>er</sup> juillet 2026
+        </span>
+
+      </div>
+
     </div>
 
-    <a class="ad" href="/mentions-legales" style="text-decoration:none">
-      <span class="fmt">Espace annonceur</span>
-      <span>Votre marque ici — format 300 × 250<br><b>Nous contacter →</b></span>
+
+    <div class="box">
+
+      <span class="eyebrow">
+        Notre méthode
+      </span>
+
+      <p
+        class="muted"
+        style="
+          margin:10px 0 12px;
+          font-size:.95rem">
+
+        Nos récits sont écrits en français
+        à partir de décisions rendues
+        et de la presse israélienne en hébreu.
+
+        Le fil d'actualité, lui,
+        renvoie toujours à l'éditeur d'origine.
+
+      </p>
+
+      <div class="meta">
+
+        <a href="/charte-ethique">
+          <b>Notre charte éthique →</b>
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <a
+      class="ad"
+      href="/mentions-legales"
+      style="text-decoration:none">
+
+      <span class="fmt">
+        Espace annonceur
+      </span>
+
+      <span>
+        Votre marque ici — format 300 × 250
+        <br>
+        <b>Nous contacter →</b>
+      </span>
+
     </a>
 
   </aside>
+
 </div>
 
-<!-- GRAND RÉCIT (Ynet) -->
-<section class="feature feature--record"><div class="wrap feature-grid">
-  <div class="ph ph--night" style="background-image:url('./assets/covers/fond.svg');background-size:cover;background-position:center"></div>
-  <div>
-    <span class="eyebrow">À lire ailleurs · Archives</span>
-    <h2>Quand le criminel le plus dangereux d'Israël fut capturé à Paris</h2>
-    <p>Braquage à main armée, meurtre du commandant de la prison d'Ayalon, vol de diamants à Ramat Gan, cavale sous fausse identité : la trajectoire de Hertzl Abiyan s'achève à Paris en 1982. Condamné à deux peines de perpétuité, il meurt en détention en 2001. Enquête publiée par Ynet, en hébreu — nous n'en sommes pas les auteurs.</p>
-    <div class="meta" style="margin-bottom:20px"><span class="src">via <b>Ynet</b></span><span class="dot">Archives · פלילים</span></div>
-    <a href="https://www.ynet.co.il/news/article/b15wx56dwl" target="_blank" rel="noopener" class="btn btn--primary">Lire l'enquête sur Ynet →</a>
-  </div>
-</div></section>
 
-<!-- RUBRIQUES -->
-<section class="rowsec"><div class="wrap">
-  <div class="section-head"><h2>Explorer par rubrique</h2></div>
-  <div class="cats">
-    <a class="cat" href="/recits"><div class="ph ph--red"></div><div class="co"><div><h3>Récits</h3><span>Longs formats originaux</span></div></div></a>
-    <a class="cat" href="/justice"><div class="ph ph--slate"></div><div class="co"><div><h3>Justice</h3><span>Audiences, verdicts</span></div></div></a>
-    <a class="cat" href="/crime-organise"><div class="ph ph--night"></div><div class="co"><div><h3>Crime organisé</h3><span>Gangs & mafias</span></div></div></a>
-    <a class="cat" href="/societe"><div class="ph ph--sand"></div><div class="co"><div><h3>Société</h3><span>Fractures & données</span></div></div></a>
-    <a class="cat" href="/archives"><div class="ph ph--olive"></div><div class="co"><div><h3>Archives</h3><span>Par affaire & date</span></div></div></a>
-    <a class="cat" href="/sources"><div class="ph ph--slate"></div><div class="co"><div><h3>Sources</h3><span>D'où viennent nos infos</span></div></div></a>
-  </div>
-</div></section>
+<!-- =====================================================
+     GRAND RÉCIT
+     ===================================================== -->
 
-<!-- NEWSLETTER PLEINE LARGEUR -->
-<section class="nlfull" id="newsletter"><div class="wrap">
-  <h2>La lettre du dossier</h2>
-  <p>Chaque vendredi, notre récit de la semaine et la sélection commentée des affaires en cours, avec les liens vers les sources en hébreu.</p>
-  <form class="nlform"><input type="email" placeholder="Votre adresse e-mail" required><button class="btn btn--primary" type="submit">Je m'inscris</button></form>
-  <small>Désinscription en un clic. Vos données ne sont jamais revendues.</small>
-</div></section>
+<section class="feature feature--record">
 
-<!-- FOOTER -->
-<footer class="foot"><div class="wrap">
-  <div class="foot-top">
-    <div>
-      <a class="brand" href="/"><svg class="emblem" viewBox="0 0 44 44" fill="none" aria-hidden="true"><rect x="2" y="2" width="40" height="40" rx="10" fill="#111"/><rect x="2" y="2" width="40" height="40" rx="10" stroke="#C9A227" stroke-width="1.6"/><circle cx="18" cy="18" r="9.3" fill="none" stroke="#d10a13" stroke-width="3"/><line x1="24.8" y1="24.8" x2="33" y2="33" stroke="#C9A227" stroke-width="3.8" stroke-linecap="round"/><path d="M18 13.6 L21.9 20.4 L14.1 20.4 Z" fill="none" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/><path d="M18 22.4 L21.9 15.6 L14.1 15.6 Z" fill="none" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg><span class="word">Ktav Ichoum</span></a>
-      <p class="about">Récits originaux et chroniques judiciaires en français, écrits à partir de sources israéliennes en hébreu. Les synthèses de presse créditent leurs éditeurs d'origine et renvoient vers eux.</p>
+  <div class="wrap feature-grid">
+
+    <div
+      class="ph ph--night"
+      style="
+        background-image:url('./assets/covers/fond.svg');
+        background-size:cover;
+        background-position:center">
     </div>
-    <div><h5>Rubriques</h5><ul><li><a href="/">Accueil</a></li><li><a href="/fil">Fil en continu</a></li><li><a href="/recits">Récits</a></li><li><a href="/justice">Justice</a></li><li><a href="/crime-organise">Crime organisé</a></li><li><a href="/societe">Société</a></li></ul></div>
-    <div><h5>Le média</h5><ul><li><a href="/a-propos">À propos</a></li><li><a href="/charte-ethique">Charte éthique</a></li><li><a href="/mentions-legales">Mentions légales</a></li><li><a href="/mentions-legales">Contact</a></li></ul></div>
-    <div><h5>Nos sources</h5><ul class="src-list"><li><a href="https://www.ynet.co.il/news/category/190" target="_blank" rel="noopener">Ynet</a></li><li><a href="https://www.mako.co.il/men-men_news" target="_blank" rel="noopener">N12 (Mako)</a></li><li><a href="https://www.haaretz.co.il/news/law" target="_blank" rel="noopener">Haaretz</a></li><li><a href="https://13tv.co.il/news/domestic/crime-and-justice/" target="_blank" rel="noopener">Chaîne 13</a></li><li><a href="/sources"><b>Toutes les sources</b></a></li></ul></div>
-    <div><h5>Ressources</h5><ul><li><a href="/archives">Archives</a></li><li><a href="/sources">Sources</a></li><li><a href="#newsletter">Newsletter</a></li><li><a href="/api/rss">Flux RSS</a></li><li><a href="/confidentialite">Confidentialité</a></li></ul></div>
-  </div>
-  <div class="foot-bottom">
-    <span>&copy; <span data-year>2026</span> Ktav Ichoum &mdash; FACILE PAPIERS SAS. Directeur de la publication : David Castel.</span>
-    <div class="legal"><a href="/mentions-legales">Mentions légales</a><a href="/confidentialite">Confidentialité</a><a href="/charte-ethique">Charte éthique</a></div>
-  </div>
-</div></footer>
 
-<div class="mobile-menu"><div class="mm-head"><span class="word" style="font-family:var(--ff-display);font-weight:800;text-transform:uppercase">Ktav Ichoum</span>
-  <button class="icon-btn" data-menu-close aria-label="Fermer"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
-  <nav><a href="/">Accueil</a><a href="/fil">Fil</a><a href="/recits">Récits</a><a href="/justice">Justice</a><a href="/crime-organise">Crime organisé</a><a href="/societe">Société</a><a href="/archives">Archives</a><a href="/sources">Sources</a></nav>
+
+    <div>
+
+      <span class="eyebrow">
+        À lire ailleurs · Archives
+      </span>
+
+      <h2>
+        Quand le criminel le plus dangereux
+        d'Israël fut capturé à Paris
+      </h2>
+
+      <p>
+        Braquage à main armée,
+        meurtre du commandant de la prison d'Ayalon,
+        vol de diamants à Ramat Gan,
+        cavale sous fausse identité :
+        la trajectoire de Hertzl Abiyan
+        s'achève à Paris en 1982.
+
+        Condamné à deux peines de perpétuité,
+        il meurt en détention en 2001.
+
+        Enquête publiée par Ynet, en hébreu —
+        nous n'en sommes pas les auteurs.
+      </p>
+
+      <div
+        class="meta"
+        style="margin-bottom:20px">
+
+        <span class="src">
+          via <b>Ynet</b>
+        </span>
+
+        <span class="dot">
+          Archives · פלילים
+        </span>
+
+      </div>
+
+      <a
+        href="https://www.ynet.co.il/news/article/b15wx56dwl"
+        target="_blank"
+        rel="noopener"
+        class="btn btn--primary">
+
+        Lire l'enquête sur Ynet →
+
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     RUBRIQUES
+     ===================================================== -->
+
+<section class="rowsec">
+
+  <div class="wrap">
+
+    <div class="section-head">
+
+      <h2>
+        Explorer par rubrique
+      </h2>
+
+    </div>
+
+
+    <div class="cats">
+
+
+      <a class="cat" href="/recits">
+
+        <div class="ph ph--red"></div>
+
+        <div class="co">
+
+          <div>
+            <h3>Récits</h3>
+            <span>Longs formats originaux</span>
+          </div>
+
+        </div>
+
+      </a>
+
+
+      <a class="cat" href="/justice">
+
+        <div class="ph ph--slate"></div>
+
+        <div class="co">
+
+          <div>
+            <h3>Justice</h3>
+            <span>Audiences, verdicts</span>
+          </div>
+
+        </div>
+
+      </a>
+
+
+      <a class="cat" href="/crime-organise">
+
+        <div class="ph ph--night"></div>
+
+        <div class="co">
+
+          <div>
+            <h3>Crime organisé</h3>
+            <span>Gangs & mafias</span>
+          </div>
+
+        </div>
+
+      </a>
+
+
+      <a class="cat" href="/societe">
+
+        <div class="ph ph--sand"></div>
+
+        <div class="co">
+
+          <div>
+            <h3>Société</h3>
+            <span>Fractures & données</span>
+          </div>
+
+        </div>
+
+      </a>
+
+
+      <a class="cat" href="/archives">
+
+        <div class="ph ph--olive"></div>
+
+        <div class="co">
+
+          <div>
+            <h3>Archives</h3>
+            <span>Par affaire & date</span>
+          </div>
+
+        </div>
+
+      </a>
+
+
+      <a class="cat" href="/sources">
+
+        <div class="ph ph--slate"></div>
+
+        <div class="co">
+
+          <div>
+            <h3>Sources</h3>
+            <span>D'où viennent nos infos</span>
+          </div>
+
+        </div>
+
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     NEWSLETTER
+     ===================================================== -->
+
+<section class="nlfull" id="newsletter">
+
+  <div class="wrap">
+
+    <h2>
+      La lettre du dossier
+    </h2>
+
+    <p>
+      Chaque vendredi,
+      notre récit de la semaine
+      et la sélection commentée
+      des affaires en cours,
+      avec les liens vers les sources en hébreu.
+    </p>
+
+    <form class="nlform">
+
+      <input
+        type="email"
+        placeholder="Votre adresse e-mail"
+        required>
+
+      <button
+        class="btn btn--primary"
+        type="submit">
+
+        Je m'inscris
+
+      </button>
+
+    </form>
+
+    <small>
+      Désinscription en un clic.
+      Vos données ne sont jamais revendues.
+    </small>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
+
+<footer class="foot">
+
+  <div class="wrap">
+
+    <div class="foot-top">
+
+
+      <div>
+
+        <a class="brand" href="/">
+
+          <svg
+            class="emblem"
+            viewBox="0 0 44 44"
+            fill="none"
+            aria-hidden="true">
+
+            <rect
+              x="2" y="2"
+              width="40" height="40"
+              rx="10"
+              fill="#111"/>
+
+            <rect
+              x="2" y="2"
+              width="40" height="40"
+              rx="10"
+              stroke="#C9A227"
+              stroke-width="1.6"/>
+
+            <circle
+              cx="18" cy="18"
+              r="9.3"
+              fill="none"
+              stroke="#d10a13"
+              stroke-width="3"/>
+
+            <line
+              x1="24.8"
+              y1="24.8"
+              x2="33"
+              y2="33"
+              stroke="#C9A227"
+              stroke-width="3.8"
+              stroke-linecap="round"/>
+
+            <path
+              d="M18 13.6 L21.9 20.4 L14.1 20.4 Z"
+              fill="none"
+              stroke="#fff"
+              stroke-width="1.5"
+              stroke-linejoin="round"/>
+
+            <path
+              d="M18 22.4 L21.9 15.6 L14.1 15.6 Z"
+              fill="none"
+              stroke="#fff"
+              stroke-width="1.5"
+              stroke-linejoin="round"/>
+
+          </svg>
+
+          <span class="word">
+            Ktav Ichoum
+          </span>
+
+        </a>
+
+        <p class="about">
+          Récits originaux et chroniques judiciaires
+          en français,
+          écrits à partir de sources israéliennes en hébreu.
+
+          Les synthèses de presse créditent
+          leurs éditeurs d'origine
+          et renvoient vers eux.
+        </p>
+
+      </div>
+
+
+      <div>
+
+        <h5>Rubriques</h5>
+
+        <ul>
+          <li><a href="/">Accueil</a></li>
+          <li><a href="/fil">Fil en continu</a></li>
+          <li><a href="/recits">Récits</a></li>
+          <li><a href="/justice">Justice</a></li>
+          <li><a href="/crime-organise">Crime organisé</a></li>
+          <li><a href="/societe">Société</a></li>
+        </ul>
+
+      </div>
+
+
+      <div>
+
+        <h5>Le média</h5>
+
+        <ul>
+          <li><a href="/a-propos">À propos</a></li>
+          <li><a href="/charte-ethique">Charte éthique</a></li>
+          <li><a href="/mentions-legales">Mentions légales</a></li>
+          <li><a href="/mentions-legales">Contact</a></li>
+        </ul>
+
+      </div>
+
+
+      <div>
+
+        <h5>Nos sources</h5>
+
+        <ul class="src-list">
+
+          <li>
+            <a
+              href="https://www.ynet.co.il/news/category/190"
+              target="_blank"
+              rel="noopener">
+              Ynet
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="https://www.mako.co.il/men-men_news"
+              target="_blank"
+              rel="noopener">
+              N12 (Mako)
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="https://www.haaretz.co.il/news/law"
+              target="_blank"
+              rel="noopener">
+              Haaretz
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="https://13tv.co.il/news/domestic/crime-and-justice/"
+              target="_blank"
+              rel="noopener">
+              Chaîne 13
+            </a>
+          </li>
+
+          <li>
+            <a href="/sources">
+              <b>Toutes les sources</b>
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+
+
+      <div>
+
+        <h5>Ressources</h5>
+
+        <ul>
+          <li><a href="/archives">Archives</a></li>
+          <li><a href="/sources">Sources</a></li>
+          <li><a href="#newsletter">Newsletter</a></li>
+          <li><a href="/api/rss">Flux RSS</a></li>
+          <li><a href="/confidentialite">Confidentialité</a></li>
+        </ul>
+
+      </div>
+
+    </div>
+
+
+    <div class="foot-bottom">
+
+      <span>
+        &copy;
+        <span data-year>2026</span>
+        Ktav Ichoum — FACILE PAPIERS SAS.
+        Directeur de la publication : David Castel.
+      </span>
+
+      <div class="legal">
+
+        <a href="/mentions-legales">
+          Mentions légales
+        </a>
+
+        <a href="/confidentialite">
+          Confidentialité
+        </a>
+
+        <a href="/charte-ethique">
+          Charte éthique
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+<!-- =====================================================
+     MENU MOBILE
+     ===================================================== -->
+
+<div class="mobile-menu">
+
+  <div class="mm-head">
+
+    <span
+      class="word"
+      style="
+        font-family:var(--ff-display);
+        font-weight:800;
+        text-transform:uppercase">
+
+      Ktav Ichoum
+
+    </span>
+
+    <button
+      class="icon-btn"
+      data-menu-close
+      aria-label="Fermer">
+
+      <svg
+        width="26"
+        height="26"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2">
+
+        <path d="M18 6 6 18M6 6l12 12"/>
+
+      </svg>
+
+    </button>
+
+  </div>
+
+
+  <nav>
+
+    <a href="/">Accueil</a>
+    <a href="/fil">Fil</a>
+    <a href="/recits">Récits</a>
+    <a href="/justice">Justice</a>
+    <a href="/crime-organise">Crime organisé</a>
+    <a href="/societe">Société</a>
+    <a href="/archives">Archives</a>
+    <a href="/sources">Sources</a>
+
+  </nav>
+
 </div>
 
-<script>
-/* Date d'\u00e9dition \u2014 inject\u00e9e c\u00f4t\u00e9 client, aucun placeholder visible si le script \u00e9choue. */
-(function(){var e=document.querySelector('.util .today');if(!e)return;
- try{e.textContent=' \u00b7 '+new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});}catch(x){}})();
-</script>
-<script src="./assets/app.js?v=20260812"></script>
+
+<!-- =====================================================
+     DATE D'ÉDITION
+     ===================================================== -->
 
 <script>
-/* Fil KTAV ICHOUM — inline, autonome (indépendant de app.js/cache) */
 (function(){
-  var T=document.querySelectorAll('[data-feed-theme]'); if(!T.length) return;
-  var L={'crime-organise':'Crime organisé','justice':'Justice','police':'Police','enquetes':'Enquêtes','societe':'Société','faits-divers':'Faits divers'};
-  function rel(d){if(!d)return'';var t=new Date(d).getTime();if(isNaN(t))return'';var s=Math.max(0,(Date.now()-t)/1000);return s<3600?Math.round(s/60)+' min':(s<86400?Math.round(s/3600)+' h':Math.round(s/86400)+' j');}
-  function esc(x){return(x||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
-  function frItem(it,all){var b=(all&&it.theme)?'<span class="lw-badge">'+esc(L[it.theme]||'')+'</span>':'';return '<div class="lw-item"><span class="tm">'+(rel(it.pubDate)||'·')+'</span><span><a href="'+esc(it.link)+'" target="_blank" rel="noopener">'+esc(it.title)+'</a>'+(it.source?'<span class="so">'+esc(it.source)+b+'</span>':b)+'</span></div>';}
-  /* Ne retenir que les depeches passees par une rubrique criminelle ou judiciaire.
-     Ecarte le contenu generaliste mal classe et garantit que le titre est traduit. */
-  function pertinent(x){ return x && x.title && !/[\u0590-\u05FF]/.test(x.title); }
-  /* Bandeau « A la une » : 2 recits originaux (en dur, jamais perimes)
-     suivis des 3 depeches les plus recentes du flux. Si le flux ne repond pas,
-     le bandeau garde le HTML statique de la page. */
-  var TICK_LEAD='<a href="/recit-nahlaot-adulte-presente">Notre r\u00e9cit \u2014 \u00c0 Nahlaot, une adulte et six enfants : sept personnes poursuivies, dont quatre mineurs</a>'
-              + '<a href="/recit-ramat-gan-wishniak">Notre r\u00e9cit \u2014 Rue Avtalion : six ans de proc\u00e9dure pour le meurtre de Maya Wishniak</a>'
-              + '<a href="/recit-srour-shuafat">Notre r\u00e9cit \u2014 \u00c0 la lueur du coup de feu : Jamil Srour obtient un nouveau proc\u00e8s apr\u00e8s seize ans</a>'
-              + '<a href="/recit-eilat-taxi">Notre r\u00e9cit \u2014 La facilit\u00e9 : 27 et 25 ans de prison pour le meurtre du taxi d\'Eilat</a>'
-              + '<a href="/recit-ashdod-250-shekels">Notre r\u00e9cit \u2014 Deux cent cinquante shekels : le meurtre d\'Ashdod</a>';
-  function ticker(d){
-    var ms=document.querySelectorAll('.ticker .move'); if(!ms.length||!d||!d.fr) return;
-    var extra=d.fr.filter(pertinent).slice(0,2).map(function(it){
-      return '<a href="'+esc(it.link)+'" target="_blank" rel="noopener">'+esc(it.title)+'</a>';
-    }).join('');
-    if(!extra) return;
-    Array.prototype.forEach.call(ms,function(m){ m.innerHTML=TICK_LEAD+extra; });
-  }
-  function render(d){
-    ticker(d);
-    T.forEach(function(el){
-      var th=el.getAttribute('data-feed-theme'), items;
-      if(!d||!d.fr){ el.innerHTML='<div class="lw-empty">Chargement…</div>'; return; }
-      var base=d.fr.filter(pertinent);
-      if(th==='all'){ items=base; } else { var m=base.filter(function(x){return x.theme===th;}); items=(m.length>=4)?m:m.concat(base.filter(function(x){return x.theme!==th;})); }
-      el.innerHTML=(items&&items.length)?items.slice(0, el.id==='lw-list' ? 8 : 24).map(function(it){return frItem(it,th==='all');}).join(''):'<div class="lw-empty">Aucune dépêche judiciaire depuis 48 heures.</div>';
-    });
-    var u=document.getElementById('lw-upd');
-    if(u&&d&&d.fr){ var n=d.fr.filter(pertinent).length; u.textContent=n+' dépêche'+(n>1?'s':'')+' · mis à jour à '+new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}); }
-  }
-  function fetchFeed(cb){ fetch('/api/feed',{cache:'no-store'}).then(function(r){return r.json();}).then(cb).catch(function(){cb(null);}); }
-  var tries=0;
-  (function go(){ tries++; fetchFeed(function(d){ if(d&&d.fr){ render(d); } else if(tries<6){ setTimeout(go,2500); } else { render(null); } }); })();
-  setInterval(function(){ fetchFeed(function(d){ if(d&&d.fr) render(d); }); }, 300000);
+
+  var e = document.querySelector('.util .today');
+
+  if(!e) return;
+
+  try{
+
+    e.textContent =
+      ' · ' +
+      new Date().toLocaleDateString(
+        'fr-FR',
+        {
+          day:'numeric',
+          month:'long',
+          year:'numeric'
+        }
+      );
+
+  }catch(x){}
+
 })();
 </script>
+
+
+<!-- =====================================================
+     JS GLOBAL EXISTANT
+     ===================================================== -->
+
+<script src="./assets/app.js?v=20260812"></script>
+
+
+<!-- =====================================================
+     FIL KTAV ICHOUM
+     ===================================================== -->
+
+<script>
+
+(function(){
+
+  var T = document.querySelectorAll('[data-feed-theme]');
+
+  if(!T.length) return;
+
+
+  var L = {
+
+    'crime-organise':'Crime organisé',
+    'justice':'Justice',
+    'police':'Police',
+    'enquetes':'Enquêtes',
+    'societe':'Société',
+    'faits-divers':'Faits divers'
+
+  };
+
+
+  function rel(d){
+
+    if(!d) return '';
+
+    var t = new Date(d).getTime();
+
+    if(isNaN(t)) return '';
+
+    var s =
+      Math.max(
+        0,
+        (Date.now() - t) / 1000
+      );
+
+    return s < 3600
+      ? Math.round(s / 60) + ' min'
+      : (
+          s < 86400
+            ? Math.round(s / 3600) + ' h'
+            : Math.round(s / 86400) + ' j'
+        );
+
+  }
+
+
+  function esc(x){
+
+    return (x || '').replace(
+      /[&<>"]/g,
+      function(c){
+
+        return {
+          '&':'&amp;',
+          '<':'&lt;',
+          '>':'&gt;',
+          '"':'&quot;'
+        }[c];
+
+      }
+    );
+
+  }
+
+
+  function frItem(it,all){
+
+    var b =
+      (all && it.theme)
+      ? '<span class="lw-badge">' +
+          esc(L[it.theme] || '') +
+        '</span>'
+      : '';
+
+    return (
+      '<div class="lw-item">' +
+
+        '<span class="tm">' +
+          (rel(it.pubDate) || '·') +
+        '</span>' +
+
+        '<span>' +
+
+          '<a href="' +
+            esc(it.link) +
+            '" target="_blank" rel="noopener">' +
+
+            esc(it.title) +
+
+          '</a>' +
+
+          (
+            it.source
+            ? '<span class="so">' +
+                esc(it.source) +
+                b +
+              '</span>'
+            : b
+          ) +
+
+        '</span>' +
+
+      '</div>'
+    );
+
+  }
+
+
+  function pertinent(x){
+
+    return (
+      x &&
+      x.title &&
+      !/[\u0590-\u05FF]/.test(x.title)
+    );
+
+  }
+
+
+  var TICK_LEAD =
+
+    '<a href="/recit-nahlaot-adulte-presente">' +
+      'Notre récit — À Nahlaot, une adulte et six enfants : ' +
+      'sept personnes poursuivies, dont quatre mineurs' +
+    '</a>' +
+
+    '<a href="/recit-ramat-gan-wishniak">' +
+      'Notre récit — Rue Avtalion : ' +
+      'six ans de procédure pour le meurtre de Maya Wishniak' +
+    '</a>' +
+
+    '<a href="/recit-srour-shuafat">' +
+      'Notre récit — À la lueur du coup de feu : ' +
+      'Jamil Srour obtient un nouveau procès après seize ans' +
+    '</a>' +
+
+    '<a href="/recit-eilat-taxi">' +
+      'Notre récit — La facilité : ' +
+      '27 et 25 ans de prison pour le meurtre du taxi d\'Eilat' +
+    '</a>' +
+
+    '<a href="/recit-ashdod-250-shekels">' +
+      'Notre récit — Deux cent cinquante shekels : ' +
+      'le meurtre d\'Ashdod' +
+    '</a>';
+
+
+  function ticker(d){
+
+    var ms =
+      document.querySelectorAll(
+        '.ticker .move'
+      );
+
+    if(
+      !ms.length ||
+      !d ||
+      !d.fr
+    ){
+      return;
+    }
+
+
+    var extra =
+      d.fr
+        .filter(pertinent)
+        .slice(0,2)
+        .map(function(it){
+
+          return (
+            '<a href="' +
+            esc(it.link) +
+            '" target="_blank" rel="noopener">' +
+            esc(it.title) +
+            '</a>'
+          );
+
+        })
+        .join('');
+
+
+    if(!extra) return;
+
+
+    Array.prototype.forEach.call(
+      ms,
+      function(m){
+
+        m.innerHTML =
+          TICK_LEAD +
+          extra;
+
+      }
+    );
+
+  }
+
+
+  function render(d){
+
+    ticker(d);
+
+
+    T.forEach(function(el){
+
+      var th =
+        el.getAttribute(
+          'data-feed-theme'
+        );
+
+      var items;
+
+
+      if(!d || !d.fr){
+
+        el.innerHTML =
+          '<div class="lw-empty">' +
+          'Chargement…' +
+          '</div>';
+
+        return;
+
+      }
+
+
+      var base =
+        d.fr.filter(pertinent);
+
+
+      if(th === 'all'){
+
+        items = base;
+
+      }else{
+
+        var m =
+          base.filter(function(x){
+
+            return x.theme === th;
+
+          });
+
+
+        items =
+          (m.length >= 4)
+          ? m
+          : m.concat(
+              base.filter(function(x){
+
+                return x.theme !== th;
+
+              })
+            );
+
+      }
+
+
+      el.innerHTML =
+
+        (items && items.length)
+
+        ? items
+            .slice(
+              0,
+              el.id === 'lw-list'
+                ? 8
+                : 24
+            )
+            .map(function(it){
+
+              return frItem(
+                it,
+                th === 'all'
+              );
+
+            })
+            .join('')
+
+        : '<div class="lw-empty">' +
+            'Aucune dépêche judiciaire depuis 48 heures.' +
+          '</div>';
+
+    });
+
+
+    var u =
+      document.getElementById(
+        'lw-upd'
+      );
+
+
+    if(u && d && d.fr){
+
+      var n =
+        d.fr
+          .filter(pertinent)
+          .length;
+
+
+      u.textContent =
+
+        n +
+        ' dépêche' +
+        (n > 1 ? 's' : '') +
+        ' · mis à jour à ' +
+
+        new Date()
+          .toLocaleTimeString(
+            'fr-FR',
+            {
+              hour:'2-digit',
+              minute:'2-digit'
+            }
+          );
+
+    }
+
+  }
+
+
+  function fetchFeed(cb){
+
+    fetch(
+      '/api/feed',
+      {
+        cache:'no-store'
+      }
+    )
+
+    .then(function(r){
+      return r.json();
+    })
+
+    .then(cb)
+
+    .catch(function(){
+      cb(null);
+    });
+
+  }
+
+
+  var tries = 0;
+
+
+  (function go(){
+
+    tries++;
+
+    fetchFeed(function(d){
+
+      if(d && d.fr){
+
+        render(d);
+
+      }else if(tries < 6){
+
+        setTimeout(
+          go,
+          2500
+        );
+
+      }else{
+
+        render(null);
+
+      }
+
+    });
+
+  })();
+
+
+  setInterval(
+    function(){
+
+      fetchFeed(function(d){
+
+        if(d && d.fr){
+          render(d);
+        }
+
+      });
+
+    },
+    300000
+  );
+
+})();
+
+</script>
+
 </body>
 </html>
+```
