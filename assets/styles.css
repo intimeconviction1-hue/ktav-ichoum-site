@@ -204,6 +204,13 @@ button{font-family:inherit; cursor:pointer}
 .nlbox h3{font-family:var(--ff-display); font-weight:800; font-size:1.25rem; margin:0 0 6px}
 .nlbox p{color:var(--ki-text-2); font-size:.88rem; margin:0 0 14px}
 .nlform{display:flex; gap:8px}
+.nlform{flex-wrap:wrap}
+.nlform .nl-consent,.nlform .nl-status{flex-basis:100%;width:100%;text-align:left;font-family:var(--ff-ui);font-size:.8rem;line-height:1.4}
+.nlform .nl-consent{display:flex;align-items:flex-start;gap:8px;margin-top:5px;cursor:pointer}
+.nlform .nl-consent input[type="checkbox"],.nlfull .nlform .nl-consent input[type="checkbox"],.art-cta .nlform .nl-consent input[type="checkbox"]{flex:0 0 auto;width:16px;height:16px;min-height:16px;margin:1px 0 0;accent-color:#8a1220}
+.nlform .nl-consent a{color:inherit;text-decoration:underline}
+.nlform .nl-status{margin:0;min-height:1.4em}
+.nlform button:disabled{opacity:.65;cursor:wait}
 .nlform input{flex:1; min-width:0; background:var(--ki-ink); border:1px solid var(--ki-line-strong);
   color:var(--ki-text); padding:11px 12px; border-radius:8px; font-family:inherit; font-size:.9rem}
 .nlform input:focus{outline:2px solid var(--ki-bordeaux-2); outline-offset:0}

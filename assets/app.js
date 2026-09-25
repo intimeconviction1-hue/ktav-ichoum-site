@@ -25,12 +25,43 @@
     }
   });
 
-  // ---- Formulaires newsletter (démo) ----
+  // ---- Newsletter : confirmation uniquement après enregistrement par l'API ----
   document.querySelectorAll("form.nlform").forEach(function (f) {
-    f.addEventListener("submit", function (ev) {
+    var input = f.querySelector('input[type="email"]');
+    var button = f.querySelector('button[type="submit"]');
+    if (!input || !button) return;
+    input.name = 'email';
+    input.autocomplete = 'email';
+    f.method = 'post';
+    f.action = '/api/subscribe';
+    var label = document.createElement('label');
+    label.className = 'nl-consent';
+    label.innerHTML = '<input type="checkbox" name="consent" required> Je souhaite recevoir la lettre de Ktav Ichoum. <a href="/confidentialite">Confidentialité</a>';
+    f.appendChild(label);
+    var status = document.createElement('p');
+    status.className = 'nl-status';
+    status.setAttribute('role', 'status');
+    status.setAttribute('aria-live', 'polite');
+    f.appendChild(status);
+    f.addEventListener("submit", async function (ev) {
       ev.preventDefault();
-      var i = f.querySelector("input");
-      if (i && i.value) { i.value = ""; i.placeholder = "✓ Inscription enregistrée (démo)"; }
+      if (!f.reportValidity()) return;
+      button.disabled = true;
+      status.textContent = 'Inscription en cours…';
+      try {
+        var response = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: input.value, consent: label.querySelector('input').checked }),
+        });
+        var result = await response.json();
+        status.textContent = result.message || 'Inscription indisponible pour le moment.';
+        if (response.ok && result.ok) f.reset();
+      } catch (e) {
+        status.textContent = 'Connexion impossible. Votre adresse n’a pas été enregistrée.';
+      } finally {
+        button.disabled = false;
+      }
     });
   });
 
