@@ -6,7 +6,7 @@
 //   1. Flux natifs des éditeurs — pas d'agrégateur tiers
 //   2. Titres seuls, liens directs vers la source
 //   3. Quarantaine automatique de toute dépêche pouvant concerner un mineur
-//   4. Éphémère : fenêtre de 48 h, aucun archivage, en-tête noindex
+//   4. Éphémère : fenêtre de 24 h, aucun archivage, en-tête noindex
 //   5. Attribution explicite côté front
 //
 // v3 : le tri repose d'abord sur la RUBRIQUE DE L'ÉDITEUR (lisible dans l'URL),
@@ -38,7 +38,7 @@ const SOURCES = [
   // acceptent l'UA robot le conservent : on s'identifie quand on le peut.
 ];
 
-const WINDOW_HOURS = 48;
+const WINDOW_HOURS = 24;
 const MAX_ITEMS    = 40;
 const TIMEOUT_MS   = 7000;
 
@@ -125,6 +125,12 @@ const EXCL_ACCIDENT = /תאונ|התהפכ|נהרג בתאונה|טבע למוו
 
 // Manifestations et ordre public
 const EXCL_MANIF = /הפגנ|מחאה|מפגינים|חסימת כביש|protest|demonstrat|rally|road block/i;
+
+// Les flux généralistes mélangent parfois une affaire pénale israélienne avec
+// un procès étranger, un litige sportif ou une actualité de sécurité nationale.
+// Ces exclusions restent un filet de sécurité si la qualification ci-dessous
+// est indisponible ; la qualification éditoriale tranche les autres cas.
+const EXCL_HORS_RUBRIQUE = /מנצ'סטר סיטי|מנצ׳סטר סיטי|manchester city|טראמפ.*האריס|trump.*harris|אורניום|uranium|העשרת גרעין|enrichissement nucléaire|ערב הסעודית|arabie saoudite|saudi arabia/i;
 
 // --- 5. QUARANTAINE MINEURS --------------------------------------------------
 // Art. L. 513-4 CJPM, art. 39 bis loi 1881. Filtre volontairement large :
@@ -348,7 +354,7 @@ async function traduireEtQualifier(retenus, suspects) {
         max_tokens: 4000,
         system: [
           "Tu traites des titres de presse judiciaire israelienne pour un media francophone.",
-          "Pour CHAQUE titre, tu produis deux informations :",
+          "Pour CHAQUE titre, tu produis trois informations :",
           "1) fr : la traduction en francais. Registre sobre et factuel, sans sensationnalisme.",
           "   Conserve le vocabulaire de la presomption d'innocence (suspecte, mis en cause, presume).",
           "   Ne traduis pas les noms propres.",
@@ -358,7 +364,10 @@ async function traduireEtQualifier(retenus, suspects) {
           "   false si les ages ou mots cites ne concernent que des adultes.",
           "   Exemple : « un homme de 57 ans abattu » = false. « fillettes de 8 et 10 ans agressees » = true.",
           "   En cas de doute, reponds true.",
-          "Reponds UNIQUEMENT par un tableau JSON d'objets {\"i\":numero,\"fr\":\"...\",\"mineur\":true|false},",
+          "3) pertinent : true uniquement pour une affaire criminelle, une enquete de police judiciaire ou une decision de justice penale en Israel.",
+          "   false pour un evenement etranger, le sport, la justice sportive ou financiere, la politique, la diplomatie, le renseignement et la securite nationale sans affaire penale.",
+          "   Un mot comme police, accuse ou condamne ne suffit pas a rendre un titre pertinent.",
+          "Reponds UNIQUEMENT par un tableau JSON d'objets {\"i\":numero,\"fr\":\"...\",\"mineur\":true|false,\"pertinent\":true|false},",
           "dans l'ordre, sans preambule ni balises de code.",
         ].join(' '),
         messages: [{ role: 'user', content: liste }],
@@ -377,13 +386,14 @@ async function traduireEtQualifier(retenus, suspects) {
     tous.forEach((x, i) => {
       const o = parIndex.get(i);
       if (!o) return;
+      if (o.pertinent === false) { x.horsSujetEditorial = true; return; }
       if (typeof o.fr === 'string' && o.fr.trim()) {
         x.titleOrig = x.title;
         x.title = o.fr.trim();
         traduits++;
       }
       // Un suspect n'est reintegre que si le modele repond explicitement false
-      if (x.suspectMineur && o.mineur === false) {
+      if (x.suspectMineur && o.mineur === false && o.pertinent === true) {
         delete x.suspectMineur;
         x.qualifie = true;
         retenus.push(x);
@@ -414,6 +424,7 @@ export default async function handler(req, res) {
     const stats = {
       recus: 0, horsFenetre: 0, rubriqueRefusee: 0, horsSujet: 0,
       guerre: 0, territoires: 0, admin: 0, accident: 0, manifestation: 0,
+      horsRubrique: 0, horsSujetEditorial: 0,
       quarantaineMineurs: 0, doublons: 0,
     };
     const parSource = {};
@@ -457,6 +468,7 @@ export default async function handler(req, res) {
         if (EXCL_ADMIN.test(it.title))        { stats.admin++; rejet('administratif', it); continue; }
         if (EXCL_ACCIDENT.test(it.title)) { stats.accident++; rejet('accident', it); continue; }
         if (EXCL_MANIF.test(it.title))    { stats.manifestation++; rejet('manifestation', it); continue; }
+        if (EXCL_HORS_RUBRIQUE.test(it.title)) { stats.horsRubrique++; rejet('hors rubrique', it); continue; }
 
         // Soupcon de mineur : mis de cote, tranche plus bas par le modele
         const soupcon = mentionsMinor(it.title);
@@ -482,6 +494,10 @@ export default async function handler(req, res) {
     // Le modele traduit et tranche les soupcons ; les suspects non leves
     // restent ecartes. items est complete par reintegration.
     const trad = await traduireEtQualifier(items, suspects.slice(0, 20));
+    stats.horsSujetEditorial = items.filter((x) => x.horsSujetEditorial).length;
+    for (let i = items.length - 1; i >= 0; i--) {
+      if (items[i].horsSujetEditorial) items.splice(i, 1);
+    }
     stats.quarantaineMineurs = suspects.length - (trad.reintegres || 0);
 
     items.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
