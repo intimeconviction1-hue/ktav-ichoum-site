@@ -58,6 +58,6 @@
   var jour = d.getDate();
   var full = jours[d.getDay()] + ' ' + (jour === 1 ? '1er' : jour) + ' ' + mois[d.getMonth()] + ' ' + d.getFullYear();
   var cap = full.charAt(0).toUpperCase() + full.slice(1);
-  document.querySelectorAll('.today').forEach(function (e) { e.textContent = cap; });
+  document.querySelectorAll('.today').forEach(function (e) { e.textContent = (e.closest(".edition") ? " · " : "") + cap; });
   document.querySelectorAll('.today-lc').forEach(function (e) { e.textContent = full; });
 })();
