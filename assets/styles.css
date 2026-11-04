@@ -952,3 +952,39 @@ blockquote.pull cite{display:block; font-family:var(--ff-sans); font-weight:500;
 .hero-img .ph{background-image:url('./covers/fond.svg')}
 .hero .ph,
 .lead-card .ph{background-image:url('./covers/fond.svg')}
+
+/* Continuité éditoriale et confort de lecture — novembre 2026 */
+:root[data-theme="light"]{--ki-ink:#f2efe7;--ki-surface:#fffdf8;--ki-surface-2:#faf8f2;--ki-text:#191b19;--ki-text-2:#50564e;--ki-text-3:#686f63;--ki-line:#d4d3c8;--ki-bordeaux:#b71c24;--ki-bordeaux-2:#991821}
+body:not(.home) .masthead{background:var(--ki-ink);box-shadow:none;border-bottom:1px solid var(--ki-line)}
+body:not(.home) .brand .word{color:var(--ki-text)}
+body:not(.home) .art-head h1,body:not(.home) .rec-intro h1{
+ font-family:"Newsreader",Georgia,serif;font-size:clamp(2.6rem,5vw,4.4rem);font-weight:600;line-height:1.05;letter-spacing:-.04em;text-transform:none
+}
+body:not(.home) .art-body h2,body:not(.home) .art-body h3,body:not(.home) .rec-item h2{
+ font-family:"Newsreader",Georgia,serif;font-weight:600;letter-spacing:-.025em;text-transform:none
+}
+body:not(.home) .rec-item h2{font-size:2rem}
+.art-body{font-size:1.22rem;line-height:1.85;overflow-wrap:break-word}
+.art-body em,.art-body i,.art-head em,.rec-item em{font-style:normal}
+.art-body h2{scroll-margin-top:100px}
+.art-body .ext-note{font-family:var(--ff-sans);font-size:.85rem;line-height:1.7;border-radius:0}
+body:not(.home) .hero-img{border-radius:0}
+body:not(.home) .rec-item{padding:30px 0}
+body:not(.home) .rec-item:hover h2{color:var(--ki-bordeaux-2)}
+.nav a[aria-current="page"]{color:var(--ki-bordeaux-2);text-decoration:underline;text-underline-offset:7px}
+.icon-btn,.share a{min-width:44px;min-height:44px}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #b75f43;outline-offset:4px}
+.ki-skip{position:fixed;top:8px;left:16px;z-index:1000;transform:translateY(-160%);background:var(--ki-surface);color:var(--ki-text);padding:12px 18px;border:2px solid var(--ki-bordeaux)}
+.ki-skip:focus{transform:none}
+.ki-feedback{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:1000;padding:12px 20px;background:#202b25;color:#fff;font:14px Inter,sans-serif;box-shadow:0 4px 24px #0003}
+dialog::backdrop{background:#111b17b8;backdrop-filter:blur(3px)}
+body.ki-menu-open{overflow:hidden}
+@media(max-width:720px){
+ .art-head h1{overflow-wrap:break-word}
+ .art-body{font-size:1.12rem;line-height:1.8}
+ .art-head .chapo{font-size:1.15rem}
+ body:not(.home) .rec-item h2{font-size:1.7rem}
+ .rec-item .meta{line-height:1.7}
+ .byline .share{margin-left:0}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
