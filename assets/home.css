@@ -158,3 +158,97 @@ body.home{
 
 /* Accueil : typographie sans italique. */
 .home em,.home i{font-style:normal}
+
+/* Une de presse : rythme, rouge signature et titres francs. */
+body.home{--home-bg:#fff;--home-paper:#f4f3ef;--home-card:#f7f6f2;--home-ink:#171717;--home-muted:#5e5e59;--home-red:#d1091d;--home-red-dark:#aa0014;--home-line:#deded8;background:var(--home-bg)}
+.home .notice{background:#161616}
+.home .util{background:#f5f5f2}
+.home .masthead{background:var(--home-bg)}
+.home .masthead .wrap{padding-top:22px}
+.home .masthead .brand{background:var(--home-red);padding:15px 22px 14px;gap:14px}
+.home .masthead .brand .word{color:#fff;font-size:clamp(2.5rem,4.4vw,4.2rem);letter-spacing:-.02em}
+.home .masthead .brand .word small{color:#fff;letter-spacing:.28em}
+.home .masthead .brand .emblem{display:none}
+.home .nav{border-top:0;border-bottom:4px solid #171717;padding:16px 0 13px;margin-top:14px}
+.home .nav a{font:700 13px "Archivo",sans-serif;letter-spacing:.02em}
+.home .nav a.hot{color:var(--home-red)}
+.home .ticker{background:var(--home-red);color:#fff;border:0}
+.home .ticker .move a{color:#fff;font-weight:600}
+.home .ticker .lbl{background:#171717}
+.home .hero{padding-top:25px}
+.editorial-kicker{font-size:10px;letter-spacing:.08em}
+.editorial-heading p{font:900 clamp(1.8rem,3.5vw,3rem)/1.05 "Archivo",sans-serif;letter-spacing:-.045em}
+.home .hero-grid{grid-template-columns:minmax(0,1.65fr) minmax(310px,1fr);gap:27px}
+.home .lead{min-height:540px;background:#121212}
+.home .lead>.ph{background-image:linear-gradient(0deg,#000 0%,#000c 24%,#0001 80%),url('/assets/photos/cour-supreme-jerusalem.jpg')!important;filter:saturate(.8);background-position:center}
+.home .lead::after{display:none}
+.home .lead .overlay{justify-content:flex-end;padding:30px 32px 82px;background:linear-gradient(90deg,#0006,transparent)}
+.home .lead .tag--doc{background:#ffe400;color:#171717;border:0;padding:7px 10px;font-weight:800;letter-spacing:.04em}
+.wow-location{font:700 11px "Inter",sans-serif;color:#fff;letter-spacing:.06em;margin:20px 0 0}
+.home .hero .lead .overlay .lead-titre{font:900 clamp(3rem,5.6vw,5.4rem)/.95 "Archivo",sans-serif;letter-spacing:-.055em;text-transform:uppercase;margin:10px 0 17px;max-width:11ch;color:#fff}
+.home .lead p{font:500 15px/1.5 "Inter",sans-serif;color:#eee;max-width:49ch;margin-bottom:15px}
+.home .lead .meta{font-size:10px}
+.lead-read{left:32px;right:32px;border-color:#ffffff4d;font-weight:700;bottom:27px}
+.home .side-heading{background:#171717;color:white;border:0;padding:13px 14px;font:800 10px "Archivo",sans-serif;letter-spacing:.04em}
+.home .side-heading span:last-child{color:#ffdf00;font-size:8px}
+.home .side-card{grid-template-columns:116px minmax(0,1fr);padding:20px 0;gap:17px}
+.home .side-card .thumb{aspect-ratio:1/1}
+.home .side-card h3{font:800 21px/1.16 "Archivo",sans-serif;letter-spacing:-.035em;margin:9px 0 12px}
+.home .side-card .tag{font-size:8px}
+.home .livewire{margin-top:30px}
+.home .livewire>.wrap{background:#f5f5f1;border-top:4px solid var(--home-red)}
+.home .lw-head h2{font:900 24px/1.15 "Archivo",sans-serif;letter-spacing:-.035em}
+.home .lw-item a{font-weight:600}
+.wow-dossiers{padding-top:44px;padding-bottom:8px}
+.home .section-head{border-top:4px solid #171717;padding-top:15px}
+.home .section-head h2{font:900 clamp(1.5rem,2.6vw,2.1rem)/1.1 "Archivo",sans-serif;letter-spacing:-.04em}
+.wow-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.wow-card{position:relative;min-height:330px;display:flex;flex-direction:column;justify-content:flex-end;padding:27px;background:#141414;color:#fff;overflow:hidden;border-bottom:5px solid var(--home-red)}
+.wow-card-one{background:linear-gradient(0deg,#080808,#08080844),url('/assets/covers/enquetes-fond.svg') center/cover}
+.wow-card-two{background:linear-gradient(0deg,#1e0808,#4b0b1855),url('/assets/covers/crime-organise-fond.svg') center/cover}
+.wow-card-three{background:linear-gradient(0deg,#050505,#05050544),url('/assets/photos/cour-supreme-jerusalem.jpg') center/cover}
+.wow-num{position:absolute;top:14px;right:20px;font:900 76px/1 "Archivo",sans-serif;color:#ffffff18;letter-spacing:-.06em}
+.wow-tag{font:800 9px "Inter",sans-serif;color:#ffe400;letter-spacing:.08em;z-index:1}
+.wow-card h3{font:900 32px/1 "Archivo",sans-serif;letter-spacing:-.04em;margin:15px 0 12px;z-index:1}
+.wow-card p{font:400 12px/1.6 "Inter",sans-serif;color:#ddd;margin:0 0 21px;z-index:1}
+.wow-open{font:700 11px "Inter",sans-serif;border-top:1px solid #ffffff40;padding-top:13px;z-index:1}
+.wow-card:hover{border-bottom-color:#ffe400}.wow-card:hover h3{text-decoration:underline;text-underline-offset:5px}
+.home .main-grid{padding-top:40px}
+.home .story h3{font:800 25px/1.15 "Archivo",sans-serif;letter-spacing:-.03em}
+.home .feature{background:#151515;border-top:6px solid var(--home-red)}
+.home .feature h2{font:900 clamp(2rem,4vw,3.6rem)/1.04 "Archivo",sans-serif;letter-spacing:-.04em}
+.home .feature p{font:400 15px/1.7 "Inter",sans-serif}
+.home .cat h3{font:800 25px "Archivo",sans-serif}
+.home .nlfull{background:#ffe400;color:#171717}
+.home .nlfull h2{font:900 54px "Archivo",sans-serif;letter-spacing:-.05em}
+.home .nlfull p{font:500 17px/1.6 "Inter",sans-serif}
+.home .foot{background:#141414}
+.home em,.home i{font-style:normal}
+:root[data-theme="dark"] body.home{--home-bg:#151515;--home-paper:#202020;--home-card:#202020;--home-ink:#f3f2eb;--home-muted:#bcbcb4;--home-line:#454540;--home-red:#f04450}
+:root[data-theme="dark"] .home .util,:root[data-theme="dark"] .home .livewire>.wrap{background:#202020}
+:root[data-theme="dark"] .home .nav,:root[data-theme="dark"] .home .section-head{border-color:#eee}
+:root[data-theme="dark"] .home .nlfull{background:#d7c91c;color:#151515}
+@media(max-width:1000px){
+ .home .hero-grid{grid-template-columns:minmax(0,1.4fr) minmax(270px,1fr)}
+ .home .side-card{grid-template-columns:85px minmax(0,1fr)}
+ .home .side-card h3{font-size:19px}
+ .wow-card{padding:20px;min-height:320px}.wow-card h3{font-size:27px}
+}
+@media(max-width:720px){
+ .home .masthead .wrap{padding-top:16px;padding-bottom:16px}
+ .home .masthead .brand{padding:11px 13px}.home .masthead .brand .word{font-size:2rem}
+ .home .masthead .brand .word small{font-size:6px}
+ .home .hero-grid{grid-template-columns:minmax(0,1fr)}
+ .editorial-heading p{font-size:30px}.editorial-kicker{font-size:9px}
+ .home .lead{min-height:500px}
+ .home .lead .overlay{padding:25px 24px 80px}
+ .home .hero .lead .overlay .lead-titre{font-size:54px;max-width:10ch}
+ .home .lead p{font-size:13px}.lead-read{left:24px;right:24px}
+ .home .side-card{grid-template-columns:95px minmax(0,1fr)}.home .side-card h3{font-size:20px}
+ .home .lw-head h2{font-size:20px}
+ .wow-grid{grid-template-columns:1fr}.wow-card{min-height:260px}
+ .wow-card h3{font-size:34px;max-width:15ch}
+ .wow-dossiers{padding-top:32px}
+ .home .story h3{font-size:20px}
+ .home .nlfull h2{font-size:40px}
+}
