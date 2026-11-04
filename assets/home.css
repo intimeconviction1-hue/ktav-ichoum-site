@@ -155,3 +155,6 @@ body.home{
 
 /* Les titres éditoriaux conservent leur casse naturelle. */
 .home .side-card h3,.home .story h3,.home .section-head h2,.home .lw-head h2,.home .cat h3,.home .nlfull h2{text-transform:none}
+
+/* Accueil : typographie sans italique. */
+.home em,.home i{font-style:normal}
