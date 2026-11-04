@@ -152,3 +152,6 @@ body.home{
  .home .nlfull{padding:40px 0}.home .nlfull h2{font-size:46px}
 }
 @media(prefers-reduced-motion:reduce){.home *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+/* Les titres éditoriaux conservent leur casse naturelle. */
+.home .side-card h3,.home .story h3,.home .section-head h2,.home .lw-head h2,.home .cat h3,.home .nlfull h2{text-transform:none}
