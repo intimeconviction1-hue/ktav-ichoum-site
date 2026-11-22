@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://www.ktavichoum.com/</loc><changefreq>hourly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://www.ktavichoum.com/rubrique.html</loc><changefreq>hourly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.ktavichoum.com/crime-organise.html</loc><changefreq>hourly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.ktavichoum.com/justice.html</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.ktavichoum.com/police.html</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.ktavichoum.com/enquetes.html</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.ktavichoum.com/societe.html</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.ktavichoum.com/archives.html</loc><changefreq>daily</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.ktavichoum.com/article.html</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.ktavichoum.com/article-japanika.html</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.ktavichoum.com/article-justice.html</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.ktavichoum.com/article-police.html</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.ktavichoum.com/article-enquetes.html</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.ktavichoum.com/article-societe.html</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.ktavichoum.com/sources.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
-<url><loc>https://ktavichoum.vercel.app/recit-diyar-omri-les-derniers-coups</loc><lastmod>2026-11-04</lastmod></url></urlset>
+  <url><loc>https://ktavichoum.vercel.app/</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/fil</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/recits</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/archives</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/justice</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/crime-organise</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/societe</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/sources</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/a-propos</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/charte-ethique</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/mentions-legales</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/confidentialite</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/recit-diyar-omri-les-derniers-coups</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/recit-yazdi-quatre-coudees</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/recit-bir-al-maksour-dix-huit-ans</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/recit-nahlaot-adulte-presente</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/recit-ramat-gan-wishniak</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/recit-srour-shuafat</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/recit-ashdod-250-shekels</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/recit-eilat-taxi</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/synthese-japanika-grenades</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/synthese-operation-on-target</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/synthese-homicides-societe-arabe-2026</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/synthese-razi-jerusalem</loc></url>
+  <url><loc>https://ktavichoum.vercel.app/dossier-disparus-mont-meron</loc></url>
+</urlset>
